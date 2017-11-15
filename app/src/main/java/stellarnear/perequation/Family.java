@@ -1,11 +1,19 @@
 package stellarnear.perequation;
 
-/**
- * Created by jchatron on 15/11/2017.
- */
+import android.support.v7.app.AppCompatActivity;
 
-public class Family {
+import java.io.Serializable;
 
 
+public class Family extends AppCompatActivity implements Serializable {
+
+
+    private String  name;
+    private int  donation;
+    public Family(String name,Integer donation){
+        this.name=name;
+        this.donation=donation;
+
+    }
 
 }

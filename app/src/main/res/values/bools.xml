@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="chatron_jacques_switch_def">true</bool>
+    <bool name="chatron_jeremie_switch_def">true</bool>
+
+
+</resources>
