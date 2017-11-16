@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.List;
 
+
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
  * handset devices, settings are presented as a single list. On tablets,
@@ -85,11 +86,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
-                || CombatPreferenceFragment.class.getName().equals(fragmentName)
-                || SpellByDayPreferenceFragment.class.getName().equals(fragmentName)
                 || InfosPreferenceFragment.class.getName().equals(fragmentName)
-                || RazPreferenceFragment.class.getName().equals(fragmentName)
-                || SleepPreferenceFragment.class.getName().equals(fragmentName);
+                || RazPreferenceFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -119,62 +117,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    /**
-     page de combat
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class CombatPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_combat);
-            setHasOptionsMenu(true);
 
-        }
-
-
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
-
-    //autre fragement liste de sort par jour
-    /**
-     page de sort par jour
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class SpellByDayPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_spell_by_day);
-            setHasOptionsMenu(true);
-
-        }
-
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-    }
 
     /**
      page d'info settings
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @TargetApi(23)
     public static class InfosPreferenceFragment extends PreferenceFragment {
 
         @Override
@@ -269,79 +217,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             },time);
 
-        }
-    }
-
-
-    /**
-     page de dodo
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class SleepPreferenceFragment extends PreferenceFragment {
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            View window =(View) getActivity().findViewById(android.R.id.content);
-            window.setBackgroundResource(R.drawable.sleep_background);
-
-            String descr="Fais de beaux rêves !";
-            Toast toast = Toast.makeText(getContext(), descr, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER| Gravity.CENTER_HORIZONTAL,0,0);
-            toast.show();
-
-
-
-            int time=2000; // in milliseconds
-
-            Handler h=new Handler();
-
-            h.postDelayed(new Runnable() {
-
-                @Override
-                public void run() {
-
-
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-            SharedPreferences.Editor editor = prefs.edit();
-
-            editor.putString("n_rank_1",prefs.getString("n_rank_1_start",getString(R.string.n_rank_1_def)));
-            editor.putString("n_rank_2",prefs.getString("n_rank_2_start",getString(R.string.n_rank_2_def)));
-            editor.putString("n_rank_3",prefs.getString("n_rank_3_start",getString(R.string.n_rank_3_def)));
-            editor.putString("n_rank_4",prefs.getString("n_rank_4_start",getString(R.string.n_rank_4_def)));
-            editor.putString("n_rank_5",prefs.getString("n_rank_5_start",getString(R.string.n_rank_5_def)));
-            editor.putString("n_rank_6",prefs.getString("n_rank_6_start",getString(R.string.n_rank_6_def)));
-            editor.putString("n_rank_7",prefs.getString("n_rank_7_start",getString(R.string.n_rank_7_def)));
-            editor.putString("n_rank_8",prefs.getString("n_rank_8_start",getString(R.string.n_rank_8_def)));
-            editor.putString("n_rank_9",prefs.getString("n_rank_9_start",getString(R.string.n_rank_9_def)));
-            editor.putString("n_rank_10",prefs.getString("n_rank_10_start",getString(R.string.n_rank_10_def)));
-            editor.putString("n_rank_11",prefs.getString("n_rank_11_start",getString(R.string.n_rank_11_def)));
-            editor.putString("n_rank_12",prefs.getString("n_rank_12_start",getString(R.string.n_rank_12_def)));
-            editor.putString("n_rank_13",prefs.getString("n_rank_13_start",getString(R.string.n_rank_13_def)));
-            editor.putString("n_rank_14",prefs.getString("n_rank_14_start",getString(R.string.n_rank_14_def)));
-            editor.putString("n_rank_15",prefs.getString("n_rank_15_start",getString(R.string.n_rank_15_def)));
-            editor.commit();
-
-            String descr="Une nouvelle journée pleine de sortilèges t'attends.";
-            Toast toast = Toast.makeText(getContext(), descr, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.CENTER| Gravity.CENTER_HORIZONTAL,0,0);
-            toast.show();
-            startActivity(new Intent(getActivity(), MainActivity.class));
-                }
-
-            },time);
-
-        }
-
-        public Integer to_int(String key){
-            Integer value;
-            try {
-                value = Integer.parseInt(key);
-            } catch (Exception e){
-                value=0;
-            }
-            return value;
         }
     }
 

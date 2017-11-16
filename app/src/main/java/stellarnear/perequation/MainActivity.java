@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import stellarnear.periquation.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,11 +20,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        All_Families all_families = new All_Families(getApplicationContext());
+
+        final Integer all_money = all_families.getAllMoney();
+        final Double money_per_indiv = all_families.getMoneyPerIndiv();
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Argent total :"+all_money+" Argent par personne :"+money_per_indiv, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
