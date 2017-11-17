@@ -7,6 +7,14 @@
     <bool name="Claude_Francoise_switch_def">true</bool>
     <bool name="Robert_Mireille_switch_def">true</bool>
     <bool name="Bernard_Chantal_switch_def">true</bool>
+    <bool name="Simon_Anais_switch_def">true</bool>
+    <bool name="Sam_Perrine_switch_def">true</bool>
+    <bool name="Benjamin_Claire_switch_def">true</bool>
+    <bool name="Raphael_Florence_switch_def">true</bool>
+    <bool name="Aurelie_Annabel_switch_def">true</bool>
+    <bool name="Nicolas_Delphine_switch_def">true</bool>
+    <bool name="Antony_Sophie_switch_def">true</bool>
+    <bool name="Christophe_Florence_switch_def">true</bool>
 
 
 </resources>

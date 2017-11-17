@@ -1,10 +1,21 @@
 <resources>
     <string name="app_name">Perequation</string>
+
     <string name="action_settings">Settings</string>
+
+    <string name="Alloc_alime_def">Claude et Francoise</string>
+
     <string name="Jacques_Dominique_n_def">2</string>
     <string name="Jeremie_Marjorie_n_def">2</string>
-    <string name="Claude_Francoise_n_def">5</string>
-    <string name="Robert_Mireille_n_def">4</string>
-    <string name="Bernard_Chantal_n_def">5</string>
-    <string name="Alloc_alime_def">Claude et Francoise</string>
+    <string name="Claude_Francoise_n_def">2</string>
+    <string name="Robert_Mireille_n_def">2</string>
+    <string name="Bernard_Chantal_n_def">2</string>
+    <string name="Simon_Anais_n_def">2</string>
+    <string name="Sam_Perrine_n_def">5</string>
+    <string name="Benjamin_Claire_n_def">5</string>
+    <string name="Raphael_Florence_n_def">4</string>
+    <string name="Aurelie_Annabel_n_def">2</string>
+    <string name="Nicolas_Delphine_n_def">4</string>
+    <string name="Antony_Sophie_n_def">5</string>
+    <string name="Christophe_Florence_n_def">5</string>
 </resources>

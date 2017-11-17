@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v2.0a"</string>
-    <string name="basic_infos">"Cette application est développée par le dernier déscandant Chatron.
+    <string name="version">"alpha"</string>
+    <string name="basic_infos">"Cette application est développée par le dernier Chatron.
 Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
     </string>
 

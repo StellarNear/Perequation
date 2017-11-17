@@ -20,9 +20,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,23 +42,10 @@ public class MainActivity extends AppCompatActivity {
 
         final LinearLayout mainLinear = (LinearLayout) findViewById(R.id.linearMain);
 
+
+
         buildPage1(mainLinear,all_families);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainLinear.removeAllViews();
-
-                Double money_per_indiv = 0.0;
-                money_per_indiv=calculMoneyPerIndiv(all_families);
-
-                buildPage2(mainLinear,all_families,money_per_indiv);
-                Snackbar.make(view, "Argent par personne : "+String.format("%.2f", money_per_indiv), Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     private Double calculMoneyPerIndiv(All_Families all_families) {
@@ -103,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private void buildPage1(LinearLayout mainLinear,All_Families all_families) {
+    private void buildPage1(final LinearLayout mainLinear,final All_Families all_families) {
 
         final LinearLayout fam_title = new LinearLayout(this);
         fam_title.setOrientation(LinearLayout.HORIZONTAL);
@@ -137,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         fam_nam.setText("Famille");
         Colonne1Titre.addView(fam_nam);
 
-        donation.setTextSize(20);
+        donation.setTextSize(18);
         donation.setTextColor(Color.DKGRAY);
         donation.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         donation.setText("Donation");
@@ -148,6 +137,13 @@ public class MainActivity extends AppCompatActivity {
         h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
         h_sep.setBackgroundColor(Color.GRAY);
         mainLinear.addView(h_sep);
+
+        ScrollView scrolling_fams = new ScrollView(this);
+        mainLinear.addView(scrolling_fams);
+        LinearLayout scroll_fams = new LinearLayout(this);
+        scroll_fams.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+        scroll_fams.setOrientation(LinearLayout.VERTICAL);
+        scrolling_fams.addView(scroll_fams);
 
         for (final Family fam : all_families.asList()){
             final LinearLayout fam_lin = new LinearLayout(this);
@@ -160,12 +156,12 @@ public class MainActivity extends AppCompatActivity {
             View h_sep2 = new View(this);
             h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
             h_sep2.setBackgroundColor(Color.GRAY);
-            mainLinear.addView(h_sep2);
-            mainLinear.addView(fam_lin);
+            scroll_fams.addView(h_sep2);
+            scroll_fams.addView(fam_lin);
 
 
             fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
-            fam_lin.setWeightSum(3);
+            fam_lin.setWeightSum(2);
             fam_lin.setGravity(Gravity.CENTER_VERTICAL);
 
             LinearLayout Colonne1 = new LinearLayout(this);
@@ -212,12 +208,32 @@ public class MainActivity extends AppCompatActivity {
             Colonne2.addView(donation_picker);
 
         }
+
+        final Button button = new Button(getApplicationContext());
+        button.setText("Enregisterer les donations");
+        button.setTextSize(18);
+        button.setElevation(10);
+        scroll_fams.addView(button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainLinear.removeAllViews();
+
+                Double money_per_indiv = 0.0;
+                money_per_indiv=calculMoneyPerIndiv(all_families);
+
+                buildPage2(mainLinear,all_families,money_per_indiv);
+            }
+        });
+
     }
 
     private void buildPage2(LinearLayout mainLinear,All_Families all_families,double money_per_indiv) {
 
         TextView result = new TextView(this);
-        String result_txt="Total : "+all_families.getAllMoney() +"€, Budget/pers : "+String.format("%.2f", money_per_indiv)+"€";
+        String result_txt="Total : "+all_families.getAllMoney() +"€, Cadeau : "+String.format("%.2f", money_per_indiv)+"€";
+        if (all_families.isAlim()) {result_txt+=", Repas : "+all_families.getAlim()+"€";}
         result.setTextSize(18);
         result.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         result.setTextColor(Color.DKGRAY);
