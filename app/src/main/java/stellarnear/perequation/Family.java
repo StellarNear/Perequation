@@ -36,4 +36,9 @@ public class Family extends AppCompatActivity implements Serializable {
         Log.d("STATE dona:", "ca:"+donation+this.donation);
         this.donation = donation;
     }
+
+    public Double getExed(Double money_per_indiv) {
+        Double exed = this.donation-(this.n_member*money_per_indiv);
+        return exed;
+    }
 }

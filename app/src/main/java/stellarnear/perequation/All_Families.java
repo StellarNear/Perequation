@@ -23,12 +23,29 @@ public class All_Families extends AppCompatActivity {
 
             if (prefs.getBoolean("Jacques_Dominique_switch",mC.getResources().getBoolean(R.bool.Jacques_Dominique_switch_def)))  {
                 Integer n_member=to_int(prefs.getString("Jacques_Dominique_n",mC.getResources().getString(R.string.Jacques_Dominique_n_def)),"Nombre Jacques et Dominique",mC);
-                All_Families.add(new Family("Chatron Père",n_member));
+                All_Families.add(new Family("Jacques et Dominique",n_member));
             }
             if (prefs.getBoolean("Jeremie_Marjorie_switch",mC.getResources().getBoolean(R.bool.Jeremie_Marjorie_switch_def)))  {
                 Integer n_member=to_int(prefs.getString("Jeremie_Marjorie_n",mC.getResources().getString(R.string.Jeremie_Marjorie_n_def)),"Nombre Jeremie et Marjorie",mC);
-                All_Families.add(new Family("Chatron Fils",n_member));
+                All_Families.add(new Family("Jérémie et Marjorie",n_member));
             }
+            if (prefs.getBoolean("Bernard_Chantal_switch",mC.getResources().getBoolean(R.bool.Bernard_Chantal_switch_def)))  {
+                Integer n_member=to_int(prefs.getString("Bernard_Chantal_n",mC.getResources().getString(R.string.Bernard_Chantal_n_def)),"Nombre Bernard et Chantal",mC);
+                All_Families.add(new Family("Bernard et Chantal",n_member));
+            }
+            if (prefs.getBoolean("Robert_Mireille_switch",mC.getResources().getBoolean(R.bool.Robert_Mireille_switch_def)))  {
+                Integer n_member=to_int(prefs.getString("Robert_Mireille_n",mC.getResources().getString(R.string.Robert_Mireille_n_def)),"Nombre Robert et Mireille",mC);
+                All_Families.add(new Family("Robert et Mireille",n_member));
+            }
+            if (prefs.getBoolean("Claude_Francoise_switch",mC.getResources().getBoolean(R.bool.Claude_Francoise_switch_def)))  {
+                Integer n_member=to_int(prefs.getString("Claude_Francoise_n",mC.getResources().getString(R.string.Claude_Francoise_n_def)),"Claude et Francoise",mC);
+                All_Families.add(new Family("Claude et Francoise",n_member));
+            }
+
+
+
+
+
 
         } catch (Exception e) {
             e.printStackTrace();
