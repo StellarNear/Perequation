@@ -14,6 +14,9 @@ public class Family extends AppCompatActivity implements Serializable {
     private String  name;
     private Integer  donation=0;
     private Integer n_member;
+    private double exed;
+    private boolean alimentaire=false;
+    private Integer alim=0;
     private Map<String,Integer> transfert_map = new HashMap<String,Integer>();
 
     public Family(String name,Integer n_member){
@@ -37,8 +40,30 @@ public class Family extends AppCompatActivity implements Serializable {
         this.donation = donation;
     }
 
-    public Double getExed(Double money_per_indiv) {
-        Double exed = this.donation-(this.n_member*money_per_indiv);
-        return exed;
+    public void setExed(double money_per_indiv){
+        if (this.alimentaire) {
+            this.exed = this.donation - this.n_member * money_per_indiv - this.alim;
+        }else {
+            this.exed = this.donation - this.n_member * money_per_indiv;
+        }
+    }
+
+    public Double getExed() {
+        return this.exed;
+    }
+
+    public void setAlimentaire_bool(boolean alim){
+        this.alimentaire=alim;
+    }
+
+    public boolean isAlim(){
+        return this.alimentaire;
+    }
+
+    public void setAlim(int alim){
+        this.alim=alim;
+    }
+    public Integer getAlim(){
+        return  this.alim;
     }
 }

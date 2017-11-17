@@ -2,10 +2,12 @@ package stellarnear.perequation;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.icu.text.MessagePattern;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -46,23 +48,62 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mainLinear.removeAllViews();
-                buildPage2(mainLinear,all_families);
-                Integer all_money = all_families.getAllMoney();
-                Integer all_pop = all_families.getAllIndiv();
 
-                Double money_per_indiv = (double)all_money/all_pop;
-                Snackbar.make(view, "Argent total :"+all_money+" Argent par personne : "+String.format("%.2f", money_per_indiv), Snackbar.LENGTH_LONG)
+                Double money_per_indiv = 0.0;
+                money_per_indiv=calculMoneyPerIndiv(all_families);
+
+                buildPage2(mainLinear,all_families,money_per_indiv);
+                Snackbar.make(view, "Argent par personne : "+String.format("%.2f", money_per_indiv), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
     }
 
-    private void buildPage1(LinearLayout mainLinear,All_Families all_families) {
-
+    private Double calculMoneyPerIndiv(All_Families all_families) {
         Integer all_money = all_families.getAllMoney();
         Integer all_pop = all_families.getAllIndiv();
 
-        final Double money_per_indiv = (double)all_money/all_pop;
+        Family fam_alloc = test_alloc_alim(all_families,getApplicationContext());
+        Double money_per_indiv = 0.0;
+        if (fam_alloc == null) {
+            money_per_indiv = (double) all_money / all_pop;
+        } else {
+
+            money_per_indiv = (double) all_money / all_pop;
+
+            Integer money_per_indiv_part_int= (int) (money_per_indiv/10.0)*10;
+
+            Double rest = money_per_indiv-money_per_indiv_part_int;
+
+            fam_alloc.setAlimentaire_bool(true);
+            fam_alloc.setAlim((int) (rest * all_pop));
+
+            money_per_indiv = (double) money_per_indiv_part_int;
+
+        }
+
+        for (Family fam : all_families.asList()){
+            fam.setExed(money_per_indiv);
+        }
+
+
+        return money_per_indiv;
+    }
+
+    private Family test_alloc_alim(All_Families all_families, Context mC) {
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        String alloc_fam = prefs.getString("Alloc_alime",mC.getResources().getString(R.string.Alloc_alime_def));
+
+        for (final Family fam : all_families.asList()){
+            if (fam.getName().equals(alloc_fam)) {
+                return fam;
+            }
+        }
+        return null;
+    }
+
+    private void buildPage1(LinearLayout mainLinear,All_Families all_families) {
 
         final LinearLayout fam_title = new LinearLayout(this);
         fam_title.setOrientation(LinearLayout.HORIZONTAL);
@@ -90,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         TextView donation=new TextView(this);
 
 
-        fam_nam.setTextSize(20);
+        fam_nam.setTextSize(18);
         fam_nam.setTextColor(Color.DKGRAY);
         fam_nam.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         fam_nam.setText("Famille");
@@ -142,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             TextView fam_txt = new TextView(this);
-            fam_txt.setText(fam.getName());
+            fam_txt.setText(fam.getName() +" ("+fam.getPopulation()+")");
             fam_txt.setTextSize(20);
             fam_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             fam_lin.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
@@ -173,12 +214,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void buildPage2(LinearLayout mainLinear,All_Families all_families) {
+    private void buildPage2(LinearLayout mainLinear,All_Families all_families,double money_per_indiv) {
 
-        Integer all_money = all_families.getAllMoney();
-        Integer all_pop = all_families.getAllIndiv();
+        TextView result = new TextView(this);
+        String result_txt="Total : "+all_families.getAllMoney() +"€, Budget/pers : "+String.format("%.2f", money_per_indiv)+"€";
+        result.setTextSize(18);
+        result.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        result.setTextColor(Color.DKGRAY);
+        result.setText(result_txt);
 
-        final Double money_per_indiv = (double)all_money/all_pop;
+        mainLinear.addView(result);
+
+
+        View h_sep0 = new View(this);
+        h_sep0.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,8));
+        h_sep0.setBackgroundColor(Color.GRAY);
+        mainLinear.addView(h_sep0);
 
         final LinearLayout fam_title = new LinearLayout(this);
         fam_title.setOrientation(LinearLayout.HORIZONTAL);
@@ -272,8 +323,8 @@ public class MainActivity extends AppCompatActivity {
 
 
             TextView fam_txt = new TextView(this);
-            fam_txt.setText(fam.getName());
-            fam_txt.setTextSize(18);
+            fam_txt.setText(fam.getName()+" ("+fam.getPopulation()+")");
+            fam_txt.setTextSize(16);
             fam_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             fam_txt.setTextColor(Color.DKGRAY);
             Colonne1.addView(fam_txt);
@@ -287,7 +338,7 @@ public class MainActivity extends AppCompatActivity {
             Colonne2.addView(fam_don);
 
             TextView fam_exed_txt = new TextView(this);
-            fam_exed_txt.setText(String.format("%.2f",fam.getExed(money_per_indiv)));
+            fam_exed_txt.setText(String.format("%.2f",fam.getExed()));
             fam_exed_txt.setTextSize(22);
             fam_exed_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             fam_exed_txt.setTextColor(Color.DKGRAY);

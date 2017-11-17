@@ -6,7 +6,7 @@
         android:fragment="stellarnear.perequation.SettingsActivity$GeneralPreferenceFragment"
         android:icon="@drawable/ic_person_pin_black_24dp"
         android:title="Paramètres généraux"
-        android:summary="Statistiques de base du personnage et paramètres de l'application"/>
+        android:summary="Nombres d'enfants à charge et préparation repas"/>
 
 
     <header
