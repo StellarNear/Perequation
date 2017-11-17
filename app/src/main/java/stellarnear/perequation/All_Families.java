@@ -23,11 +23,11 @@ public class All_Families extends AppCompatActivity {
 
             if (prefs.getBoolean("Jacques_Dominique_switch",mC.getResources().getBoolean(R.bool.Jacques_Dominique_switch_def)))  {
                 Integer n_member=to_int(prefs.getString("Jacques_Dominique_n",mC.getResources().getString(R.string.Jacques_Dominique_n_def)),"Nombre Jacques et Dominique",mC);
-                All_Families.add(new Family("Chatron Père",500,n_member));
+                All_Families.add(new Family("Chatron Père",n_member));
             }
             if (prefs.getBoolean("Jeremie_Marjorie_switch",mC.getResources().getBoolean(R.bool.Jeremie_Marjorie_switch_def)))  {
                 Integer n_member=to_int(prefs.getString("Jeremie_Marjorie_n",mC.getResources().getString(R.string.Jeremie_Marjorie_n_def)),"Nombre Jeremie et Marjorie",mC);
-                All_Families.add(new Family("Chatron Fils",100,n_member));
+                All_Families.add(new Family("Chatron Fils",n_member));
             }
 
         } catch (Exception e) {
@@ -60,13 +60,15 @@ public class All_Families extends AppCompatActivity {
     }
 
 
-    public Double getMoneyPerIndiv() {
-        Integer allMoney=0;
+    public Integer getAllIndiv() {
         Integer allPop=0;
         for (Family fam : All_Families){
             allPop+=fam.getPopulation();
-            allMoney+=fam.getDonation();
         }
-        return (double)allMoney/allPop;
+        return allPop;
+    }
+
+    public List<Family> asList() {
+        return All_Families;
     }
 }
