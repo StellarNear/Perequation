@@ -32,6 +32,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -151,12 +152,76 @@ public class MainActivity extends AppCompatActivity {
 
         //CHATRON
         if (prefs.getBoolean("Test_switch",getResources().getBoolean(R.bool.Test_switch_def)))  {  //mettre le switch dans les parametre appli en bas
-            //linear layout horizontal
-            //buton Random qui set all fam doantion random 1-2000
-            // verti sep
-            // edit text
+            LinearLayout test_hori = new LinearLayout(this);
+            test_hori.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
+            test_hori.setOrientation(LinearLayout.HORIZONTAL);
+            test_hori.setWeightSum(2);
+            mainLinear.addView(test_hori);
 
-            //buton sett all qui prend le edittext et le met à tout le monde
+
+            LinearLayout Colonne1Test = new LinearLayout(this);
+            Colonne1Test.setOrientation(LinearLayout.VERTICAL);
+            Colonne1Test.setGravity(Gravity.CENTER);
+            Colonne1Test.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,1));
+            LinearLayout Colonne2Test = new LinearLayout(this);
+            Colonne2Test.setOrientation(LinearLayout.VERTICAL);
+            Colonne2Test.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT,1));
+            Colonne2Test.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
+
+            test_hori.addView(Colonne1Test);
+            test_hori.addView(Colonne2Test);
+
+            Button button_rand = new Button(getApplicationContext());
+            button_rand.setText("Random");
+            button_rand.setTextSize(18);
+            button_rand.setElevation(10);
+            Colonne1Test.addView(button_rand);
+
+            button_rand.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    for (Family fam : all_families.asList()){
+                        Random rand = new Random();
+                        fam.setDonation(rand.nextInt(1500));
+                    }
+
+                    mainLinear.removeAllViews();
+                    Double money_per_indiv = 0.0;
+                    money_per_indiv=calculMoneyPerIndiv(all_families);
+                    buildPage2(mainLinear,all_families,money_per_indiv);
+                }
+            });
+
+
+            final EditText donation_all = new EditText(this);
+            donation_all.setTextSize(25);
+            donation_all.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            donation_all.setTextColor(Color.DKGRAY);
+            donation_all.setInputType(InputType.TYPE_CLASS_NUMBER);
+            Colonne2Test.addView(donation_all);
+
+            Button button_all = new Button(getApplicationContext());
+            button_all.setText("Set All");
+            button_all.setTextSize(18);
+            button_all.setElevation(10);
+            Colonne2Test.addView(button_all);
+
+            button_all.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    for (Family fam : all_families.asList()){
+                        fam.setDonation(to_int(donation_all.getText().toString(),"Set all money",getApplicationContext()));
+                    }
+
+                    mainLinear.removeAllViews();
+                    Double money_per_indiv = 0.0;
+                    money_per_indiv=calculMoneyPerIndiv(all_families);
+                    buildPage2(mainLinear,all_families,money_per_indiv);
+                }
+            });
+
 
         }
 
