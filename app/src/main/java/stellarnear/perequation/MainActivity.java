@@ -146,12 +146,31 @@ public class MainActivity extends AppCompatActivity {
         h_sep.setBackgroundColor(Color.GRAY);
         mainLinear.addView(h_sep);
 
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        //CHATRON
+        if (prefs.getBoolean("Test_switch",getResources().getBoolean(R.bool.Test_switch_def)))  {  //mettre le switch dans les parametre appli en bas
+            //linear layout horizontal
+            //buton Random qui set all fam doantion random 1-2000
+            // verti sep
+            // edit text
+
+            //buton sett all qui prend le edittext et le met à tout le monde
+
+        }
+
+
         ScrollView scrolling_fams = new ScrollView(this);
         mainLinear.addView(scrolling_fams);
         LinearLayout scroll_fams = new LinearLayout(this);
         scroll_fams.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
         scroll_fams.setOrientation(LinearLayout.VERTICAL);
         scrolling_fams.addView(scroll_fams);
+
+
+
+
 
         for (final Family fam : all_families.asList()){
             final LinearLayout fam_lin = new LinearLayout(this);
@@ -227,10 +246,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mainLinear.removeAllViews();
-
                 Double money_per_indiv = 0.0;
                 money_per_indiv=calculMoneyPerIndiv(all_families);
-
                 buildPage2(mainLinear,all_families,money_per_indiv);
             }
         });
@@ -691,9 +708,9 @@ public class MainActivity extends AppCompatActivity {
         List<Family> donateurs = new ArrayList<Family>();
         List<Family> receveurs = new ArrayList<Family>();
         for (Family fam : all_families.asList()){
-            if (fam.getExed()>5){
+            if (fam.getExed()>0){
                 donateurs.add(fam);
-            } else if (fam.getExed()<-5){
+            } else if (fam.getExed()<0){
                 receveurs.add(fam);
             }
         }
@@ -702,14 +719,14 @@ public class MainActivity extends AppCompatActivity {
             Log.d("STATE dona", "---Donneur---:"+fam_don.getName());
             Integer dons = fam_don.getExed();
 
-            while (dons > 5) {
+            while (dons > 3 ) {
                 Log.d("STATE dons","Famille :"+fam_don.getName()+" Dons restant :"+String.valueOf(dons));
                 for (Family fam_rec : receveurs){
                     if (dons == 0 ){continue;} //plus d'argent à donner
                     Log.d("STATE dons",String.valueOf(dons));
                     Log.d("STATE rec",fam_rec.getName());
                     Log.d("STATE rec_ex",String.valueOf(fam_rec.getExed()));
-                    if(Math.abs(fam_rec.getExed())>5){
+                    if(Math.abs(fam_rec.getExed())>0){
                         Log.d("STATE passage",fam_rec.getName()+" encore dans le besoin");
                         if (dons > Math.abs(fam_rec.getExed())){
                             fam_don.addTransfert(fam_rec.getName(),Math.abs(fam_rec.getExed()));
