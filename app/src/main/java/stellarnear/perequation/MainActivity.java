@@ -4,30 +4,35 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.inputmethod.EditorInfo;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +51,56 @@ public class MainActivity extends AppCompatActivity {
 
         final All_Families all_families = new All_Families(getApplicationContext());
 
-        final LinearLayout mainLinear = (LinearLayout) findViewById(R.id.linearMain);
+        //final LinearLayout mainLinear = (LinearLayout) findViewById(R.id.linearMain);
+        final LinearLayout mainLinear1 = (LinearLayout) findViewById(R.id.linearMain1);
+        final LinearLayout mainLinear2 = (LinearLayout) findViewById(R.id.linearMain2);
 
-        buildPage1(mainLinear,all_families);
+        final ViewSwitcher panel = (ViewSwitcher) findViewById(R.id.panel);
 
+        buildPage1(mainLinear1,mainLinear2,all_families,panel);
+
+    }
+
+    private void setAnimPanel(ViewSwitcher panel, String mode) {
+        if (mode.equals("aller")) {
+            Animation outtoLeft = new TranslateAnimation(
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, -1.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation de sortie vers la gauche
+            outtoLeft.setDuration(500);
+            outtoLeft.setInterpolator(new AccelerateInterpolator());
+
+            Animation inFromRight = new TranslateAnimation(
+                    Animation.RELATIVE_TO_PARENT, +1.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation d'entree par la droite
+            inFromRight.setDuration(500);
+            inFromRight.setInterpolator(new AccelerateInterpolator());
+
+            panel.setInAnimation(inFromRight);
+            panel.setOutAnimation(outtoLeft);
+        }else {
+            Animation outtoRight = new TranslateAnimation(
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, +1.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation de sortie vers la gauche
+            outtoRight.setDuration(500);
+            outtoRight.setInterpolator(new AccelerateInterpolator());
+
+            Animation inFromLeft = new TranslateAnimation(
+                    Animation.RELATIVE_TO_PARENT, -1.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f,
+                    Animation.RELATIVE_TO_PARENT, 0.0f);            //animation d'entree par la droite
+            inFromLeft.setDuration(500);
+            inFromLeft.setInterpolator(new AccelerateInterpolator());
+
+            panel.setInAnimation(inFromLeft);
+            panel.setOutAnimation(outtoRight);
+        }
     }
 
     private Double calculMoneyPerIndiv(All_Families all_families) {
@@ -101,14 +152,14 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private void buildPage1(final LinearLayout mainLinear,final All_Families all_families) {
+    private void buildPage1(final LinearLayout mainLinear1, final LinearLayout mainLinear2, final All_Families all_families, final ViewSwitcher panel) {
 
         final LinearLayout fam_title = new LinearLayout(this);
         fam_title.setOrientation(LinearLayout.HORIZONTAL);
         fam_title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
         fam_title.setWeightSum(2);
         fam_title.setGravity(Gravity.CENTER_VERTICAL);
-        mainLinear.addView(fam_title);
+        mainLinear1.addView(fam_title);
 
         LinearLayout Colonne1Titre = new LinearLayout(this);
         Colonne1Titre.setOrientation(LinearLayout.VERTICAL);
@@ -145,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
         View h_sep = new View(this);
         h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
         h_sep.setBackgroundColor(Color.GRAY);
-        mainLinear.addView(h_sep);
+        mainLinear1.addView(h_sep);
 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -156,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             test_hori.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             test_hori.setOrientation(LinearLayout.HORIZONTAL);
             test_hori.setWeightSum(2);
-            mainLinear.addView(test_hori);
+            mainLinear1.addView(test_hori);
 
 
             LinearLayout Colonne1Test = new LinearLayout(this);
@@ -186,10 +237,11 @@ public class MainActivity extends AppCompatActivity {
                         fam.setDonation(rand.nextInt(1200));
                     }
 
-                    mainLinear.removeAllViews();
+
                     Double money_per_indiv = 0.0;
                     money_per_indiv=calculMoneyPerIndiv(all_families);
-                    buildPage2(mainLinear,all_families,money_per_indiv);
+                    buildPage2(mainLinear2,all_families,money_per_indiv,panel);
+                    switchPanel(panel,"aller");
                 }
             });
 
@@ -215,10 +267,10 @@ public class MainActivity extends AppCompatActivity {
                         fam.setDonation(to_int(donation_all.getText().toString(),"Set all money",getApplicationContext()));
                     }
 
-                    mainLinear.removeAllViews();
                     Double money_per_indiv = 0.0;
                     money_per_indiv=calculMoneyPerIndiv(all_families);
-                    buildPage2(mainLinear,all_families,money_per_indiv);
+                    buildPage2(mainLinear2,all_families,money_per_indiv,panel);
+                    switchPanel(panel,"aller");
                 }
             });
 
@@ -227,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         ScrollView scrolling_fams = new ScrollView(this);
-        mainLinear.addView(scrolling_fams);
+        mainLinear1.addView(scrolling_fams);
         LinearLayout scroll_fams = new LinearLayout(this);
         scroll_fams.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
         scroll_fams.setOrientation(LinearLayout.VERTICAL);
@@ -304,23 +356,40 @@ public class MainActivity extends AppCompatActivity {
         final Button button = new Button(getApplicationContext());
         button.setText("Enregisterer les donations");
         button.setTextSize(18);
+        button.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_check_black_24dp,"white"),null);
         button.setElevation(10);
         scroll_fams.addView(button);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainLinear.removeAllViews();
+                //mainLinear.removeAllViews();
+
                 Double money_per_indiv = 0.0;
                 money_per_indiv=calculMoneyPerIndiv(all_families);
-                buildPage2(mainLinear,all_families,money_per_indiv);
+                buildPage2(mainLinear2,all_families,money_per_indiv,panel);
+                switchPanel(panel,"aller");
             }
         });
 
     }
 
-    private void buildPage2(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv) {
+    private void switchPanel(ViewSwitcher panel,String mode) {
+        if(mode.equals("aller")){
+            setAnimPanel(panel,"aller");
+            panel.showNext();
+        } else {
+            setAnimPanel(panel,"retour");
+            panel.showPrevious();
+        }
 
+
+
+    }
+
+
+    private void buildPage2(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv, final ViewSwitcher panel) {
+        mainLinear.removeAllViews();
         TextView result = new TextView(this);
         String result_txt="Total dons : "+all_families.getAllMoney()+"€, Population : "+ all_families.getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", money_per_indiv)+"€";
         if (all_families.isAlim()) {result_txt+=", Repas : "+all_families.getAlim()+"€";}
@@ -456,6 +525,7 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonT = new Button(getApplicationContext());
         buttonT.setText("Calculer les transferts");
         buttonT.setTextSize(18);
+        buttonT.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_swap_vert_black_24dp,"white"),null);
         buttonT.setElevation(10);
         mainLinear.addView(buttonT);
 
@@ -465,12 +535,45 @@ public class MainActivity extends AppCompatActivity {
                 mainLinear.removeAllViews();
 
                 calculTransfer(all_families);
-                buildPage3(mainLinear,all_families,money_per_indiv);
+                buildPage2_2(mainLinear,all_families,money_per_indiv,panel);
             }
         });
+
+        final Button buttonBack = new Button(getApplicationContext());
+        buttonBack.setText("Retour à la saisie des dons");
+        buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
+        buttonBack.setTextSize(18);
+        buttonBack.setElevation(10);
+        mainLinear.addView(buttonBack);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchPanel(panel,"retour");
+            }
+        });
+
     }
 
-    private void buildPage3(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv) {
+    private Drawable changeColor(int img_id, String color) {
+        Drawable img = getResources().getDrawable(img_id);
+        int iColor = Color.parseColor(color);
+
+        int red   = (iColor & 0xFF0000) / 0xFFFF;
+        int green = (iColor & 0xFF00) / 0xFF;
+        int blue  = iColor & 0xFF;
+
+        float[] matrix = { 0, 0, 0, 0, red,
+                0, 0, 0, 0, green,
+                0, 0, 0, 0, blue,
+                0, 0, 0, 1, 0 };
+
+        ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
+        img.setColorFilter(colorFilter);
+        return img;
+    }
+
+    private void buildPage2_2(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv, final ViewSwitcher panel) {
 
         TextView result = new TextView(this);
         String result_txt="Total dons : "+all_families.getAllMoney()+"€, Population : "+ all_families.getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", money_per_indiv)+"€";
@@ -607,6 +710,7 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonT_display = new Button(getApplicationContext());
         buttonT_display.setText("Afficher les transferts");
         buttonT_display.setTextSize(18);
+        buttonT_display.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_receipt_black_24dp,"white"),null);
         buttonT_display.setElevation(10);
         mainLinear.addView(buttonT_display);
 
@@ -615,12 +719,26 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mainLinear.removeAllViews();
 
-                buildPage4(mainLinear,all_families,money_per_indiv);
+                buildPage2_3(mainLinear,all_families,money_per_indiv,panel);
+            }
+        });
+
+        final Button buttonBack = new Button(getApplicationContext());
+        buttonBack.setText("Retour à la saisie des dons");
+        buttonBack.setTextSize(18);
+        buttonBack.setElevation(10);
+        buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
+        mainLinear.addView(buttonBack);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchPanel(panel,"retour");
             }
         });
     }
 
-    private void buildPage4(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv) {
+    private void buildPage2_3(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv, final ViewSwitcher panel) {
 
         TextView result = new TextView(this);
         String result_txt="Total dons : "+all_families.getAllMoney()+"€, Population : "+ all_families.getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", money_per_indiv)+"€";
@@ -767,6 +885,20 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
+        final Button buttonBack = new Button(getApplicationContext());
+        buttonBack.setText("Retour à la saisie des dons");
+        buttonBack.setTextSize(18);
+        buttonBack.setElevation(10);
+        buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
+        mainLinear.addView(buttonBack);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switchPanel(panel,"retour");
+            }
+        });
     }
 
     private void calculTransfer(All_Families all_families) {
