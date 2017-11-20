@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -389,6 +390,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void buildPage2(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv, final ViewSwitcher panel) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         mainLinear.removeAllViews();
         TextView result = new TextView(this);
         String result_txt="Total dons : "+all_families.getAllMoney()+"€, Population : "+ all_families.getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", money_per_indiv)+"€";
