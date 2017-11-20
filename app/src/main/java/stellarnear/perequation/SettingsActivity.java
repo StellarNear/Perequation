@@ -122,7 +122,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     /**
      page d'info settings
      */
-    @TargetApi(23)
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class InfosPreferenceFragment extends PreferenceFragment {
 
         @Override
@@ -131,13 +131,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             ContentFrameLayout window =(ContentFrameLayout) getActivity().findViewById(android.R.id.content);
 
-            ImageView ivBackground = new ImageView(getContext());
+            ImageView ivBackground = new ImageView(getActivity());
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.logo_near));
 
             window.addView(ivBackground);
 
 
-            LinearLayout page_info = new LinearLayout(getContext());
+            LinearLayout page_info = new LinearLayout(getActivity());
             page_info.setOrientation(LinearLayout.VERTICAL);
             window.addView(page_info);
 
@@ -148,10 +148,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             page_info.addView(Yfa_version);
 
-            ScrollView scroll_info = new ScrollView(getContext());
+            ScrollView scroll_info = new ScrollView(getActivity());
             page_info.addView(scroll_info);
 
-            final TextView texte_infos = new TextView(getContext());
+            final TextView texte_infos = new TextView(getActivity());
             texte_infos.setSingleLine(false);
             texte_infos.setTextColor(Color.DKGRAY);
 
@@ -159,10 +159,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             scroll_info.addView(texte_infos);
 
-            final Button button = new Button(getContext());
+            final Button button = new Button(getActivity());
             button.setText("Patch notes");
             button.setTextSize(18);
-            button.setElevation(10);
+            //button.setElevation(10);
             page_info.addView(button);
 
             button.setOnClickListener(new View.OnClickListener() {
@@ -209,7 +209,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             editor.commit();
 
             String descr="Remise à zero des paramètres de l'application";
-            Toast toast = Toast.makeText(getContext(), descr, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getActivity(), descr, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.CENTER| Gravity.CENTER_HORIZONTAL,0,0);
             toast.show();
             startActivity(new Intent(getActivity(), MainActivity.class));

@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.icu.text.MessagePattern;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
                     for (Family fam : all_families.asList()){
                         Random rand = new Random();
-                        fam.setDonation(rand.nextInt(1500));
+                        fam.setDonation(rand.nextInt(1200));
                     }
 
                     mainLinear.removeAllViews();
@@ -784,7 +784,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("STATE dona", "---Donneur---:"+fam_don.getName());
             Integer dons = fam_don.getExed();
 
-            while (dons > 3 ) {
+            while (dons > 1 ) {
                 Log.d("STATE dons","Famille :"+fam_don.getName()+" Dons restant :"+String.valueOf(dons));
                 for (Family fam_rec : receveurs){
                     if (dons == 0 ){continue;} //plus d'argent à donner
