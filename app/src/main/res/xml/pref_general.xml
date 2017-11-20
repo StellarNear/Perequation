@@ -1,13 +1,13 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <stellarnear.perequation.EditTextPreference
-        android:defaultValue="@string/Alloc_alime_def"
+    <ListPreference
         android:key="Alloc_alime"
         android:title="Famille qui fournit le repas"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : %s"/>
+        android:entries="@array/values_fam_names_alim"
+        android:entryValues="@array/values_fam_names_alim"
+        android:summary="Valeur : %s"
+        android:defaultValue="@string/Alloc_alime_def"/>
 
     <SwitchPreference
         android:defaultValue="@bool/Jacques_Dominique_switch_def"

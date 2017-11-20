@@ -60,6 +60,19 @@ public class MainActivity extends AppCompatActivity {
 
         buildPage1(mainLinear1,mainLinear2,all_families,panel);
 
+        Family fam_alloc = test_alloc_alim(all_families,getApplicationContext());
+        String msg="";
+        if (fam_alloc==null) {
+            msg="Aucune famille n'a été trouvée dans les paramètres pour organiser le repas.";
+        } else {
+            msg="La famille "+fam_alloc.getName()+" a été désignée organisatrice du repas.";
+        }
+
+        Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
+        toast.show();
+
+
     }
 
     private void setAnimPanel(ViewSwitcher panel, String mode) {
@@ -128,6 +141,12 @@ public class MainActivity extends AppCompatActivity {
             }
 
             Double rest = money_per_indiv_ori-money_per_indiv;
+
+            while (rest * all_pop < 100.0) {
+                money_per_indiv-=5.0;
+                rest = money_per_indiv_ori-money_per_indiv;
+            }
+
             fam_alloc.setAlimentaire_bool(true);
             fam_alloc.setAlim((int) (rest * all_pop));
         }
@@ -135,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         for (Family fam : all_families.asList()){
             fam.calcExed(money_per_indiv);
         }
-
 
         return money_per_indiv;
     }

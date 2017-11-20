@@ -15,6 +15,7 @@ v beta :
 - sliding entre les activités
 - retour vers saisie (page1) depuis chaque page
 - repli automatique de la saisie texte quand slide page1>page2
+- famille organisatrice du repas séléctionnée à partir d'une liste
 ----------------------------------------------------------------------------------
 v alpha :
 - gestion de chaque famille indépendamment

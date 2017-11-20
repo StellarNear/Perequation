@@ -55,8 +55,8 @@ public class All_Families extends AppCompatActivity {
                 All_Families.add(new Family("Robert et Mireille",n_member));
             }
             if (prefs.getBoolean("Aurelie_Annabel_switch",mC.getResources().getBoolean(R.bool.Aurelie_Annabel_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Aurelie_Annabel_n",mC.getResources().getString(R.string.Aurelie_Annabel_n_def)),"Aurelie et Annabel",mC);
-                All_Families.add(new Family("Aurelie et Annabel",n_member));
+                Integer n_member=to_int(prefs.getString("Aurelie_Annabel_n",mC.getResources().getString(R.string.Aurelie_Annabel_n_def)),"Aurélie et Annabel",mC);
+                All_Families.add(new Family("Aurélie et Annabel",n_member));
             }
             if (prefs.getBoolean("Raphael_Florence_switch",mC.getResources().getBoolean(R.bool.Raphael_Florence_switch_def)))  {
                 Integer n_member=to_int(prefs.getString("Raphael_Florence_n",mC.getResources().getString(R.string.Raphael_Florence_n_def)),"Raphael et Florence",mC);
@@ -79,13 +79,9 @@ public class All_Families extends AppCompatActivity {
                 All_Families.add(new Family("Sam et Perrine",n_member));
             }
             if (prefs.getBoolean("Simon_Anais_switch",mC.getResources().getBoolean(R.bool.Simon_Anais_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Simon_Anais_n",mC.getResources().getString(R.string.Simon_Anais_n_def)),"Simon et Anais",mC);
-                All_Families.add(new Family("Simon et Anais",n_member));
+                Integer n_member=to_int(prefs.getString("Simon_Anais_n",mC.getResources().getString(R.string.Simon_Anais_n_def)),"Simon et Anaïs",mC);
+                All_Families.add(new Family("Simon et Anaïs",n_member));
             }
-
-
-
-
 
 
         } catch (Exception e) {
@@ -93,6 +89,7 @@ public class All_Families extends AppCompatActivity {
         }
 
     }
+
 
 
 

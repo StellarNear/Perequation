@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Perequation</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Paramètres</string>
 
     <string name="Alloc_alime_def">Claude et Francoise</string>
 
@@ -18,4 +18,23 @@
     <string name="Nicolas_Delphine_n_def">4</string>
     <string name="Antony_Sophie_n_def">5</string>
     <string name="Christophe_Florence_n_def">5</string>
+
+
+    <string-array name="values_fam_names_alim">
+        <item>"Aucune"</item>
+        <item>"Jacques et Dominique"</item>
+        <item>"Jérémie et Marjorie"</item>
+        <item>"Bernard et Chantal"</item>
+        <item>"Christophe et Florence"</item>
+        <item>"Antony et Sophie"</item>
+        <item>"Nicolas et Delphine"</item>
+        <item>"Robert et Mireille"</item>
+        <item>"Aurélie et Annabel"</item>
+        <item>"Raphael et Florence"</item>
+        <item>"Claude et Francoise"</item>
+        <item>"Benjamin et Claire"</item>
+        <item>"Sam et Perrine"</item>
+        <item>"Simon et Anaïs"</item>
+    </string-array>
+
 </resources>
