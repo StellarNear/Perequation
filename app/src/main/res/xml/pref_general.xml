@@ -1,6 +1,7 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceCategory android:title="Paramètres généraux">
     <ListPreference
         android:key="Alloc_alime"
         android:title="Famille qui fournit le repas"
@@ -8,6 +9,25 @@
         android:entryValues="@array/values_fam_names_alim"
         android:summary="Valeur : %s"
         android:defaultValue="@string/Alloc_alime_def"/>
+    <stellarnear.perequation.EditTextPreference
+        android:defaultValue="@string/Money_alloc_alim_def"
+        android:key="Money_alloc_alim"
+        android:title="Argent alloué au repas"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="Valeur : %s€"/>
+
+     <ListPreference
+        android:defaultValue="@string/round_budget_def"
+        android:key="round_budget"
+        android:title="Arrondi pour le budget cadeau"
+        android:entries="@array/arrondi_budget"
+        android:entryValues="@array/arrondi_budget"
+        android:summary="Valeur : %s€"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Familles et population">
+
 
     <SwitchPreference
         android:defaultValue="@bool/Jacques_Dominique_switch_def"
@@ -173,11 +193,13 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="Valeur : %s"/>
+    </PreferenceCategory>
 
+    <PreferenceCategory android:title="Paramètre de test">
     <SwitchPreference
         android:defaultValue="@bool/Test_switch_def"
         android:key="Test_switch"
         android:title="Mode Test" />
 
-
+    </PreferenceCategory>
 </PreferenceScreen>

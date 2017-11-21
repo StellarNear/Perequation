@@ -36,7 +36,6 @@ public class Family extends AppCompatActivity implements Serializable {
     }
 
     public void setDonation(Integer donation) {
-        Log.d("STATE dona:", "ca:"+donation+this.donation);
         this.donation = donation;
     }
 

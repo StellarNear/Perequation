@@ -131,19 +131,32 @@ public class MainActivity extends AppCompatActivity {
 
             String money_per_indiv_txt = String.valueOf(money_per_indiv_ori);
 
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            Double money_repas = (double) to_int(prefs.getString("Money_alloc_alim",getResources().getString(R.string.Money_alloc_alim_def)),"Argent repas",getApplicationContext());
+            Integer arrondi_budget = to_int(prefs.getString("round_budget",getResources().getString(R.string.round_budget_def)),"Arrondi budget",getApplicationContext());
+
+
             Log.d("STATE txt",money_per_indiv_txt+"pos:"+money_per_indiv_txt.indexOf("."));
             String avant_virgule = money_per_indiv_txt.substring(money_per_indiv_txt.indexOf(".")-1);  // dans 154,78  ca donne 4,78
+            Log.d("STATE avant virg",avant_virgule);
+            if (arrondi_budget==5){
+                if (Double.parseDouble(avant_virgule) >=5.0) {
+                    money_per_indiv=Double.parseDouble(money_per_indiv_txt.replace(avant_virgule,"5"));
+                } else {
+                    money_per_indiv=Double.parseDouble(money_per_indiv_txt.replace(avant_virgule,"0"));
+                }
+            } else if (arrondi_budget==1){
 
-            if (Double.parseDouble(avant_virgule) >=5.0) {
-                money_per_indiv=Double.parseDouble(money_per_indiv_txt.replace(avant_virgule,"5"));
-            } else {
-                money_per_indiv=Double.parseDouble(money_per_indiv_txt.replace(avant_virgule,"0"));
+                money_per_indiv= (double) money_per_indiv_ori.intValue(); //arrondi à l'entier inferieur
+                Log.d("STATE budg1",String.valueOf(money_per_indiv));
             }
+
 
             Double rest = money_per_indiv_ori-money_per_indiv;
 
-            while (rest * all_pop < 100.0) {
-                money_per_indiv-=5.0;
+            while (rest * all_pop < money_repas) {
+                money_per_indiv-=arrondi_budget;
                 rest = money_per_indiv_ori-money_per_indiv;
             }
 

@@ -16,6 +16,9 @@ v beta :
 - retour vers saisie (page1) depuis chaque page
 - repli automatique de la saisie texte quand slide page1>page2
 - famille organisatrice du repas séléctionnée à partir d'une liste
+- paramètres en sections
+- argent min repas settable
+- arrondi budget cadeau settable
 ----------------------------------------------------------------------------------
 v alpha :
 - gestion de chaque famille indépendamment

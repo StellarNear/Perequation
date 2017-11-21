@@ -12,12 +12,14 @@
     <string name="Bernard_Chantal_n_def">2</string>
     <string name="Simon_Anais_n_def">2</string>
     <string name="Sam_Perrine_n_def">5</string>
-    <string name="Benjamin_Claire_n_def">5</string>
+    <string name="Benjamin_Claire_n_def">4</string>
     <string name="Raphael_Florence_n_def">4</string>
     <string name="Aurelie_Annabel_n_def">2</string>
     <string name="Nicolas_Delphine_n_def">4</string>
     <string name="Antony_Sophie_n_def">5</string>
     <string name="Christophe_Florence_n_def">5</string>
+    <string name="Money_alloc_alim_def">100</string>
+    <string name="round_budget_def">5</string>
 
 
     <string-array name="values_fam_names_alim">
@@ -35,6 +37,11 @@
         <item>"Benjamin et Claire"</item>
         <item>"Sam et Perrine"</item>
         <item>"Simon et Anaïs"</item>
+    </string-array>
+
+    <string-array name="arrondi_budget">
+        <item>"5"</item>
+        <item>"1"</item>
     </string-array>
 
 </resources>

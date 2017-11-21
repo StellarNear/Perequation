@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
@@ -102,6 +104,25 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
 
+
+
+
+            ListPreference itemList = (ListPreference)findPreference("Alloc_alime");
+            final Preference Money_alloc_alim = (Preference)findPreference("Money_alloc_alim");
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String fam_alloc = prefs.getString("Alloc_alime",getResources().getString(R.string.Alloc_alime_def));
+            if (fam_alloc.equals("Aucune")){Money_alloc_alim.setEnabled(false);}else {Money_alloc_alim.setEnabled(true);}
+
+            itemList.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    if(newValue.equals("Aucune"))
+                        Money_alloc_alim.setEnabled(false);
+                    else
+                        Money_alloc_alim.setEnabled(true);
+                    return true;
+                }
+            });
 
         }
 
