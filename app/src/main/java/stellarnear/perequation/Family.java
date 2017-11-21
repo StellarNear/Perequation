@@ -79,4 +79,8 @@ public class Family extends AppCompatActivity implements Serializable {
     public Map<String,Integer> getTransferts(){
         return transfert_map;
     }
+
+    public void clearTransfert() {
+        transfert_map.clear();
+    }
 }

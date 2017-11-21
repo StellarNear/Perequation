@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final All_Families all_families = new All_Families(getApplicationContext());
 
         //final LinearLayout mainLinear = (LinearLayout) findViewById(R.id.linearMain);
         final LinearLayout mainLinear1 = (LinearLayout) findViewById(R.id.linearMain1);
@@ -58,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ViewSwitcher panel = (ViewSwitcher) findViewById(R.id.panel);
 
-        buildPage1(mainLinear1,mainLinear2,all_families,panel);
 
+        final All_Families all_families = new All_Families(getApplicationContext());
         Family fam_alloc = test_alloc_alim(all_families,getApplicationContext());
         String msg="";
         if (fam_alloc==null) {
@@ -71,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
+
+
+
+        buildPage1(mainLinear1,mainLinear2,all_families,panel);
+
+
 
 
     }
@@ -184,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private void buildPage1(final LinearLayout mainLinear1, final LinearLayout mainLinear2, final All_Families all_families, final ViewSwitcher panel) {
+    private void buildPage1(final LinearLayout mainLinear1, final LinearLayout mainLinear2,final All_Families all_families, final ViewSwitcher panel) {
 
         final LinearLayout fam_title = new LinearLayout(this);
         fam_title.setOrientation(LinearLayout.HORIZONTAL);
@@ -945,6 +950,7 @@ public class MainActivity extends AppCompatActivity {
         List<Family> donateurs = new ArrayList<Family>();
         List<Family> receveurs = new ArrayList<Family>();
         for (Family fam : all_families.asList()){
+            fam.clearTransfert(); //en cas d'aller retour p2>p1
             if (fam.getExed()>0){
                 donateurs.add(fam);
             } else if (fam.getExed()<0){
