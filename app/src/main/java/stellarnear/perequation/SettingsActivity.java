@@ -154,6 +154,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             ImageView ivBackground = new ImageView(getActivity());
             ivBackground.setImageDrawable(getResources().getDrawable(R.mipmap.logo_near));
+            ivBackground.setPadding(0,300,0,0);
 
             window.addView(ivBackground);
 
@@ -163,11 +164,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             window.addView(page_info);
 
 
-            TextView Yfa_version = new TextView(getContext());
-            Yfa_version.setText("Version actuelle : "+getResources().getString(R.string.version));
-            Yfa_version.setTextSize(22);
+            TextView version = new TextView(getActivity());
+            String Version_txt = "Version actuelle :\n"+getResources().getString(R.string.version);
+            version.setSingleLine(false);
+            version.setText(Version_txt);
+            version.setTextSize(18);
 
-            page_info.addView(Yfa_version);
+            page_info.addView(version);
 
             ScrollView scroll_info = new ScrollView(getActivity());
             page_info.addView(scroll_info);
@@ -183,7 +186,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             final Button button = new Button(getActivity());
             button.setText("Patch notes");
             button.setTextSize(18);
-            //button.setElevation(10);
+            button.setGravity(Gravity.CENTER);
             page_info.addView(button);
 
             button.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +227,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                               @Override
                               public void run() {
 
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
             SharedPreferences.Editor editor = prefs.edit();
             editor.clear();
             editor.commit();

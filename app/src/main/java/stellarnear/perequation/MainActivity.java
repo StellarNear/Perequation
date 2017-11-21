@@ -214,13 +214,13 @@ public class MainActivity extends AppCompatActivity {
 
         fam_nam.setTextSize(18);
         fam_nam.setTextColor(Color.DKGRAY);
-        fam_nam.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        fam_nam.setGravity(Gravity.CENTER);
         fam_nam.setText("Famille");
         Colonne1Titre.addView(fam_nam);
 
         donation.setTextSize(18);
         donation.setTextColor(Color.DKGRAY);
-        donation.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        donation.setGravity(Gravity.CENTER);
         donation.setText("Donation");
         Colonne2Titre.addView(donation);
 
@@ -257,7 +257,6 @@ public class MainActivity extends AppCompatActivity {
             Button button_rand = new Button(getApplicationContext());
             button_rand.setText("Random");
             button_rand.setTextSize(18);
-            button_rand.setElevation(10);
             Colonne1Test.addView(button_rand);
 
             button_rand.setOnClickListener(new View.OnClickListener() {
@@ -280,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
 
             final EditText donation_all = new EditText(this);
             donation_all.setTextSize(25);
-            donation_all.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            donation_all.setGravity(Gravity.CENTER);
             donation_all.setTextColor(Color.DKGRAY);
             donation_all.setInputType(InputType.TYPE_CLASS_NUMBER);
             Colonne2Test.addView(donation_all);
@@ -288,7 +287,6 @@ public class MainActivity extends AppCompatActivity {
             Button button_all = new Button(getApplicationContext());
             button_all.setText("Set All");
             button_all.setTextSize(18);
-            button_all.setElevation(10);
             Colonne2Test.addView(button_all);
 
             button_all.setOnClickListener(new View.OnClickListener() {
@@ -357,14 +355,14 @@ public class MainActivity extends AppCompatActivity {
             TextView fam_txt = new TextView(this);
             fam_txt.setText(fam.getName() +" ("+fam.getPopulation()+")");
             fam_txt.setTextSize(20);
-            fam_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            fam_txt.setGravity(Gravity.CENTER);
             fam_lin.setHorizontalGravity(Gravity.CENTER_HORIZONTAL);
             fam_txt.setTextColor(Color.DKGRAY);
             Colonne1.addView(fam_txt);
 
             final EditText donation_picker = new EditText(this);
             donation_picker.setTextSize(30);
-            donation_picker.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            donation_picker.setGravity(Gravity.CENTER);
             donation_picker.setTextColor(Color.DKGRAY);
             donation_picker.setInputType(InputType.TYPE_CLASS_NUMBER);
             donation_picker.addTextChangedListener(new TextWatcher() {
@@ -389,7 +387,6 @@ public class MainActivity extends AppCompatActivity {
         button.setText("Enregisterer les donations");
         button.setTextSize(18);
         button.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_check_black_24dp,"white"),null);
-        button.setElevation(10);
         scroll_fams.addView(button);
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -429,7 +426,7 @@ public class MainActivity extends AppCompatActivity {
         if (all_families.isAlim()) {result_txt+=", Repas : "+all_families.getAlim()+"€";}
         result.setTextSize(18);
         result.setSingleLine(false);
-        result.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        result.setGravity(Gravity.CENTER);
         result.setTextColor(Color.DKGRAY);
         result.setText(result_txt);
 
@@ -472,19 +469,19 @@ public class MainActivity extends AppCompatActivity {
 
         fam_nam.setTextSize(20);
         fam_nam.setTextColor(Color.DKGRAY);
-        fam_nam.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        fam_nam.setGravity(Gravity.CENTER);
         fam_nam.setText("     Famille     ");
         Colonne1Titre.addView(fam_nam);
 
         donation.setTextSize(20);
         donation.setTextColor(Color.DKGRAY);
-        donation.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        donation.setGravity(Gravity.CENTER);
         donation.setText("Donation");
         Colonne2Titre.addView(donation);
 
         ecart.setTextSize(20);
         ecart.setTextColor(Color.DKGRAY);
-        ecart.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        ecart.setGravity(Gravity.CENTER);
         ecart.setText("Excès");
         ecart.setSingleLine(false);
         Colonne3Titre.addView(ecart);
@@ -493,6 +490,13 @@ public class MainActivity extends AppCompatActivity {
         h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
         h_sep.setBackgroundColor(Color.GRAY);
         mainLinear.addView(h_sep);
+
+        ScrollView scrolling_fams = new ScrollView(this);
+        mainLinear.addView(scrolling_fams);
+        LinearLayout scroll_fams = new LinearLayout(this);
+        scroll_fams.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+        scroll_fams.setOrientation(LinearLayout.VERTICAL);
+        scrolling_fams.addView(scroll_fams);
 
         for (final Family fam : all_families.asList()){
             final LinearLayout fam_lin = new LinearLayout(this);
@@ -505,8 +509,8 @@ public class MainActivity extends AppCompatActivity {
             View h_sep2 = new View(this);
             h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
             h_sep2.setBackgroundColor(Color.GRAY);
-            mainLinear.addView(h_sep2);
-            mainLinear.addView(fam_lin);
+            scroll_fams.addView(h_sep2);
+            scroll_fams.addView(fam_lin);
 
 
             fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
@@ -535,14 +539,14 @@ public class MainActivity extends AppCompatActivity {
             TextView fam_txt = new TextView(this);
             fam_txt.setText(fam.getName()+" ("+fam.getPopulation()+")");
             fam_txt.setTextSize(16);
-            fam_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            fam_txt.setGravity(Gravity.CENTER);
             fam_txt.setTextColor(Color.DKGRAY);
             Colonne1.addView(fam_txt);
 
             TextView fam_don = new TextView(this);
             fam_don.setText(String.valueOf(fam.getDonation())+"€");
             fam_don.setTextSize(20);
-            fam_don.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            fam_don.setGravity(Gravity.CENTER);
 
             fam_don.setTextColor(Color.DKGRAY);
             Colonne2.addView(fam_don);
@@ -550,7 +554,7 @@ public class MainActivity extends AppCompatActivity {
             TextView fam_exed_txt = new TextView(this);
             fam_exed_txt.setText(fam.getExed()+"€");
             fam_exed_txt.setTextSize(20);
-            fam_exed_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            fam_exed_txt.setGravity(Gravity.CENTER);
             fam_exed_txt.setTextColor(Color.DKGRAY);
             Colonne3.addView(fam_exed_txt);
 
@@ -560,8 +564,7 @@ public class MainActivity extends AppCompatActivity {
         buttonT.setText("Calculer les transferts");
         buttonT.setTextSize(18);
         buttonT.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_swap_vert_black_24dp,"white"),null);
-        buttonT.setElevation(10);
-        mainLinear.addView(buttonT);
+        scroll_fams.addView(buttonT);
 
         buttonT.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -577,8 +580,7 @@ public class MainActivity extends AppCompatActivity {
         buttonBack.setText("Retour à la saisie des dons");
         buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
         buttonBack.setTextSize(18);
-        buttonBack.setElevation(10);
-        mainLinear.addView(buttonBack);
+        scroll_fams.addView(buttonBack);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -614,7 +616,7 @@ public class MainActivity extends AppCompatActivity {
         if (all_families.isAlim()) {result_txt+=", Repas : "+all_families.getAlim()+"€";}
         result.setTextSize(18);
         result.setSingleLine(false);
-        result.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        result.setGravity(Gravity.CENTER);
         result.setTextColor(Color.DKGRAY);
         result.setText(result_txt);
 
@@ -657,19 +659,19 @@ public class MainActivity extends AppCompatActivity {
 
         fam_nam.setTextSize(20);
         fam_nam.setTextColor(Color.DKGRAY);
-        fam_nam.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        fam_nam.setGravity(Gravity.CENTER);
         fam_nam.setText("     Famille     ");
         Colonne1Titre.addView(fam_nam);
 
         donation.setTextSize(20);
         donation.setTextColor(Color.DKGRAY);
-        donation.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        donation.setGravity(Gravity.CENTER);
         donation.setText("Donation");
         Colonne2Titre.addView(donation);
 
         ecart.setTextSize(20);
         ecart.setTextColor(Color.DKGRAY);
-        ecart.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        ecart.setGravity(Gravity.CENTER);
         ecart.setText("Excès");
         ecart.setSingleLine(false);
         Colonne3Titre.addView(ecart);
@@ -678,6 +680,13 @@ public class MainActivity extends AppCompatActivity {
         h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
         h_sep.setBackgroundColor(Color.GRAY);
         mainLinear.addView(h_sep);
+
+        ScrollView scrolling_fams = new ScrollView(this);
+        mainLinear.addView(scrolling_fams);
+        LinearLayout scroll_fams = new LinearLayout(this);
+        scroll_fams.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+        scroll_fams.setOrientation(LinearLayout.VERTICAL);
+        scrolling_fams.addView(scroll_fams);
 
         for (final Family fam : all_families.asList()){
             final LinearLayout fam_lin = new LinearLayout(this);
@@ -690,8 +699,8 @@ public class MainActivity extends AppCompatActivity {
             View h_sep2 = new View(this);
             h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
             h_sep2.setBackgroundColor(Color.GRAY);
-            mainLinear.addView(h_sep2);
-            mainLinear.addView(fam_lin);
+            scroll_fams.addView(h_sep2);
+            scroll_fams.addView(fam_lin);
 
 
             fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
@@ -720,14 +729,14 @@ public class MainActivity extends AppCompatActivity {
             TextView fam_txt = new TextView(this);
             fam_txt.setText(fam.getName()+" ("+fam.getPopulation()+")");
             fam_txt.setTextSize(16);
-            fam_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            fam_txt.setGravity(Gravity.CENTER);
             fam_txt.setTextColor(Color.DKGRAY);
             Colonne1.addView(fam_txt);
 
             TextView fam_don = new TextView(this);
             fam_don.setText(String.valueOf(fam.getDonation())+"€");
             fam_don.setTextSize(20);
-            fam_don.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            fam_don.setGravity(Gravity.CENTER);
 
             fam_don.setTextColor(Color.DKGRAY);
             Colonne2.addView(fam_don);
@@ -735,7 +744,7 @@ public class MainActivity extends AppCompatActivity {
             TextView fam_exed_txt = new TextView(this);
             fam_exed_txt.setText(fam.getExed()+"€");
             fam_exed_txt.setTextSize(20);
-            fam_exed_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            fam_exed_txt.setGravity(Gravity.CENTER);
             fam_exed_txt.setTextColor(Color.DKGRAY);
             Colonne3.addView(fam_exed_txt);
 
@@ -745,8 +754,7 @@ public class MainActivity extends AppCompatActivity {
         buttonT_display.setText("Afficher les transferts");
         buttonT_display.setTextSize(18);
         buttonT_display.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_receipt_black_24dp,"white"),null);
-        buttonT_display.setElevation(10);
-        mainLinear.addView(buttonT_display);
+        scroll_fams.addView(buttonT_display);
 
         buttonT_display.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -760,9 +768,8 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonBack = new Button(getApplicationContext());
         buttonBack.setText("Retour à la saisie des dons");
         buttonBack.setTextSize(18);
-        buttonBack.setElevation(10);
         buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
-        mainLinear.addView(buttonBack);
+        scroll_fams.addView(buttonBack);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -779,7 +786,7 @@ public class MainActivity extends AppCompatActivity {
         if (all_families.isAlim()) {result_txt+=", Repas : "+all_families.getAlim()+"€";}
         result.setTextSize(18);
         result.setSingleLine(false);
-        result.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        result.setGravity(Gravity.CENTER);
         result.setTextColor(Color.DKGRAY);
         result.setText(result_txt);
 
@@ -822,19 +829,19 @@ public class MainActivity extends AppCompatActivity {
 
         fam_nam.setTextSize(20);
         fam_nam.setTextColor(Color.DKGRAY);
-        fam_nam.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        fam_nam.setGravity(Gravity.CENTER);
         fam_nam.setText("Donateur");
         Colonne1Titre.addView(fam_nam);
 
         donation.setTextSize(20);
         donation.setTextColor(Color.DKGRAY);
-        donation.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        donation.setGravity(Gravity.CENTER);
         donation.setText(" à ");
         Colonne2Titre.addView(donation);
 
         ecart.setTextSize(20);
         ecart.setTextColor(Color.DKGRAY);
-        ecart.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        ecart.setGravity(Gravity.CENTER);
         ecart.setText("Receveur");
         ecart.setSingleLine(false);
         Colonne3Titre.addView(ecart);
@@ -897,14 +904,14 @@ public class MainActivity extends AppCompatActivity {
                 TextView fam_txt = new TextView(this);
                 fam_txt.setText(fam.getName());
                 fam_txt.setTextSize(15);
-                fam_txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                fam_txt.setGravity(Gravity.CENTER);
                 fam_txt.setTextColor(Color.DKGRAY);
                 Colonne1.addView(fam_txt);
 
                 TextView fleche = new TextView(this);
                 fleche.setText(">");
                 fleche.setTextSize(15);
-                fleche.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                fleche.setGravity(Gravity.CENTER);;
 
                 fleche.setTextColor(Color.DKGRAY);
                 Colonne2.addView(fleche);
@@ -913,7 +920,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView fam_rece = new TextView(this);
                 fam_rece.setText(transfert.getKey()+" ("+transfert.getValue()+"€)");
                 fam_rece.setTextSize(15);
-                fam_rece.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                fam_rece.setGravity(Gravity.CENTER);
                 fam_rece.setTextColor(Color.DKGRAY);
                 Colonne3.addView(fam_rece);
             }
@@ -923,9 +930,8 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonBack = new Button(getApplicationContext());
         buttonBack.setText("Retour à la saisie des dons");
         buttonBack.setTextSize(18);
-        buttonBack.setElevation(10);
         buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
-        mainLinear.addView(buttonBack);
+        scroll_fams.addView(buttonBack);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -949,17 +955,22 @@ public class MainActivity extends AppCompatActivity {
         for (Family fam_don : donateurs){
             Log.d("STATE dona", "---Donneur---:"+fam_don.getName());
             Integer dons = fam_don.getExed();
+            Boolean all_rec_all_ok=false;
+            while (dons > 1 && !all_rec_all_ok) {
+                all_rec_all_ok=true;
+                for (Family fam_rec : receveurs){
+                    if (Math.abs(fam_rec.getExed())>1){all_rec_all_ok=false;}   //tant que quelqu'un a besoin d'argent
+                }
 
-            while (dons > 1 ) {
                 Log.d("STATE dons","Famille :"+fam_don.getName()+" Dons restant :"+String.valueOf(dons));
                 for (Family fam_rec : receveurs){
                     if (dons == 0 ){continue;} //plus d'argent à donner
                     Log.d("STATE dons",String.valueOf(dons));
                     Log.d("STATE rec",fam_rec.getName());
                     Log.d("STATE rec_ex",String.valueOf(fam_rec.getExed()));
-                    if(Math.abs(fam_rec.getExed())>0){
+                    if(Math.abs(fam_rec.getExed())>1){
                         Log.d("STATE passage",fam_rec.getName()+" encore dans le besoin");
-                        if (dons > Math.abs(fam_rec.getExed())){
+                        if (dons >= Math.abs(fam_rec.getExed())){
                             fam_don.addTransfert(fam_rec.getName(),Math.abs(fam_rec.getExed()));
                             dons -= Math.abs(fam_rec.getExed());
                             fam_don.setExed(dons);
@@ -968,7 +979,7 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             fam_don.addTransfert(fam_rec.getName(),dons);
                             fam_rec.setExed(fam_rec.getExed()+dons);
-                            dons =0;
+                            dons = 0;
                             fam_don.setExed(dons);
                             Log.d("STATE passage","Le dons est inferieur");
                         }

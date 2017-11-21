@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"beta"</string>
+    <string name="version">"Beta (android 4.1+ JellyBean)"</string>
     <string name="basic_infos">"Cette application est développée par le dernier Chatron.
 Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
     </string>
@@ -8,7 +8,7 @@ Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
 <string name="patch_list">"----------------------------------------------------------------------------------
 V 1.0 -soon-
 ----------------------------------------------------------------------------------
-v beta :
+v Beta :
 - développement pour être compatible android 4.1+ (JellyBean)
 - mode test ajouté pour random ou set all toutes les familles d'un coup
 - ajout des boutons et icônes (filtrage couleur blanc)
@@ -19,8 +19,9 @@ v beta :
 - paramètres en sections
 - argent min repas settable
 - arrondi budget cadeau settable
+- fix petit écran page 2 scrolling avec boutons aussi
 ----------------------------------------------------------------------------------
-v alpha :
+v Alpha :
 - gestion de chaque famille indépendamment
 - section paramètre pour gestion de l'effectif de chaque famille
 - construction automatique de liste de toutes les familles
