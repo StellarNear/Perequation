@@ -15,7 +15,7 @@
     <bool name="Nicolas_Delphine_switch_def">true</bool>
     <bool name="Antony_Sophie_switch_def">true</bool>
     <bool name="Christophe_Florence_switch_def">true</bool>
-    <bool name="Test_switch_def">true</bool>
+    <bool name="Test_switch_def">false</bool>
 
 
 </resources>

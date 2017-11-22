@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"Beta (android 4.1+ JellyBean)"</string>
+    <string name="version">"v1.0 (android 4.1+ JellyBean)"</string>
     <string name="basic_infos">"Cette application est développée par le dernier Chatron.
 Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
-V 1.0 -soon-
+v1.0 : Tag de la version stable compatible JellyBean
 ----------------------------------------------------------------------------------
-v Beta :
+vBeta :
 - développement pour être compatible android 4.1+ (JellyBean)
 - mode test ajouté pour random ou set all toutes les familles d'un coup
 - ajout des boutons et icônes (filtrage couleur blanc)
@@ -23,7 +23,7 @@ v Beta :
 - fix multi retour page 2 > page 1
 - added color backgrounds to layouts
 ----------------------------------------------------------------------------------
-v Alpha :
+vAlpha :
 - gestion de chaque famille indépendamment
 - section paramètre pour gestion de l'effectif de chaque famille
 - construction automatique de liste de toutes les familles
