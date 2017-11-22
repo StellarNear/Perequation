@@ -71,13 +71,7 @@ public class MainActivity extends AppCompatActivity {
         toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL,0,0);
         toast.show();
 
-
-
         buildPage1(mainLinear1,mainLinear2,all_families,panel);
-
-
-
-
     }
 
     private void setAnimPanel(ViewSwitcher panel, String mode) {
@@ -189,14 +183,28 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    private void addHsep(LinearLayout lay,int color, int h) {
+        View h_sep = new View(this);
+        h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,h));
+        h_sep.setBackgroundColor(color);
+        lay.addView(h_sep);
+    }
+
     private void buildPage1(final LinearLayout mainLinear1, final LinearLayout mainLinear2,final All_Families all_families, final ViewSwitcher panel) {
+        addHsep(mainLinear1,Color.DKGRAY,4);
 
         final LinearLayout fam_title = new LinearLayout(this);
         fam_title.setOrientation(LinearLayout.HORIZONTAL);
         fam_title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
         fam_title.setWeightSum(2);
         fam_title.setGravity(Gravity.CENTER_VERTICAL);
+        GradientDrawable fam_title_gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{Color.WHITE, Color.LTGRAY});
+        fam_title_gd.setCornerRadius(0f);
+        fam_title.setBackground(fam_title_gd);
         mainLinear1.addView(fam_title);
+        addHsep(mainLinear1,Color.DKGRAY,4);
 
         LinearLayout Colonne1Titre = new LinearLayout(this);
         Colonne1Titre.setOrientation(LinearLayout.VERTICAL);
@@ -229,11 +237,6 @@ public class MainActivity extends AppCompatActivity {
         donation.setText("Donation");
         Colonne2Titre.addView(donation);
 
-
-        View h_sep = new View(this);
-        h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-        h_sep.setBackgroundColor(Color.GRAY);
-        mainLinear1.addView(h_sep);
 
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -332,10 +335,7 @@ public class MainActivity extends AppCompatActivity {
             gd.setCornerRadius(0f);
             fam_lin.setBackground(gd);
             fam_lin.setOrientation(LinearLayout.HORIZONTAL);
-            View h_sep2 = new View(this);
-            h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-            h_sep2.setBackgroundColor(Color.GRAY);
-            scroll_fams.addView(h_sep2);
+
             scroll_fams.addView(fam_lin);
 
 
@@ -386,6 +386,7 @@ public class MainActivity extends AppCompatActivity {
 
             Colonne2.addView(donation_picker);
 
+            addHsep(scroll_fams,Color.GRAY,4);
         }
 
         final Button button = new Button(getApplicationContext());
@@ -408,6 +409,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     private void switchPanel(ViewSwitcher panel,String mode) {
         if(mode.equals("aller")){
             setAnimPanel(panel,"aller");
@@ -426,28 +429,37 @@ public class MainActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         mainLinear.removeAllViews();
+        addHsep(mainLinear,Color.DKGRAY,4);
+
         TextView result = new TextView(this);
         String result_txt="Total dons : "+all_families.getAllMoney()+"€, Population : "+ all_families.getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", money_per_indiv)+"€";
         if (all_families.isAlim()) {result_txt+=", Repas : "+all_families.getAlim()+"€";}
         result.setTextSize(18);
         result.setSingleLine(false);
+        GradientDrawable gd_res = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{Color.WHITE, Color.parseColor("#99ddff")});
+        gd_res.setCornerRadius(0f);
+        result.setBackground(gd_res);
         result.setGravity(Gravity.CENTER);
         result.setTextColor(Color.DKGRAY);
         result.setText(result_txt);
 
         mainLinear.addView(result);
 
-
-        View h_sep0 = new View(this);
-        h_sep0.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,8));
-        h_sep0.setBackgroundColor(Color.GRAY);
-        mainLinear.addView(h_sep0);
+        addHsep(mainLinear,Color.DKGRAY,4);
 
         final LinearLayout fam_title = new LinearLayout(this);
         fam_title.setOrientation(LinearLayout.HORIZONTAL);
         fam_title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
         fam_title.setWeightSum(3);
         fam_title.setGravity(Gravity.CENTER_VERTICAL);
+        GradientDrawable fam_title_gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{Color.WHITE, Color.LTGRAY});
+        fam_title_gd.setCornerRadius(0f);
+        fam_title.setBackground(fam_title_gd);
+
         mainLinear.addView(fam_title);
 
         LinearLayout Colonne1Titre = new LinearLayout(this);
@@ -491,10 +503,7 @@ public class MainActivity extends AppCompatActivity {
         ecart.setSingleLine(false);
         Colonne3Titre.addView(ecart);
 
-        View h_sep = new View(this);
-        h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-        h_sep.setBackgroundColor(Color.GRAY);
-        mainLinear.addView(h_sep);
+        addHsep(mainLinear,Color.DKGRAY,4);
 
         ScrollView scrolling_fams = new ScrollView(this);
         mainLinear.addView(scrolling_fams);
@@ -511,16 +520,11 @@ public class MainActivity extends AppCompatActivity {
             gd.setCornerRadius(0f);
             fam_lin.setBackground(gd);
             fam_lin.setOrientation(LinearLayout.HORIZONTAL);
-            View h_sep2 = new View(this);
-            h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-            h_sep2.setBackgroundColor(Color.GRAY);
-            scroll_fams.addView(h_sep2);
-            scroll_fams.addView(fam_lin);
-
 
             fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
             fam_lin.setWeightSum(3);
             fam_lin.setGravity(Gravity.CENTER_VERTICAL);
+            scroll_fams.addView(fam_lin);
 
             LinearLayout Colonne1 = new LinearLayout(this);
             Colonne1.setOrientation(LinearLayout.VERTICAL);
@@ -562,6 +566,8 @@ public class MainActivity extends AppCompatActivity {
             fam_exed_txt.setGravity(Gravity.CENTER);
             fam_exed_txt.setTextColor(Color.DKGRAY);
             Colonne3.addView(fam_exed_txt);
+
+            addHsep(scroll_fams,Color.GRAY,4);
 
         }
 
@@ -616,28 +622,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void buildPage2_2(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv, final ViewSwitcher panel) {
 
+        addHsep(mainLinear,Color.DKGRAY,4);
+
         TextView result = new TextView(this);
         String result_txt="Total dons : "+all_families.getAllMoney()+"€, Population : "+ all_families.getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", money_per_indiv)+"€";
         if (all_families.isAlim()) {result_txt+=", Repas : "+all_families.getAlim()+"€";}
         result.setTextSize(18);
         result.setSingleLine(false);
+        GradientDrawable gd_res = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{Color.WHITE, Color.parseColor("#99ddff")});
+        gd_res.setCornerRadius(0f);
+        result.setBackground(gd_res);
         result.setGravity(Gravity.CENTER);
         result.setTextColor(Color.DKGRAY);
         result.setText(result_txt);
 
         mainLinear.addView(result);
-
-
-        View h_sep0 = new View(this);
-        h_sep0.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,8));
-        h_sep0.setBackgroundColor(Color.GRAY);
-        mainLinear.addView(h_sep0);
+        addHsep(mainLinear,Color.DKGRAY,4);
 
         final LinearLayout fam_title = new LinearLayout(this);
         fam_title.setOrientation(LinearLayout.HORIZONTAL);
         fam_title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
         fam_title.setWeightSum(3);
         fam_title.setGravity(Gravity.CENTER_VERTICAL);
+        GradientDrawable fam_title_gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{Color.WHITE, Color.LTGRAY});
+        fam_title_gd.setCornerRadius(0f);
+        fam_title.setBackground(fam_title_gd);
         mainLinear.addView(fam_title);
 
         LinearLayout Colonne1Titre = new LinearLayout(this);
@@ -681,10 +694,7 @@ public class MainActivity extends AppCompatActivity {
         ecart.setSingleLine(false);
         Colonne3Titre.addView(ecart);
 
-        View h_sep = new View(this);
-        h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-        h_sep.setBackgroundColor(Color.GRAY);
-        mainLinear.addView(h_sep);
+        addHsep(mainLinear,Color.DKGRAY,4);
 
         ScrollView scrolling_fams = new ScrollView(this);
         mainLinear.addView(scrolling_fams);
@@ -701,10 +711,6 @@ public class MainActivity extends AppCompatActivity {
             gd.setCornerRadius(0f);
             fam_lin.setBackground(gd);
             fam_lin.setOrientation(LinearLayout.HORIZONTAL);
-            View h_sep2 = new View(this);
-            h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-            h_sep2.setBackgroundColor(Color.GRAY);
-            scroll_fams.addView(h_sep2);
             scroll_fams.addView(fam_lin);
 
 
@@ -753,6 +759,8 @@ public class MainActivity extends AppCompatActivity {
             fam_exed_txt.setTextColor(Color.DKGRAY);
             Colonne3.addView(fam_exed_txt);
 
+            addHsep(scroll_fams,Color.GRAY,4);
+
         }
 
         final Button buttonT_display = new Button(getApplicationContext());
@@ -785,76 +793,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void buildPage2_3(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv, final ViewSwitcher panel) {
+        addHsep(mainLinear,Color.DKGRAY,4);
 
         TextView result = new TextView(this);
         String result_txt="Total dons : "+all_families.getAllMoney()+"€, Population : "+ all_families.getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", money_per_indiv)+"€";
         if (all_families.isAlim()) {result_txt+=", Repas : "+all_families.getAlim()+"€";}
         result.setTextSize(18);
         result.setSingleLine(false);
+        GradientDrawable gd_res = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{Color.WHITE, Color.parseColor("#99ddff")});
+        gd_res.setCornerRadius(0f);
+        result.setBackground(gd_res);
         result.setGravity(Gravity.CENTER);
         result.setTextColor(Color.DKGRAY);
         result.setText(result_txt);
 
         mainLinear.addView(result);
 
+        addHsep(mainLinear,Color.DKGRAY,4);
 
-        View h_sep0 = new View(this);
-        h_sep0.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,8));
-        h_sep0.setBackgroundColor(Color.GRAY);
-        mainLinear.addView(h_sep0);
+        TextView transfert_title=new TextView(this);
+        transfert_title.setText("Transferts de fonds");
+        transfert_title.setTextSize(20);
+        transfert_title.setGravity(Gravity.CENTER);
+        GradientDrawable fam_title_gd = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{Color.WHITE, Color.LTGRAY});
+        fam_title_gd.setCornerRadius(0f);
+        transfert_title.setBackground(fam_title_gd);
+        transfert_title.setTextColor(Color.DKGRAY);
+        mainLinear.addView(transfert_title);
 
-        final LinearLayout fam_title = new LinearLayout(this);
-        fam_title.setOrientation(LinearLayout.HORIZONTAL);
-        fam_title.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
-        fam_title.setWeightSum(3);
-        fam_title.setGravity(Gravity.CENTER_VERTICAL);
-        mainLinear.addView(fam_title);
-
-        LinearLayout Colonne1Titre = new LinearLayout(this);
-        Colonne1Titre.setOrientation(LinearLayout.VERTICAL);
-        Colonne1Titre.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-        Colonne1Titre.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
-        LinearLayout Colonne2Titre = new LinearLayout(this);
-        Colonne2Titre.setOrientation(LinearLayout.VERTICAL);
-        Colonne2Titre.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
-        Colonne2Titre.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-        LinearLayout Colonne3Titre = new LinearLayout(this);
-        Colonne3Titre.setOrientation(LinearLayout.VERTICAL);
-        Colonne3Titre.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT,1));
-        Colonne3Titre.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL);
-
-
-        fam_title.addView(Colonne1Titre);
-        fam_title.addView(Colonne2Titre);
-        fam_title.addView(Colonne3Titre);
-
-        TextView fam_nam=new TextView(this);
-        TextView donation=new TextView(this);
-        TextView ecart=new TextView(this);
-
-        fam_nam.setTextSize(20);
-        fam_nam.setTextColor(Color.DKGRAY);
-        fam_nam.setGravity(Gravity.CENTER);
-        fam_nam.setText("Donateur");
-        Colonne1Titre.addView(fam_nam);
-
-        donation.setTextSize(20);
-        donation.setTextColor(Color.DKGRAY);
-        donation.setGravity(Gravity.CENTER);
-        donation.setText(" à ");
-        Colonne2Titre.addView(donation);
-
-        ecart.setTextSize(20);
-        ecart.setTextColor(Color.DKGRAY);
-        ecart.setGravity(Gravity.CENTER);
-        ecart.setText("Receveur");
-        ecart.setSingleLine(false);
-        Colonne3Titre.addView(ecart);
-
-        View h_sep = new View(this);
-        h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,4));
-        h_sep.setBackgroundColor(Color.GRAY);
-        mainLinear.addView(h_sep);
+        addHsep(mainLinear,Color.DKGRAY,4);
 
         ScrollView scrolling_fams = new ScrollView(this);
         mainLinear.addView(scrolling_fams);
@@ -867,6 +838,19 @@ public class MainActivity extends AppCompatActivity {
             if (fam.getTransferts().isEmpty()) {
                 continue;
             }  //si elle a rien donné
+
+            TextView fam_don_name = new TextView(this);
+            fam_don_name.setText(fam.getName());
+            fam_don_name.setTextSize(18);
+            fam_don_name.setGravity(Gravity.CENTER);
+            fam_don_name.setTextColor(Color.DKGRAY);
+            GradientDrawable gd_dona = new GradientDrawable(
+                    GradientDrawable.Orientation.BL_TR,
+                    new int[]{ Color.parseColor("#ffe866"),Color.WHITE});   //fond doré
+            gd_dona.setCornerRadius(0f);
+            fam_don_name.setBackground(gd_dona);
+
+            scroll_fams.addView(fam_don_name);
 
             final LinearLayout fam_lin = new LinearLayout(this);
             GradientDrawable gd = new GradientDrawable(
@@ -885,6 +869,8 @@ public class MainActivity extends AppCompatActivity {
             fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             fam_lin.setWeightSum(3);
             fam_lin.setGravity(Gravity.CENTER_VERTICAL);
+
+
 
             LinearLayout Colonne1 = new LinearLayout(this);
             Colonne1.setOrientation(LinearLayout.VERTICAL);
@@ -929,6 +915,8 @@ public class MainActivity extends AppCompatActivity {
                 fam_rece.setTextColor(Color.DKGRAY);
                 Colonne3.addView(fam_rece);
             }
+
+            addHsep(scroll_fams,Color.GRAY,4);
 
         }
 
