@@ -514,9 +514,15 @@ public class MainActivity extends AppCompatActivity {
 
         for (final Family fam : all_families.asList()){
             final LinearLayout fam_lin = new LinearLayout(this);
+
+            int start_color=Color.WHITE;
+
+            if (fam.getExed()>10) { start_color=Color.parseColor("#A9F5E1");}
+            if (fam.getExed()<-10)  { start_color=Color.parseColor("#F5A9A9");}
+
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.BL_TR,
-                    new int[] {Color.WHITE,Color.LTGRAY});
+                    new int[] {start_color,Color.LTGRAY});
             gd.setCornerRadius(0f);
             fam_lin.setBackground(gd);
             fam_lin.setOrientation(LinearLayout.HORIZONTAL);
