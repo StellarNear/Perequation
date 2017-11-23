@@ -225,13 +225,13 @@ public class MainActivity extends AppCompatActivity {
         TextView donation=new TextView(this);
 
 
-        fam_nam.setTextSize(18);
+        fam_nam.setTextSize(20);
         fam_nam.setTextColor(Color.DKGRAY);
         fam_nam.setGravity(Gravity.CENTER);
         fam_nam.setText("Famille");
         Colonne1Titre.addView(fam_nam);
 
-        donation.setTextSize(18);
+        donation.setTextSize(20);
         donation.setTextColor(Color.DKGRAY);
         donation.setGravity(Gravity.CENTER);
         donation.setText("Donation");
@@ -515,14 +515,14 @@ public class MainActivity extends AppCompatActivity {
         for (final Family fam : all_families.asList()){
             final LinearLayout fam_lin = new LinearLayout(this);
 
-            int start_color=Color.WHITE;
+            int end_color=Color.LTGRAY;
 
-            if (fam.getExed()>10) { start_color=Color.parseColor("#A9F5E1");}
-            if (fam.getExed()<-10)  { start_color=Color.parseColor("#F5A9A9");}
+            if (fam.getExed()>1) { end_color=Color.parseColor("#A9F5E1");}
+            if (fam.getExed()<-1)  { end_color=Color.parseColor("#F5A9A9");}
 
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.BL_TR,
-                    new int[] {start_color,Color.LTGRAY});
+                    new int[] {Color.WHITE,end_color});
             gd.setCornerRadius(0f);
             fam_lin.setBackground(gd);
             fam_lin.setOrientation(LinearLayout.HORIZONTAL);
@@ -808,7 +808,7 @@ public class MainActivity extends AppCompatActivity {
         result.setSingleLine(false);
         GradientDrawable gd_res = new GradientDrawable(
                 GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{Color.WHITE, Color.parseColor("#99ddff")});
+                new int[]{Color.WHITE, Color.parseColor("#99ddff")}); //bleu
         gd_res.setCornerRadius(0f);
         result.setBackground(gd_res);
         result.setGravity(Gravity.CENTER);
@@ -851,8 +851,8 @@ public class MainActivity extends AppCompatActivity {
             fam_don_name.setGravity(Gravity.CENTER);
             fam_don_name.setTextColor(Color.DKGRAY);
             GradientDrawable gd_dona = new GradientDrawable(
-                    GradientDrawable.Orientation.BL_TR,
-                    new int[]{ Color.parseColor("#ffe866"),Color.WHITE});   //fond doré
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    new int[]{ Color.WHITE,Color.LTGRAY});   //fond doré Color.parseColor("#ffe866")
             gd_dona.setCornerRadius(0f);
             fam_don_name.setBackground(gd_dona);
 
