@@ -390,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final Button button = new Button(getApplicationContext());
-        button.setText("Enregisterer les donations");
+        button.setText("Enregistrer les donations");
         button.setTextSize(18);
         button.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_check_black_24dp,"white"),null);
         scroll_fams.addView(button);
@@ -517,7 +517,7 @@ public class MainActivity extends AppCompatActivity {
 
             int end_color=Color.LTGRAY;
 
-            if (fam.getExed()>1) { end_color=Color.parseColor("#A9F5E1");}
+            if (fam.getExed()>1) { end_color=Color.parseColor("#48eabf");}
             if (fam.getExed()<-1)  { end_color=Color.parseColor("#F5A9A9");}
 
             GradientDrawable gd = new GradientDrawable(
