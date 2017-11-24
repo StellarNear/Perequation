@@ -426,8 +426,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void buildPage2(final LinearLayout mainLinear, final All_Families all_families, final double money_per_indiv, final ViewSwitcher panel) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+        try {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e){}
+
         mainLinear.removeAllViews();
         addHsep(mainLinear,Color.DKGRAY,4);
 
