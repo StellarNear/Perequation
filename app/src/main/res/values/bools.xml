@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <bool name="chatron_jeremie_switch_def">true</bool>
-    <bool name="Jacques_Dominique_switch_def">true</bool>
-    <bool name="Jeremie_Marjorie_switch_def">true</bool>
-    <bool name="Claude_Francoise_switch_def">true</bool>
-    <bool name="Robert_Mireille_switch_def">true</bool>
-    <bool name="Bernard_Chantal_switch_def">true</bool>
-    <bool name="Simon_Anais_switch_def">true</bool>
-    <bool name="Sam_Perrine_switch_def">true</bool>
-    <bool name="Benjamin_Claire_switch_def">true</bool>
-    <bool name="Raphael_Florence_switch_def">true</bool>
-    <bool name="Aurelie_Annabel_switch_def">true</bool>
-    <bool name="Nicolas_Delphine_switch_def">true</bool>
-    <bool name="Antony_Sophie_switch_def">true</bool>
-    <bool name="Christophe_Florence_switch_def">true</bool>
     <bool name="Test_switch_def">false</bool>
-
 
 </resources>
