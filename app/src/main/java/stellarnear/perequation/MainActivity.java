@@ -3,9 +3,11 @@ package stellarnear.perequation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -16,8 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ImageSpan;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -265,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
             Button button_rand = new Button(getApplicationContext());
             button_rand.setText("Random");
             button_rand.setTextSize(18);
+            button_rand.setTextColor(Color.WHITE);
             Colonne1Test.addView(button_rand);
 
             button_rand.setOnClickListener(new View.OnClickListener() {
@@ -294,6 +301,7 @@ public class MainActivity extends AppCompatActivity {
 
             Button button_all = new Button(getApplicationContext());
             button_all.setText("Set All");
+            button_all.setTextColor(Color.WHITE);
             button_all.setTextSize(18);
             Colonne2Test.addView(button_all);
 
@@ -392,6 +400,7 @@ public class MainActivity extends AppCompatActivity {
         final Button button = new Button(getApplicationContext());
         button.setText("Enregistrer les donations");
         button.setTextSize(18);
+        button.setTextColor(Color.WHITE);
         button.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_check_black_24dp,"white"),null);
         scroll_fams.addView(button);
 
@@ -584,6 +593,7 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonT = new Button(getApplicationContext());
         buttonT.setText("Calculer les transferts");
         buttonT.setTextSize(18);
+        buttonT.setTextColor(Color.WHITE);
         buttonT.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_swap_vert_black_24dp,"white"),null);
         scroll_fams.addView(buttonT);
 
@@ -601,6 +611,7 @@ public class MainActivity extends AppCompatActivity {
         buttonBack.setText("Retour à la saisie des dons");
         buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
         buttonBack.setTextSize(18);
+        buttonBack.setTextColor(Color.WHITE);
         scroll_fams.addView(buttonBack);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -615,6 +626,24 @@ public class MainActivity extends AppCompatActivity {
     private Drawable changeColor(int img_id, String color) {
         Drawable img = getResources().getDrawable(img_id);
         int iColor = Color.parseColor(color);
+
+        int red   = (iColor & 0xFF0000) / 0xFFFF;
+        int green = (iColor & 0xFF00) / 0xFF;
+        int blue  = iColor & 0xFF;
+
+        float[] matrix = { 0, 0, 0, 0, red,
+                0, 0, 0, 0, green,
+                0, 0, 0, 0, blue,
+                0, 0, 0, 1, 0 };
+
+        ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
+        img.setColorFilter(colorFilter);
+        return img;
+    }
+
+    private Drawable changeColor(int img_id, int color) {
+        Drawable img = getResources().getDrawable(img_id);
+        int iColor = color;
 
         int red   = (iColor & 0xFF0000) / 0xFFFF;
         int green = (iColor & 0xFF00) / 0xFF;
@@ -776,6 +805,7 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonT_display = new Button(getApplicationContext());
         buttonT_display.setText("Afficher les transferts");
         buttonT_display.setTextSize(18);
+        buttonT_display.setTextColor(Color.WHITE);
         buttonT_display.setCompoundDrawablesWithIntrinsicBounds(null,null,changeColor(R.drawable.ic_receipt_black_24dp,"white"),null);
         scroll_fams.addView(buttonT_display);
 
@@ -791,6 +821,7 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonBack = new Button(getApplicationContext());
         buttonBack.setText("Retour à la saisie des dons");
         buttonBack.setTextSize(18);
+        buttonBack.setTextColor(Color.WHITE);
         buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
         scroll_fams.addView(buttonBack);
 
@@ -855,8 +886,8 @@ public class MainActivity extends AppCompatActivity {
             fam_don_name.setGravity(Gravity.CENTER);
             fam_don_name.setTextColor(Color.DKGRAY);
             GradientDrawable gd_dona = new GradientDrawable(
-                    GradientDrawable.Orientation.TOP_BOTTOM,
-                    new int[]{ Color.WHITE,Color.LTGRAY});   //fond doré Color.parseColor("#ffe866")
+                    GradientDrawable.Orientation.BL_TR,
+                    new int[]{Color.parseColor("#DAA520"),Color.parseColor("#FFD700"), Color.WHITE});
             gd_dona.setCornerRadius(0f);
             fam_don_name.setBackground(gd_dona);
 
@@ -868,7 +899,7 @@ public class MainActivity extends AppCompatActivity {
                     new int[]{Color.WHITE, Color.LTGRAY});
             gd.setCornerRadius(0f);
             fam_lin.setBackground(gd);
-            fam_lin.setOrientation(LinearLayout.HORIZONTAL);
+            fam_lin.setOrientation(LinearLayout.VERTICAL);
             View h_sep2 = new View(this);
             h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 4));
             h_sep2.setBackgroundColor(Color.GRAY);
@@ -877,53 +908,46 @@ public class MainActivity extends AppCompatActivity {
 
 
             fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            fam_lin.setWeightSum(3);
             fam_lin.setGravity(Gravity.CENTER_VERTICAL);
 
-
-
-            LinearLayout Colonne1 = new LinearLayout(this);
-            Colonne1.setOrientation(LinearLayout.VERTICAL);
-            Colonne1.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-            Colonne1.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            LinearLayout Colonne2 = new LinearLayout(this);
-            Colonne2.setOrientation(LinearLayout.VERTICAL);
-            Colonne2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            Colonne2.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-            LinearLayout Colonne3 = new LinearLayout(this);
-            Colonne3.setOrientation(LinearLayout.VERTICAL);
-            Colonne3.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-            Colonne3.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-
-
-            fam_lin.addView(Colonne1);
-            fam_lin.addView(Colonne2);
-            fam_lin.addView(Colonne3);
-
-
             for (Map.Entry<String,Integer> transfert : fam.getTransferts().entrySet()) {
-                TextView fam_txt = new TextView(this);
-                fam_txt.setText(fam.getName());
-                fam_txt.setTextSize(15);
-                fam_txt.setGravity(Gravity.CENTER);
-                fam_txt.setTextColor(Color.DKGRAY);
-                Colonne1.addView(fam_txt);
-
-                TextView fleche = new TextView(this);
-                fleche.setText(">");
-                fleche.setTextSize(15);
-                fleche.setGravity(Gravity.CENTER);;
-
-                fleche.setTextColor(Color.DKGRAY);
-                Colonne2.addView(fleche);
-
 
                 TextView fam_rece = new TextView(this);
-                fam_rece.setText(transfert.getKey()+" ("+transfert.getValue()+"€)");
-                fam_rece.setTextSize(15);
+
+
+                SpannableString spannableString = new SpannableString("X "+transfert.getKey()+" ("+transfert.getValue()+"€)"); //X sera remplacé par l'image apres
+
+                Drawable img_recolo=changeColor(R.drawable.ic_send_black_24dp,Color.DKGRAY);
+                img_recolo.setBounds(0, 0, Math.round(TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, 16,getResources().getDisplayMetrics())), Math.round(TypedValue.applyDimension(
+                        TypedValue.COMPLEX_UNIT_DIP, 16,getResources().getDisplayMetrics())));
+                ImageSpan imageSpan = new ImageSpan(img_recolo);
+
+                ImageSpan imageSpan_center = new ImageSpan(img_recolo, ImageSpan.ALIGN_BOTTOM) {   //centre l'image sur la ligne
+                    public void draw(Canvas canvas, CharSequence text, int start,
+                                     int end, float x, int top, int y, int bottom,
+                                     Paint paint) {
+                        Drawable b = getDrawable();
+                        canvas.save();
+
+                        int transY = bottom - b.getBounds().bottom;
+                        // this is the key
+                        transY -= paint.getFontMetricsInt().descent / 2;
+
+                        canvas.translate(x, transY);
+                        b.draw(canvas);
+                        canvas.restore();
+                    }
+                };
+
+                spannableString.setSpan(imageSpan_center,0,1,0);
+
+                fam_rece.setText(spannableString);
+                fam_rece.setTextSize(16);
                 fam_rece.setGravity(Gravity.CENTER);
                 fam_rece.setTextColor(Color.DKGRAY);
-                Colonne3.addView(fam_rece);
+                //fam_rece.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_send_black_24dp,Color.DKGRAY),null,null,null);
+                fam_lin.addView(fam_rece);
             }
 
             addHsep(scroll_fams,Color.GRAY,4);
@@ -933,6 +957,7 @@ public class MainActivity extends AppCompatActivity {
         final Button buttonBack = new Button(getApplicationContext());
         buttonBack.setText("Retour à la saisie des dons");
         buttonBack.setTextSize(18);
+        buttonBack.setTextColor(Color.WHITE);
         buttonBack.setCompoundDrawablesWithIntrinsicBounds(changeColor(R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
         scroll_fams.addView(buttonBack);
 

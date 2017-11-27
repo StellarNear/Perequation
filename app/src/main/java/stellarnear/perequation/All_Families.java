@@ -20,68 +20,59 @@ public class All_Families extends AppCompatActivity {
         mContext = mC;
         try {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        //CHATRON
 
-            //CHATRON
-            if (prefs.getBoolean("Jacques_Dominique_switch",mC.getResources().getBoolean(R.bool.Jacques_Dominique_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Jacques_Dominique_n",mC.getResources().getString(R.string.Jacques_Dominique_n_def)),"Jacques et Dominique",mC);
-                if(n_member>0){All_Families.add(new Family("Jacques et Dominique",n_member));}
-            }
-            if (prefs.getBoolean("Jeremie_Marjorie_switch",mC.getResources().getBoolean(R.bool.Jeremie_Marjorie_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Jeremie_Marjorie_n",mC.getResources().getString(R.string.Jeremie_Marjorie_n_def)),"Jeremie et Marjorie",mC);
-                if(n_member>0){All_Families.add(new Family("Jérémie et Marjorie",n_member));}
-            }
+            Integer n_memberJacques_Dominique=to_int(prefs.getString("Jacques_Dominique_n",mC.getResources().getString(R.string.Jacques_Dominique_n_def)),"Jacques et Dominique",mC);
+            if(n_memberJacques_Dominique>0){All_Families.add(new Family("Jacques et Dominique",n_memberJacques_Dominique));}
 
-            //GOUILLON
-            if (prefs.getBoolean("Bernard_Chantal_switch",mC.getResources().getBoolean(R.bool.Bernard_Chantal_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Bernard_Chantal_n",mC.getResources().getString(R.string.Bernard_Chantal_n_def)),"Bernard et Chantal",mC);
-                if(n_member>0){All_Families.add(new Family("Bernard et Chantal",n_member));}
-            }
-            if (prefs.getBoolean("Christophe_Florence_switch",mC.getResources().getBoolean(R.bool.Christophe_Florence_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Christophe_Florence_n",mC.getResources().getString(R.string.Christophe_Florence_n_def)),"Christophe et Florence",mC);
-                if(n_member>0){All_Families.add(new Family("Christophe et Florence",n_member));}
-            }
-            if (prefs.getBoolean("Antony_Sophie_switch",mC.getResources().getBoolean(R.bool.Antony_Sophie_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Antony_Sophie_n",mC.getResources().getString(R.string.Antony_Sophie_n_def)),"Antony et Sophie",mC);
-                if(n_member>0){All_Families.add(new Family("Antony et Sophie",n_member));}
-            }
-            if (prefs.getBoolean("Nicolas_Delphine_switch",mC.getResources().getBoolean(R.bool.Nicolas_Delphine_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Nicolas_Delphine_n",mC.getResources().getString(R.string.Nicolas_Delphine_n_def)),"Nicolas et Delphine",mC);
-                if(n_member>0){All_Families.add(new Family("Nicolas et Delphine",n_member));}
-            }
-
-            //MAESTRE
-            if (prefs.getBoolean("Robert_Mireille_switch",mC.getResources().getBoolean(R.bool.Robert_Mireille_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Robert_Mireille_n",mC.getResources().getString(R.string.Robert_Mireille_n_def)),"Robert et Mireille",mC);
-                if(n_member>0){All_Families.add(new Family("Robert et Mireille",n_member));}
-            }
-            if (prefs.getBoolean("Aurelie_Annabel_switch",mC.getResources().getBoolean(R.bool.Aurelie_Annabel_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Aurelie_Annabel_n",mC.getResources().getString(R.string.Aurelie_Annabel_n_def)),"Aurélie et Annabel",mC);
-                if(n_member>0){All_Families.add(new Family("Aurélie et Annabel",n_member));}
-            }
-            if (prefs.getBoolean("Raphael_Florence_switch",mC.getResources().getBoolean(R.bool.Raphael_Florence_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Raphael_Florence_n",mC.getResources().getString(R.string.Raphael_Florence_n_def)),"Raphael et Florence",mC);
-                if(n_member>0){All_Families.add(new Family("Raphael et Florence",n_member));}
-            }
-
-            //RIBIERE
-            if (prefs.getBoolean("Claude_Francoise_switch",mC.getResources().getBoolean(R.bool.Claude_Francoise_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Claude_Francoise_n",mC.getResources().getString(R.string.Claude_Francoise_n_def)),"Claude et Francoise",mC);
-                if(n_member>0){All_Families.add(new Family("Claude et Francoise",n_member));}
-            }
+            Integer n_memberJeremie_Marjorie=to_int(prefs.getString("Jeremie_Marjorie_n",mC.getResources().getString(R.string.Jeremie_Marjorie_n_def)),"Jeremie et Marjorie",mC);
+            if(n_memberJeremie_Marjorie>0){All_Families.add(new Family("Jérémie et Marjorie",n_memberJeremie_Marjorie));}
 
 
-            if (prefs.getBoolean("Benjamin_Claire_switch",mC.getResources().getBoolean(R.bool.Benjamin_Claire_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Benjamin_Claire_n",mC.getResources().getString(R.string.Benjamin_Claire_n_def)),"Benjamin et Claire",mC);
-                if(n_member>0){All_Families.add(new Family("Benjamin et Claire",n_member));}
-            }
-            if (prefs.getBoolean("Sam_Perrine_switch",mC.getResources().getBoolean(R.bool.Sam_Perrine_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Sam_Perrine_n",mC.getResources().getString(R.string.Sam_Perrine_n_def)),"Sam et Perrine",mC);
-                if(n_member>0){All_Families.add(new Family("Sam et Perrine",n_member));}
-            }
-            if (prefs.getBoolean("Simon_Anais_switch",mC.getResources().getBoolean(R.bool.Simon_Anais_switch_def)))  {
-                Integer n_member=to_int(prefs.getString("Simon_Anais_n",mC.getResources().getString(R.string.Simon_Anais_n_def)),"Simon et Anaïs",mC);
-                if(n_member>0){All_Families.add(new Family("Simon et Anaïs",n_member));}
-            }
+        //GOUILLON
+            Integer n_memberBernard_Chantal=to_int(prefs.getString("Bernard_Chantal_n",mC.getResources().getString(R.string.Bernard_Chantal_n_def)),"Bernard et Chantal",mC);
+            if(n_memberBernard_Chantal>0){All_Families.add(new Family("Bernard et Chantal",n_memberBernard_Chantal));}
+
+                  Integer n_memberChristophe_Florence=to_int(prefs.getString("Christophe_Florence_n",mC.getResources().getString(R.string.Christophe_Florence_n_def)),"Christophe et Florence",mC);
+            if(n_memberChristophe_Florence>0){All_Families.add(new Family("Christophe et Florence",n_memberChristophe_Florence));}
+
+
+            Integer n_memberAntony_Sophie=to_int(prefs.getString("Antony_Sophie_n",mC.getResources().getString(R.string.Antony_Sophie_n_def)),"Antony et Sophie",mC);
+            if(n_memberAntony_Sophie>0){All_Families.add(new Family("Antony et Sophie",n_memberAntony_Sophie));}
+
+
+            Integer n_memberNicolas_Delphine=to_int(prefs.getString("Nicolas_Delphine_n",mC.getResources().getString(R.string.Nicolas_Delphine_n_def)),"Nicolas et Delphine",mC);
+            if(n_memberNicolas_Delphine>0){All_Families.add(new Family("Nicolas et Delphine",n_memberNicolas_Delphine));}
+
+
+        //MAESTRE
+                  Integer n_memberRobert_Mireille=to_int(prefs.getString("Robert_Mireille_n",mC.getResources().getString(R.string.Robert_Mireille_n_def)),"Robert et Mireille",mC);
+            if(n_memberRobert_Mireille>0){All_Families.add(new Family("Robert et Mireille",n_memberRobert_Mireille));}
+
+
+            Integer n_memberAurelie_Annabel=to_int(prefs.getString("Aurelie_Annabel_n",mC.getResources().getString(R.string.Aurelie_Annabel_n_def)),"Aurélie et Annabel",mC);
+            if(n_memberAurelie_Annabel>0){All_Families.add(new Family("Aurélie et Annabel",n_memberAurelie_Annabel));}
+
+
+            Integer n_memberRaphael_Florence=to_int(prefs.getString("Raphael_Florence_n",mC.getResources().getString(R.string.Raphael_Florence_n_def)),"Raphael et Florence",mC);
+            if(n_memberRaphael_Florence>0){All_Families.add(new Family("Raphael et Florence",n_memberRaphael_Florence));}
+
+
+        //RIBIERE
+
+            Integer n_memberClaude_Francoise=to_int(prefs.getString("Claude_Francoise_n",mC.getResources().getString(R.string.Claude_Francoise_n_def)),"Claude et Francoise",mC);
+            if(n_memberClaude_Francoise>0){All_Families.add(new Family("Claude et Francoise",n_memberClaude_Francoise));}
+
+            Integer n_memberBenjamin_Claire=to_int(prefs.getString("Benjamin_Claire_n",mC.getResources().getString(R.string.Benjamin_Claire_n_def)),"Benjamin et Claire",mC);
+            if(n_memberBenjamin_Claire>0){All_Families.add(new Family("Benjamin et Claire",n_memberBenjamin_Claire));}
+
+            Integer n_memberSam_Perrine=to_int(prefs.getString("Sam_Perrine_n",mC.getResources().getString(R.string.Sam_Perrine_n_def)),"Sam et Perrine",mC);
+            if(n_memberSam_Perrine>0){All_Families.add(new Family("Sam et Perrine",n_memberSam_Perrine));}
+
+
+            Integer n_memberSimon_Anais=to_int(prefs.getString("Simon_Anais_n",mC.getResources().getString(R.string.Simon_Anais_n_def)),"Simon et Anaïs",mC);
+            if(n_memberSimon_Anais>0){All_Families.add(new Family("Simon et Anaïs",n_memberSimon_Anais));}
+
 
 
         } catch (Exception e) {

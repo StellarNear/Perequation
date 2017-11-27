@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v1.0 (android 4.1+ JellyBean)"</string>
+    <string name="version">"v1.1 (android 4.1+ JellyBean)"</string>
     <string name="basic_infos">"Cette application est développée par le dernier Chatron.
 Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+v1.1 :
+- couleur page transfert
+- changement structure page transfert (plus de lisibilité)
+- symbol transfert centrée sur texte
+- surcharge fonctionnalité de changement de couleur dynamique des images
+- couleur texte des boutons en blanc
+- changement des settings familles pour les vieilles version android
+----------------------------------------------------------------------------------
 v1.0 : Tag de la version stable compatible JellyBean
 ----------------------------------------------------------------------------------
 vBeta :

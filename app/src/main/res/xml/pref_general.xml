@@ -28,171 +28,117 @@
 
     <PreferenceCategory android:title="Familles et population">
 
-
-    <SwitchPreference
-        android:defaultValue="@bool/Jacques_Dominique_switch_def"
-        android:key="Jacques_Dominique_switch"
-        android:title="Jacques et Dominique" />
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Jacques_Dominique_switch"
+        
         android:defaultValue="@string/Jacques_Dominique_n_def"
         android:key="Jacques_Dominique_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Jacques et Dominique"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-
-    <SwitchPreference
-        android:defaultValue="@bool/Jeremie_Marjorie_switch_def"
-        android:key="Jeremie_Marjorie_switch"
-        android:title="Jérémie et Marjorie" />
+        android:summary="Nombre de personnes : %s"/>
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Jeremie_Marjorie_switch"
+        
         android:defaultValue="@string/Jeremie_Marjorie_n_def"
         android:key="Jeremie_Marjorie_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Jérémie et Marjorie"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-
-    <SwitchPreference
-        android:defaultValue="@bool/Bernard_Chantal_switch_def"
-        android:key="Bernard_Chantal_switch"
-        android:title="Bernard et Chantal" />
+        android:summary="Nombre de personnes : %s"/>
+        
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Bernard_Chantal_switch"
+        
         android:defaultValue="@string/Bernard_Chantal_n_def"
         android:key="Bernard_Chantal_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Bernard et Chantal"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-
-    <SwitchPreference
-        android:defaultValue="@bool/Christophe_Florence_switch_def"
-        android:key="Christophe_Florence_switch"
-        android:title="Christophe et Florence" />
+        android:summary="Nombre de personnes : %s"/>
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Christophe_Florence_switch"
+        
         android:defaultValue="@string/Christophe_Florence_n_def"
         android:key="Christophe_Florence_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Christophe et Florence"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-    <SwitchPreference
-        android:defaultValue="@bool/Antony_Sophie_switch_def"
-        android:key="Antony_Sophie_switch"
-        android:title="Antony et Sophie" />
+        android:summary="Nombre de personnes : %s"/>
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Antony_Sophie_switch"
+        
         android:defaultValue="@string/Antony_Sophie_n_def"
         android:key="Antony_Sophie_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Antony et Sophie"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-    <SwitchPreference
-        android:defaultValue="@bool/Nicolas_Delphine_switch_def"
-        android:key="Nicolas_Delphine_switch"
-        android:title="Nicolas et Delphine" />
+        android:summary="Nombre de personnes : %s"/>
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Nicolas_Delphine_switch"
+        
         android:defaultValue="@string/Nicolas_Delphine_n_def"
         android:key="Nicolas_Delphine_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Nicolas et Delphine"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
+        android:summary="Nombre de personnes : %s"/>
 
 
 
-
-    <SwitchPreference
-        android:defaultValue="@bool/Robert_Mireille_switch_def"
-        android:key="Robert_Mireille_switch"
-        android:title="Robert et Mireille" />
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Robert_Mireille_switch"
+        
         android:defaultValue="@string/Robert_Mireille_n_def"
         android:key="Robert_Mireille_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Robert et Mireille"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-    <SwitchPreference
-        android:defaultValue="@bool/Aurelie_Annabel_switch_def"
-        android:key="Aurelie_Annabel_switch"
-        android:title="Aurelie et Annabel" />
+        android:summary="Nombre de personnes : %s"/>
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Aurelie_Annabel_switch"
+        
         android:defaultValue="@string/Aurelie_Annabel_n_def"
         android:key="Aurelie_Annabel_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Aurelie et Annabel"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-    <SwitchPreference
-        android:defaultValue="@bool/Raphael_Florence_switch_def"
-        android:key="Raphael_Florence_switch"
-        android:title="Raphael et Florence" />
+        android:summary="Nombre de personnes : %s"/>
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Raphael_Florence_switch"
+        
         android:defaultValue="@string/Raphael_Florence_n_def"
         android:key="Raphael_Florence_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Raphael et Florence"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
+        android:summary="Nombre de personnes : %s"/>
 
-    <SwitchPreference
-        android:defaultValue="@bool/Claude_Francoise_switch_def"
-        android:key="Claude_Francoise_switch"
-        android:title="Claude et Francoise" />
+
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Claude_Francoise_switch"
+        
         android:defaultValue="@string/Claude_Francoise_n_def"
         android:key="Claude_Francoise_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Claude et Francoise"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-    <SwitchPreference
-        android:defaultValue="@bool/Benjamin_Claire_switch_def"
-        android:key="Benjamin_Claire_switch"
-        android:title="Benjamin et Claire" />
+        android:summary="Nombre de personnes : %s"/>
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Benjamin_Claire_switch"
+        
         android:defaultValue="@string/Benjamin_Claire_n_def"
         android:key="Benjamin_Claire_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Benjamin et Claire"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-    <SwitchPreference
-        android:defaultValue="@bool/Sam_Perrine_switch_def"
-        android:key="Sam_Perrine_switch"
-        android:title="Sam et Perrine" />
+        android:summary="Nombre de personnes : %s"/>
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Sam_Perrine_switch"
+        
         android:defaultValue="@string/Sam_Perrine_n_def"
         android:key="Sam_Perrine_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Sam et Perrine"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
-    <SwitchPreference
-        android:defaultValue="@bool/Simon_Anais_switch_def"
-        android:key="Simon_Anais_switch"
-        android:title="Simon et Anais" />
+        android:summary="Nombre de personnes : %s"/>
+
     <stellarnear.perequation.EditTextPreference
-        android:dependency="Simon_Anais_switch"
+        
         android:defaultValue="@string/Simon_Anais_n_def"
         android:key="Simon_Anais_n"
-        android:title="Nombre de personnes dans la famille"
+        android:title="Simon et Anais"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:summary="Valeur : %s"/>
+        android:summary="Nombre de personnes : %s"/>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Paramètre de test">
