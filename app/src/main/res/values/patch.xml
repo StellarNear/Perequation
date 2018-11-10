@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v1.1 (android 4.1+ JellyBean)"</string>
+    <string name="version">"v2.0"</string>
     <string name="basic_infos">"Cette application est développée par le dernier Chatron.
 Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+v2.0 :
+- Ajout d'une branche de famille pour Romain Gouillon
+- Ajout d'une modification manuelle du budget !
+----------------------------------------------------------------------------------
 v1.1 :
 - couleur page transfert
 - changement structure page transfert (plus de lisibilité)

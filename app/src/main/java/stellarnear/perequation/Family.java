@@ -12,7 +12,7 @@ public class Family extends AppCompatActivity implements Serializable {
 
 
     private String  name;
-    private Integer  donation=0;
+    private Integer donation=0;
     private Integer n_member;
     private Integer exed;
     private boolean alimentaire=false;

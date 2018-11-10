@@ -33,8 +33,11 @@ public class All_Families extends AppCompatActivity {
             Integer n_memberBernard_Chantal=to_int(prefs.getString("Bernard_Chantal_n",mC.getResources().getString(R.string.Bernard_Chantal_n_def)),"Bernard et Chantal",mC);
             if(n_memberBernard_Chantal>0){All_Families.add(new Family("Bernard et Chantal",n_memberBernard_Chantal));}
 
-                  Integer n_memberChristophe_Florence=to_int(prefs.getString("Christophe_Florence_n",mC.getResources().getString(R.string.Christophe_Florence_n_def)),"Christophe et Florence",mC);
+            Integer n_memberChristophe_Florence=to_int(prefs.getString("Christophe_Florence_n",mC.getResources().getString(R.string.Christophe_Florence_n_def)),"Christophe et Florence",mC);
             if(n_memberChristophe_Florence>0){All_Families.add(new Family("Christophe et Florence",n_memberChristophe_Florence));}
+
+            Integer n_memberRomain=to_int(prefs.getString("Romain_n",mC.getResources().getString(R.string.Romain_n_def)),"Romain",mC);
+            if(n_memberRomain>0){All_Families.add(new Family("Romain",n_memberRomain));}
 
 
             Integer n_memberAntony_Sophie=to_int(prefs.getString("Antony_Sophie_n",mC.getResources().getString(R.string.Antony_Sophie_n_def)),"Antony et Sophie",mC);
@@ -69,10 +72,8 @@ public class All_Families extends AppCompatActivity {
             Integer n_memberSam_Perrine=to_int(prefs.getString("Sam_Perrine_n",mC.getResources().getString(R.string.Sam_Perrine_n_def)),"Sam et Perrine",mC);
             if(n_memberSam_Perrine>0){All_Families.add(new Family("Sam et Perrine",n_memberSam_Perrine));}
 
-
             Integer n_memberSimon_Anais=to_int(prefs.getString("Simon_Anais_n",mC.getResources().getString(R.string.Simon_Anais_n_def)),"Simon et Anaïs",mC);
             if(n_memberSimon_Anais>0){All_Families.add(new Family("Simon et Anaïs",n_memberSimon_Anais));}
-
 
 
         } catch (Exception e) {

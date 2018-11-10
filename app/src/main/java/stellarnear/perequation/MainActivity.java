@@ -1,6 +1,7 @@
 package stellarnear.perequation;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
@@ -14,6 +15,7 @@ import android.graphics.drawable.GradientDrawable;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -24,6 +26,7 @@ import android.text.TextWatcher;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -41,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -122,7 +126,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private Double calculMoneyPerIndiv(All_Families all_families) {
+    private Double calculMoneyPerIndiv(All_Families all_families,Double... fixedMoney_per_indiv) {
+        Double fixedMoney = fixedMoney_per_indiv.length > 0 ? fixedMoney_per_indiv[0] : 0;
+
         Integer all_money = all_families.getAllMoney();
         Integer all_pop = all_families.getAllIndiv();
 
@@ -130,12 +136,14 @@ public class MainActivity extends AppCompatActivity {
         Double money_per_indiv = 0.0;
         if (fam_alloc == null) {
             money_per_indiv = (double) all_money / all_pop;
+            if (fixedMoney!=0){
+                money_per_indiv=fixedMoney;
+            }
         } else {
 
             Double money_per_indiv_ori = (double) all_money / all_pop;
 
             String money_per_indiv_txt = String.valueOf(money_per_indiv_ori);
-
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             Double money_repas = (double) to_int(prefs.getString("Money_alloc_alim",getResources().getString(R.string.Money_alloc_alim_def)),"Argent repas",getApplicationContext());
@@ -157,6 +165,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("STATE budg1",String.valueOf(money_per_indiv));
             }
 
+            if (fixedMoney!=0){
+                money_per_indiv=fixedMoney;
+            }
 
             Double rest = money_per_indiv_ori-money_per_indiv;
 
@@ -457,6 +468,35 @@ public class MainActivity extends AppCompatActivity {
         result.setGravity(Gravity.CENTER);
         result.setTextColor(Color.DKGRAY);
         result.setText(result_txt);
+
+        result.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder b = new AlertDialog.Builder(MainActivity.this);
+                b.setTitle("Changement du budget cadeau (<"+money_per_indiv+"€)");
+                final EditText input = new EditText(getApplicationContext());
+                input.setTextColor(Color.BLACK);
+                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                b.setView(input);
+                b.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        int newBudget = to_int(input.getText().toString(), "Nouveau budget", getApplicationContext());
+                        if (newBudget<money_per_indiv) {
+                            calculMoneyPerIndiv(all_families,(double) newBudget);
+                            buildPage2(mainLinear, all_families, newBudget, panel);
+                        } else {
+                            Toast toast = Toast.makeText(MainActivity.this,"Le nouveau budget doit etre inferieur à "+money_per_indiv+"€",Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.CENTER,0,0);
+                            toast.show();
+                        }
+                    }
+                });
+                b.setNegativeButton("Annuler", null);
+                b.create().show();
+            }
+        });
+
 
         mainLinear.addView(result);
 
