@@ -23,34 +23,36 @@
 
 
 
-        <ViewSwitcher
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ViewFlipper
             android:id="@+id/panel"
-            app:layout_anchor="@+id/toolbar"
-            app:layout_anchorGravity="bottom"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="56dp"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:orientation="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <LinearLayout
+
+            <include
+                android:id="@+id/include_input"
+                layout="@layout/page_list_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/linearMain1"
+                android:layout_height="match_parent" />
 
-                >
-            </LinearLayout>
 
-            <LinearLayout
+            <include
+                android:id="@+id/include_display"
+                layout="@layout/page_list_display"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/linearMain2"
-                >
-            </LinearLayout>
+                android:layout_height="match_parent" />
 
-        </ViewSwitcher>
+
+            <include
+                android:id="@+id/include_transfert"
+                layout="@layout/page_list_transfert"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </ViewFlipper>
 
 
 

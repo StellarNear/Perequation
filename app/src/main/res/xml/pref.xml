@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- These settings pref are only used on tablets. -->
+    <PreferenceScreen
+        android:key="pref_general"
+        android:icon="@drawable/ic_person_pin_black_24dp"
+        android:title="Paramètres généraux"
+        android:summary="Nombres d'enfants à charge et préparation repas"/>
+
+
+    <PreferenceScreen
+        android:key="pref_appli"
+        android:title="Gestion de l'application"
+        android:summary="Paramètres et informations de l'application"
+        android:icon="@drawable/ic_smartphone" />
+
+
+
+
+
+</PreferenceScreen>

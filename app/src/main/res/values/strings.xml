@@ -3,42 +3,13 @@
 
     <string name="action_settings">Paramètres</string>
 
-    <string name="Alloc_alime_def">Claude et Francoise</string>
+    <string name="alloc_alime_def">Aucune</string>
 
-    <string name="Jacques_Dominique_n_def">2</string>
-    <string name="Jeremie_Marjorie_n_def">2</string>
-    <string name="Claude_Francoise_n_def">2</string>
-    <string name="Robert_Mireille_n_def">2</string>
-    <string name="Bernard_Chantal_n_def">2</string>
-    <string name="Simon_Anais_n_def">3</string>
-    <string name="Sam_Perrine_n_def">5</string>
-    <string name="Benjamin_Claire_n_def">4</string>
-    <string name="Raphael_Florence_n_def">4</string>
-    <string name="Aurelie_Annabel_n_def">2</string>
-    <string name="Nicolas_Delphine_n_def">4</string>
-    <string name="Antony_Sophie_n_def">5</string>
-    <string name="Christophe_Florence_n_def">5</string>
-    <string name="Romain_n_def">0</string>
-    <string name="Money_alloc_alim_def">100</string>
+
+    <string name="money_alloc_alim_def">100</string>
     <string name="round_budget_def">5</string>
-
-
-    <string-array name="values_fam_names_alim">
-        <item>"Aucune"</item>
-        <item>"Jacques et Dominique"</item>
-        <item>"Jérémie et Marjorie"</item>
-        <item>"Bernard et Chantal"</item>
-        <item>"Christophe et Florence"</item>
-        <item>"Antony et Sophie"</item>
-        <item>"Nicolas et Delphine"</item>
-        <item>"Robert et Mireille"</item>
-        <item>"Aurélie et Annabel"</item>
-        <item>"Raphael et Florence"</item>
-        <item>"Claude et Francoise"</item>
-        <item>"Benjamin et Claire"</item>
-        <item>"Sam et Perrine"</item>
-        <item>"Simon et Anaïs"</item>
-    </string-array>
+    <string name="setting_activity">Paramètres</string>
+    <string name="time_spend">14h</string>
 
     <string-array name="arrondi_budget">
         <item>"5"</item>

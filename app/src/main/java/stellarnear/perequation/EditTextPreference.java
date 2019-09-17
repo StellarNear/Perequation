@@ -1,6 +1,7 @@
 package stellarnear.perequation;
 
 import android.content.Context;
+import android.text.InputType;
 import android.util.AttributeSet;
 
 
@@ -18,6 +19,13 @@ public class EditTextPreference extends android.preference.EditTextPreference{
     public EditTextPreference(Context context) {
         super(context);
     }
+
+    public EditTextPreference(Context context, int typeClassText) {
+        super(context);
+        getEditText().setInputType(InputType.TYPE_CLASS_NUMBER);
+        getEditText().setSelectAllOnFocus(true);
+    }
+
 
     @Override
     public CharSequence getSummary() {

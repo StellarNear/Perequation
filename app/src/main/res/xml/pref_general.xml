@@ -1,160 +1,47 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Paramètres généraux">
-    <ListPreference
-        android:key="Alloc_alime"
-        android:title="Famille qui fournit le repas"
-        android:entries="@array/values_fam_names_alim"
-        android:entryValues="@array/values_fam_names_alim"
-        android:summary="Valeur : %s"
-        android:defaultValue="@string/Alloc_alime_def"/>
+    <PreferenceCategory android:title="Paramètres généraux" android:key="general_alim">
+
+        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+        <ListPreference
+            android:defaultValue="@string/round_budget_def"
+            android:key="round_budget"
+            android:title="Arrondi pour le budget cadeau"
+            android:entries="@array/arrondi_budget"
+            android:entryValues="@array/arrondi_budget"
+            android:summary="Valeur : %s€"/>
+
+
     <stellarnear.perequation.EditTextPreference
-        android:defaultValue="@string/Money_alloc_alim_def"
+        android:defaultValue="@string/money_alloc_alim_def"
         android:key="Money_alloc_alim"
+        android:inputType="number"
         android:title="Argent alloué au repas"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="Valeur : %s€"/>
 
-     <ListPreference
-        android:defaultValue="@string/round_budget_def"
-        android:key="round_budget"
-        android:title="Arrondi pour le budget cadeau"
-        android:entries="@array/arrondi_budget"
-        android:entryValues="@array/arrondi_budget"
-        android:summary="Valeur : %s€"/>
     </PreferenceCategory>
-
-    <PreferenceCategory android:title="Familles et population">
-
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Jacques_Dominique_n_def"
-        android:key="Jacques_Dominique_n"
-        android:title="Jacques et Dominique"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Jeremie_Marjorie_n_def"
-        android:key="Jeremie_Marjorie_n"
-        android:title="Jérémie et Marjorie"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-        
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Bernard_Chantal_n_def"
-        android:key="Bernard_Chantal_n"
-        android:title="Bernard et Chantal"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Christophe_Florence_n_def"
-        android:key="Christophe_Florence_n"
-        android:title="Christophe et Florence"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-
-        <stellarnear.perequation.EditTextPreference
-            android:defaultValue="@string/Romain_n_def"
-            android:key="Romain_n"
-            android:title="Romain"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="Nombre de personnes : %s"/>
-
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Antony_Sophie_n_def"
-        android:key="Antony_Sophie_n"
-        android:title="Antony et Sophie"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Nicolas_Delphine_n_def"
-        android:key="Nicolas_Delphine_n"
-        android:title="Nicolas et Delphine"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-
-
-
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Robert_Mireille_n_def"
-        android:key="Robert_Mireille_n"
-        android:title="Robert et Mireille"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Aurelie_Annabel_n_def"
-        android:key="Aurelie_Annabel_n"
-        android:title="Aurelie et Annabel"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Raphael_Florence_n_def"
-        android:key="Raphael_Florence_n"
-        android:title="Raphael et Florence"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-
-
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Claude_Francoise_n_def"
-        android:key="Claude_Francoise_n"
-        android:title="Claude et Francoise"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Benjamin_Claire_n_def"
-        android:key="Benjamin_Claire_n"
-        android:title="Benjamin et Claire"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Sam_Perrine_n_def"
-        android:key="Sam_Perrine_n"
-        android:title="Sam et Perrine"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-
-    <stellarnear.perequation.EditTextPreference
-        
-        android:defaultValue="@string/Simon_Anais_n_def"
-        android:key="Simon_Anais_n"
-        android:title="Simon et Anais"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Nombre de personnes : %s"/>
-    </PreferenceCategory>
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
     <PreferenceCategory android:title="Paramètre de test">
-    <SwitchPreference
-        android:defaultValue="@bool/Test_switch_def"
-        android:key="Test_switch"
-        android:title="Mode Test" />
+
+        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+        <SwitchPreference
+            android:defaultValue="@bool/Test_switch_def"
+            android:key="Test_switch"
+            android:title="Mode Test" />
 
     </PreferenceCategory>
+
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+    <PreferenceCategory android:title="Familles et population" android:key="all_fams">
+
+        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
+
+    </PreferenceCategory>
+
+
 </PreferenceScreen>

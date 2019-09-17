@@ -2,5 +2,7 @@
 <resources>
 
     <bool name="Test_switch_def">false</bool>
+    <bool name="switch_autoclose_dialog_def">true</bool>
+    <bool name="switch_fullscreen_mode_def">true</bool>
 
 </resources>

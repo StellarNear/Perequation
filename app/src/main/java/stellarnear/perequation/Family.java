@@ -1,27 +1,52 @@
 package stellarnear.perequation;
 
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class Family extends AppCompatActivity implements Serializable {
+public class Family  {
 
-
+    private String id;
+    private String branchId;
     private String  name;
     private Integer donation=0;
-    private Integer n_member;
+    private Integer nMember;
+    private Integer nChild;
     private Integer exed;
     private boolean alimentaire=false;
     private Integer alim=0;
-    private Map<String,Integer> transfert_map = new HashMap<String,Integer>();
+    private Map<Family,Integer> transfertMap = new HashMap<Family,Integer>();
 
-    public Family(String name,Integer n_member){
+    public Family(String id,String name,Integer nMember,Integer nChild,String branchId){
+        this.id=id;
         this.name=name;
-        this.n_member=n_member;
+        this.nMember =nMember;
+        this.nChild=nChild;
+        this.branchId=branchId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getBranchId() {
+        return branchId;
+    }
+
+    public Integer getnMember() {
+        return nMember;
+    }
+
+    public Integer getnChild() {
+        return nChild;
+    }
+
+    public void setnMember(Integer nMember) {
+        this.nMember = nMember;
+    }
+
+    public void setnChild(Integer nChild) {
+        this.nChild = nChild;
     }
 
     public Integer getDonation() {
@@ -29,7 +54,7 @@ public class Family extends AppCompatActivity implements Serializable {
     }
 
     public Integer getPopulation() {
-        return this.n_member;
+        return this.nMember+this.nChild;
     }
     public String getName() {
         return this.name;
@@ -39,11 +64,11 @@ public class Family extends AppCompatActivity implements Serializable {
         this.donation = donation;
     }
 
-    public void calcExed(Double money_per_indiv){
+    public void calcExed(Double moneyPerIndiv){
         if (this.alimentaire) {
-            this.exed = (int) (this.donation - this.n_member * money_per_indiv - this.alim);
+            this.exed = (int) (this.donation - this.nMember * moneyPerIndiv - this.alim);
         }else {
-            this.exed = (int) (this.donation - this.n_member * money_per_indiv);
+            this.exed = (int) (this.donation - this.nMember * moneyPerIndiv);
         }
     }
 
@@ -72,15 +97,15 @@ public class Family extends AppCompatActivity implements Serializable {
         return  this.alim;
     }
 
-    public void addTransfert(String giveToFam,Integer donation){
-        transfert_map.put(giveToFam,donation);
+    public void addTransfert(Family family,Integer donation){
+        transfertMap.put(family,donation);
     }
 
-    public Map<String,Integer> getTransferts(){
-        return transfert_map;
+    public Map<Family,Integer> getTransferts(){
+        return transfertMap;
     }
 
     public void clearTransfert() {
-        transfert_map.clear();
+        transfertMap.clear();
     }
 }

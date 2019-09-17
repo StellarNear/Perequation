@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="custom_alert_long_duration_def">3000</integer>
+</resources>

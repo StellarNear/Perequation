@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
     <color name="colorPrimary">#999999</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="divider_pref">#E0E0E0</color>
+
+    <color name="colorBackground">#d5e7f6</color>
+    <color name="validation">#0FBD40</color>
+    <color name="cancel">#FF0000</color>
+
+    <color name="end_gradient_button_ok">#004d00</color>
+    <color name="start_gradient_button_ok">#0FBD40</color>
+    <color name="start_gradient_button_cancel">#822616</color>
+    <color name="end_gradient_button_cancel">#bd3e1e</color>
+    <color name="start_gradient_button_basic">@android:color/darker_gray</color>
+    <color name="end_gradient_button_basic">@color/white</color>
+    <color name="gray50">#808080</color>
+    <color name="information">#81BEF7</color>
 </resources>
