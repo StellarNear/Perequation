@@ -3,12 +3,12 @@
     <gradient
         android:type="radial"
         android:gradientRadius="1000%p"
-        android:startColor="@color/start_gradient_button_cancel"
-        android:endColor="@color/end_gradient_button_cancel" />
+        android:startColor="@color/start_gradient_button_info"
+        android:endColor="@color/end_gradient_button_info" />
 
     <corners android:radius="5dp"/>
     <stroke
         android:width="3dp"
-        android:color="@color/light_cancel" />
+        android:color="@color/light_info" />
 </shape>
 

@@ -35,7 +35,7 @@ public class SettingsFragment extends PreferenceFragment {
             new OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                    if (key.contains("_member")|| key.contains("_child")){
+                    if (key.contains("_member")|| key.contains("_child") || key.equalsIgnoreCase("alloc_alime")){
                         AllFamilies.getInstance(getContext()).checkSharedSettings();
                     }
                 }

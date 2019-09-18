@@ -11,12 +11,20 @@
     <color name="validation">#0FBD40</color>
     <color name="cancel">#FF0000</color>
 
-    <color name="end_gradient_button_ok">#004d00</color>
-    <color name="start_gradient_button_ok">#0FBD40</color>
-    <color name="start_gradient_button_cancel">#822616</color>
-    <color name="end_gradient_button_cancel">#bd3e1e</color>
+    <color name="start_gradient_button_ok">#004d00</color>
+    <color name="end_gradient_button_ok">#0FBD40</color>
+
+    <color name="start_gradient_button_cancel">#96260B</color>
+    <color name="end_gradient_button_cancel">#C4593F</color>
     <color name="start_gradient_button_basic">@android:color/darker_gray</color>
     <color name="end_gradient_button_basic">@color/white</color>
     <color name="gray50">#808080</color>
     <color name="information">#81BEF7</color>
+
+    <color name="light_validation">#22D395</color>
+    <color name="dkgray">#444444</color>
+    <color name="light_cancel">#EE7D61</color>
+    <color name="light_info">#4ED1E6</color>
+    <color name="end_gradient_button_info">#4EA8E6</color>
+    <color name="start_gradient_button_info">#134FE3</color>
 </resources>

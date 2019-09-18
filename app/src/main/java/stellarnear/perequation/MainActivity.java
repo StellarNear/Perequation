@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -17,30 +16,24 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class MainActivity extends AppCompatActivity {
 
     private  BuildInputPage inputPageBuilder;
     private BuildDisplayPage displayPageBuilder;
-
+    private BuildTransfertPage transfertPageBuilder;
     private ViewFlipper panel;
-
     private Tools tools=new Tools();
     private SharedPreferences settings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (settings.getBoolean("switch_fullscreen_mode", getApplicationContext().getResources().getBoolean(R.bool.switch_fullscreen_mode_def))) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
-
+        super.onCreate(savedInstanceState);
     }
 
 
@@ -51,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        LinearLayout pageInput = (LinearLayout) ((FrameLayout)findViewById(R.id.include_input)).findViewById(R.id.main_linear_1);
+        final LinearLayout pageInput = (LinearLayout) ((FrameLayout)findViewById(R.id.include_input)).findViewById(R.id.main_linear_1);
         final LinearLayout pageDisplay = (LinearLayout) ((FrameLayout)findViewById(R.id.include_display)).findViewById(R.id.main_linear_2);
+        final LinearLayout pageTransfert = (LinearLayout) ((FrameLayout)findViewById(R.id.include_transfert)).findViewById(R.id.main_linear_3);
 
         panel = (ViewFlipper) findViewById(R.id.panel);
 
@@ -79,14 +73,28 @@ public class MainActivity extends AppCompatActivity {
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 } catch (Exception e){}
 
-                displayPageBuilder=new BuildDisplayPage(getApplicationContext(),pageDisplay);
+                displayPageBuilder=new BuildDisplayPage(MainActivity.this,getApplicationContext(),pageDisplay);
                 displayPageBuilder.setBackEventListener(new BuildDisplayPage.OnBackRequest() {
                     @Override
                     public void onEvent() {
+                        inputPageBuilder.refresh();
                         panel.showPrevious();
                     }
                 });
-
+                displayPageBuilder.setValidationEventListener(new BuildDisplayPage.OnValidationRequest() {
+                    @Override
+                    public void onEvent() {
+                        transfertPageBuilder=new BuildTransfertPage(getApplicationContext(),pageTransfert);
+                        transfertPageBuilder.setBackEventListener(new BuildTransfertPage.OnBackRequest() {
+                            @Override
+                            public void onEvent() {
+                                inputPageBuilder.refresh();
+                                panel.setDisplayedChild(0);
+                            }
+                        });
+                        panel.showNext();
+                    }
+                });
                 panel.showNext();
 
             }

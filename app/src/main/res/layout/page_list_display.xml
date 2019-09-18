@@ -4,18 +4,194 @@
     android:layout_height="fill_parent">
 
 
+
     <LinearLayout
         android:id="@+id/main_linear_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/background_header_infos"
+        >
+
+        <TextView
+            android:id="@+id/resume_info_header"
+            android:text="Blabla resume"
+            android:textAlignment="center"
+            android:singleLine="false"
+            android:textColor="@color/dkgray"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+
+            >
+
+            <TextView
+                android:layout_weight="3"
+                android:layout_width="0dp"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:background="@drawable/background_header"
+                android:text="Famille"
+
+                />
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@drawable/background_header"
+                android:layout_height="wrap_content"
+                android:text="Donation"
+                />
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:background="@drawable/background_header"
+                android:layout_height="wrap_content"
+                android:text="Excès"
+                />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            android:orientation="vertical"
+            >
+
+
+            <ScrollView
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="6"
+                >
+                <LinearLayout
+                    android:layout_marginTop="@dimen/family_list_display_margin"
+                    android:layout_marginBottom="@dimen/family_list_display_margin"
+                    android:id="@+id/scroll_main_lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:showDividers="middle"
+                    android:divider="@drawable/empty_small_divider"
+                    />
+
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/validation_button"
+                    android:layout_margin="@dimen/large_button_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:background="@drawable/button_ok_gradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/light_validation"
+                        android:text="Calculer les transferts"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginStart="@dimen/general_margin"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_swap_vert_light_validation_24dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/display_tranferts"
+                    android:layout_margin="@dimen/large_button_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:background="@drawable/button_info_gradient"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/light_info"
+                        android:text="Afficher les transferts"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginStart="@dimen/general_margin"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_receipt_info_24dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:id="@+id/back_button"
+                   android:gravity="center"
+                    android:layout_margin="@dimen/large_button_margin"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/button_cancel_gradient">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="@dimen/general_margin"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_back_light_cancel_24dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/light_cancel"
+                        android:text="Retour à la saisie des dons"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     </LinearLayout>
-
-
-
 
 
 

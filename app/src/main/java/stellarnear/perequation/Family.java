@@ -66,9 +66,9 @@ public class Family  {
 
     public void calcExed(Double moneyPerIndiv){
         if (this.alimentaire) {
-            this.exed = (int) (this.donation - this.nMember * moneyPerIndiv - this.alim);
+            this.exed = (int) (this.donation - (this.nMember+this.nChild) * moneyPerIndiv - this.alim);
         }else {
-            this.exed = (int) (this.donation - this.nMember * moneyPerIndiv);
+            this.exed = (int) (this.donation - (this.nMember+this.nChild) * moneyPerIndiv);
         }
     }
 

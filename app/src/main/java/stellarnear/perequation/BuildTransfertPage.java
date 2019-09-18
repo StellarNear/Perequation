@@ -32,56 +32,16 @@ public class BuildTransfertPage {
 
 
 
-    private void addHsep(LinearLayout lay, int color, int h) {
-        View h_sep = new View(mC);
-        h_sep.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,h));
-        h_sep.setBackgroundColor(color);
-        lay.addView(h_sep);
-    }
-    
     private void buildPage3() {
-        addHsep(mainLin, Color.DKGRAY,4);
 
-        TextView result = new TextView(mC);
+        TextView result = mainLin.findViewById(R.id.resume_info_header);
 
-        double money_per_indiv=Calculation.getInstance().getMoneyPerIndiv();
-        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", money_per_indiv)+"€";
-        if (AllFamilies.getInstance(mC).isAlim()) {result_txt+=", Repas : "+AllFamilies.getInstance(mC).getAlim()+"€";}
-        result.setTextSize(18);
-        result.setSingleLine(false);
-        GradientDrawable gd_res = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{Color.WHITE, Color.parseColor("#99ddff")}); //bleu
-        gd_res.setCornerRadius(0f);
-        result.setBackground(gd_res);
-        result.setGravity(Gravity.CENTER);
-        result.setTextColor(Color.DKGRAY);
+        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", Calculation.getInstance().getMoneyPerIndiv())+"€";
+        if (AllFamilies.getInstance(mC).hasAlim()) {result_txt+=", Repas : "+AllFamilies.getInstance(mC).getAlim()+"€";}
         result.setText(result_txt);
 
-        mainLin.addView(result);
-
-        addHsep(mainLin,Color.DKGRAY,4);
-
-        TextView transfert_title=new TextView(mC);
-        transfert_title.setText("Transferts de fonds");
-        transfert_title.setTextSize(20);
-        transfert_title.setGravity(Gravity.CENTER);
-        GradientDrawable fam_title_gd = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{Color.WHITE, Color.LTGRAY});
-        fam_title_gd.setCornerRadius(0f);
-        transfert_title.setBackground(fam_title_gd);
-        transfert_title.setTextColor(Color.DKGRAY);
-        mainLin.addView(transfert_title);
-
-        addHsep(mainLin,Color.DKGRAY,4);
-
-        ScrollView scrolling_fams = new ScrollView(mC);
-        mainLin.addView(scrolling_fams);
-        LinearLayout scroll_fams = new LinearLayout(mC);
-        scroll_fams.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-        scroll_fams.setOrientation(LinearLayout.VERTICAL);
-        scrolling_fams.addView(scroll_fams);
+        LinearLayout scroll_fams = mainLin.findViewById(R.id.scroll_main_lin);
+        scroll_fams.removeAllViews();
 
         for (final Family fam : AllFamilies.getInstance(mC).asList()) {
             if (fam.getTransferts().isEmpty()) {
@@ -108,12 +68,8 @@ public class BuildTransfertPage {
             gd.setCornerRadius(0f);
             fam_lin.setBackground(gd);
             fam_lin.setOrientation(LinearLayout.VERTICAL);
-            View h_sep2 = new View(mC);
-            h_sep2.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 4));
-            h_sep2.setBackgroundColor(Color.GRAY);
-            scroll_fams.addView(h_sep2);
-            scroll_fams.addView(fam_lin);
 
+            scroll_fams.addView(fam_lin);
 
             fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             fam_lin.setGravity(Gravity.CENTER_VERTICAL);
@@ -122,14 +78,12 @@ public class BuildTransfertPage {
 
                 TextView fam_rece = new TextView(mC);
 
-
-                SpannableString spannableString = new SpannableString("X "+transfert.getKey()+" ("+transfert.getValue()+"€)"); //X sera remplacé par l'image apres
+                SpannableString spannableString = new SpannableString("X "+transfert.getKey().getName()+" ("+transfert.getValue()+"€)"); //X sera remplacé par l'image apres
 
                 Drawable img_recolo=tools.changeColor(mC,R.drawable.ic_send_black_24dp,Color.DKGRAY);
                 img_recolo.setBounds(0, 0, Math.round(TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP, 16,mC.getResources().getDisplayMetrics())), Math.round(TypedValue.applyDimension(
                         TypedValue.COMPLEX_UNIT_DIP, 16,mC.getResources().getDisplayMetrics())));
-                ImageSpan imageSpan = new ImageSpan(img_recolo);
 
                 ImageSpan imageSpan_center = new ImageSpan(img_recolo, ImageSpan.ALIGN_BOTTOM) {   //centre l'image sur la ligne
                     public void draw(Canvas canvas, CharSequence text, int start,
@@ -158,17 +112,11 @@ public class BuildTransfertPage {
                 fam_lin.addView(fam_rece);
             }
 
-            addHsep(scroll_fams,Color.GRAY,4);
+
 
         }
 
-        final Button buttonBack = new Button(mC);
-        buttonBack.setText("Retour à la saisie des dons");
-        buttonBack.setTextSize(18);
-        buttonBack.setTextColor(Color.WHITE);
-        buttonBack.setCompoundDrawablesWithIntrinsicBounds(tools.changeColor(mC,R.drawable.ic_arrow_back_black_24dp,"white"),null,null,null);
-        scroll_fams.addView(buttonBack);
-
+        LinearLayout buttonBack = mainLin.findViewById(R.id.back_button);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

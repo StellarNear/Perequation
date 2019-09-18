@@ -88,11 +88,15 @@ public class AllFamilies {
             is.close();
 
             checkSharedSettings();
-            TinyDB tinyDB = new TinyDB(mC);
-            tinyDB.putListAllFamilies("localSaveAllFamilies",listFamilies);
+            saveLocalDB();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveLocalDB() {
+        TinyDB tinyDB = new TinyDB(mC);
+        tinyDB.putListAllFamilies("localSaveAllFamilies",listFamilies);
     }
 
     private String readValue(String tag, Element element) {
@@ -113,7 +117,7 @@ public class AllFamilies {
         return allMoney;
     }
 
-    public boolean isAlim() {
+    public boolean hasAlim() {
         boolean alim=false;
         for (Family fam : listFamilies){
             if (fam.isAlim()){alim=true;}
@@ -159,9 +163,6 @@ public class AllFamilies {
                 family.setAlimentaire_bool(true);
             } else { family.setAlimentaire_bool(false); }
         }
-    }
-
-    public void calculateMoney(){
-
+        saveLocalDB();
     }
 }

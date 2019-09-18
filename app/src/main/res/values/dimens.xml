@@ -2,4 +2,7 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="divider_pref_height">1dp</dimen>
     <dimen name="general_margin">4dp</dimen>
+    <dimen name="large_button_margin">3dp</dimen>
+    <dimen name="family_list_margin">5dp</dimen>
+    <dimen name="family_list_display_margin">3dp</dimen>
 </resources>
