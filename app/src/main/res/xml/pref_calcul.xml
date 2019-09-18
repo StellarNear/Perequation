@@ -1,0 +1,9 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="@bool/family_mode_calcul_def"
+        android:key="family_mode_calcul"
+        android:title="Branche familiale"
+        android:summary="Les transfert sont privilégié au coeur d'une même branche"/>
+</PreferenceScreen>

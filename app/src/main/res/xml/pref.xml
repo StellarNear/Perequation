@@ -1,11 +1,18 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- These settings pref are only used on tablets. -->
+
     <PreferenceScreen
         android:key="pref_general"
         android:icon="@drawable/ic_person_pin_black_24dp"
         android:title="Paramètres généraux"
         android:summary="Nombres d'enfants à charge et préparation repas"/>
+
+    <PreferenceScreen
+        android:key="pref_calcul"
+        android:icon="@drawable/ic_functions_black_24dp"
+        android:title="Paramètres de calculs"
+        android:summary="Mode de calcul pour les transferts"/>
 
 
     <PreferenceScreen

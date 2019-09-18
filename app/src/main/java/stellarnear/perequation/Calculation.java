@@ -55,10 +55,8 @@ public class Calculation {
             Double money_repas = (double) tools.toInt(prefs.getString("Money_alloc_alim",mC.getResources().getString(R.string.money_alloc_alim_def)));
             Integer arrondi_budget = tools.toInt(prefs.getString("round_budget",mC.getResources().getString(R.string.round_budget_def)));
 
-
-            Log.d("STATE txt",moneyPerIndivTxt+"pos:"+moneyPerIndivTxt.indexOf("."));
             String avant_virgule = moneyPerIndivTxt.substring(moneyPerIndivTxt.indexOf(".")-1);  // dans 154,78  ca donne 4,78
-            Log.d("STATE avant virg",avant_virgule);
+
             if (arrondi_budget==5){
                 if (Double.parseDouble(avant_virgule) >=5.0) {
                     moneyPerIndiv=Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule,"5"));
@@ -133,10 +131,66 @@ public class Calculation {
         return null;
     }
 
-    public void calculTransfer() {
+    private void clearTranferts(){
+        for (Family fam : allFamilies.asList()){
+            fam.clearTransfert();
+        }
+    }
+
+    public void calculTransfer(){
+        clearTranferts();
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+        if (settings.getBoolean("family_mode_calcul", mC.getResources().getBoolean(R.bool.family_mode_calcul_def))) {
+            calculTransferFamilyBranch(); //famille d'abord
+            calculTransferAll();            // apres on fais les restant
+        } else {
+         calculTransferAll();
+        }
         this.transfertAvailable=true;
-        List<Family> donateurs = new ArrayList<Family>();
-        List<Family> receveurs = new ArrayList<Family>();
+    }
+
+    private void calculTransferAll() {
+        FamilyList donateurs = new FamilyList();
+        FamilyList receveurs = new FamilyList();
+        for (Family fam : allFamilies.asList()){
+            if (fam.getExed()>0){
+                donateurs.add(fam);
+            } else if (fam.getExed()<0){
+                receveurs.add(fam);
+            }
+        }
+
+        for (Family fam_don : donateurs.asList()){
+            Integer dons = fam_don.getExed();
+            Boolean allRecAllOk=false;
+            while (dons > 1 && !allRecAllOk) {
+                allRecAllOk=true;
+                for (Family fam_rec : receveurs.asList()){
+                    if (Math.abs(fam_rec.getExed())>1){allRecAllOk=false;}   //tant que quelqu'un a besoin d'argent
+                }
+                for (Family fam_rec : receveurs.asList()){
+                    if (dons == 0 ){continue;} //plus d'argent à donner
+                    if(Math.abs(fam_rec.getExed())>1){ //famille receveur encore dans le besoin
+                        if (dons >= Math.abs(fam_rec.getExed())){
+                            fam_don.addTransfert(fam_rec,Math.abs(fam_rec.getExed()));
+                            dons -= Math.abs(fam_rec.getExed());
+                            fam_don.setExed(dons);
+                            fam_rec.setExed(0); //le don couvre
+                        } else {
+                            fam_don.addTransfert(fam_rec,dons);
+                            fam_rec.setExed(fam_rec.getExed()+dons);
+                            dons = 0;
+                            fam_don.setExed(dons); //don est inf
+                        }
+                    } else { continue;}
+                }
+            }
+        }
+    }
+
+    private void calculTransferFamilyBranch() {
+        FamilyList donateurs = new FamilyList();
+        FamilyList receveurs = new FamilyList();
         for (Family fam : allFamilies.asList()){
             fam.clearTransfert(); //en cas d'aller retour p2>p1
             if (fam.getExed()>0){
@@ -146,41 +200,28 @@ public class Calculation {
             }
         }
 
-        for (Family fam_don : donateurs){
-            Log.d("STATE dona", "---Donneur---:"+fam_don.getName());
+        for (Family fam_don : donateurs.asList()){
             Integer dons = fam_don.getExed();
-            Boolean allRecAllOk=false;
-            while (dons > 1 && !allRecAllOk) {
-                allRecAllOk=true;
-                for (Family fam_rec : receveurs){
-                    if (Math.abs(fam_rec.getExed())>1){allRecAllOk=false;}   //tant que quelqu'un a besoin d'argent
-                }
-
-                Log.d("STATE dons","Famille :"+fam_don.getName()+" Dons restant :"+String.valueOf(dons));
-                for (Family fam_rec : receveurs){
+            Boolean familyCompleted=false;
+            while (dons > 1 && !familyCompleted) {
+                for (Family fam_rec : receveurs.filterBranchID(fam_don.getBranchId()).asList()){
                     if (dons == 0 ){continue;} //plus d'argent à donner
-                    Log.d("STATE dons",String.valueOf(dons));
-                    Log.d("STATE rec",fam_rec.getName());
-                    Log.d("STATE rec_ex",String.valueOf(fam_rec.getExed()));
-                    if(Math.abs(fam_rec.getExed())>1){
-                        Log.d("STATE passage",fam_rec.getName()+" encore dans le besoin");
+                    if(Math.abs(fam_rec.getExed())>1){ //famille encore dans le besoin
                         if (dons >= Math.abs(fam_rec.getExed())){
                             fam_don.addTransfert(fam_rec,Math.abs(fam_rec.getExed()));
                             dons -= Math.abs(fam_rec.getExed());
                             fam_don.setExed(dons);
-                            fam_rec.setExed(0);
-                            Log.d("STATE passage","Le dons couvre");
+                            fam_rec.setExed(0); //le don couvre
                         } else {
                             fam_don.addTransfert(fam_rec,dons);
                             fam_rec.setExed(fam_rec.getExed()+dons);
                             dons = 0;
-                            fam_don.setExed(dons);
-                            Log.d("STATE passage","Le dons est inferieur");
+                            fam_don.setExed(dons); //le don est inf
                         }
                     } else { continue;}
                 }
+                familyCompleted=true;//on a fait toute la branche
             }
-            Log.d("STATE dona","Don final :"+dons);
         }
     }
 

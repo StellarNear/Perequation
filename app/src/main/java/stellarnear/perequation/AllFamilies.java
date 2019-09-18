@@ -146,7 +146,7 @@ public class AllFamilies {
 
     public void checkSharedSettings() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-        String idAlim=settings.getString("alloc_alime",String.valueOf(mC.getResources().getString(R.string.alloc_alime_def)));
+
         for (Family family : listFamilies){
             int nMember=tools.toInt(settings.getString(family.getId()+"_member",String.valueOf(family.getnMember())));
             if(nMember!=family.getnMember()){
@@ -158,7 +158,7 @@ public class AllFamilies {
                 family.setnChild(nChild);
             }
 
-
+            String idAlim=settings.getString("alloc_alime",String.valueOf(mC.getResources().getString(R.string.alloc_alime_def)));
             if(idAlim.equalsIgnoreCase(family.getId())){
                 family.setAlimentaire_bool(true);
             } else { family.setAlimentaire_bool(false); }
