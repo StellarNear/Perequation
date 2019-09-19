@@ -3,16 +3,20 @@ package stellarnear.perequation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
@@ -67,11 +71,13 @@ public class MainActivity extends AppCompatActivity {
         inputPageBuilder.setValidationEventListener(new BuildInputPage.OnValidationRequest() {
             @Override
             public void onEvent() {
-                Calculation.computeInstance(getApplicationContext(),allFamilies);
                 try {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 } catch (Exception e){}
+
+                AllFamilies.getInstance(getApplicationContext()).getCalculation().resetCalculation();
+                AllFamilies.getInstance(getApplicationContext()).getTransfertManager().invalidateTranferts();
 
                 displayPageBuilder=new BuildDisplayPage(MainActivity.this,getApplicationContext(),pageDisplay);
                 displayPageBuilder.setBackEventListener(new BuildDisplayPage.OnBackRequest() {

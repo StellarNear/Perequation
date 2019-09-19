@@ -29,6 +29,9 @@ public class AllFamilies {
     private List<Family> listFamilies = new ArrayList<>();
     private Context mC;
 
+    private Calculation calculation=null;
+    private TransfertManager transfertManager=null;
+
     private Tools tools=new Tools();
 
     public static AllFamilies getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
@@ -165,4 +168,20 @@ public class AllFamilies {
         }
         saveLocalDB();
     }
+
+    public Calculation getCalculation(){
+        if(calculation==null){
+            calculation=new Calculation(mC,this);
+        }
+        return calculation;
+    }
+
+    public TransfertManager getTransfertManager(){
+        if(transfertManager==null){
+            transfertManager=new TransfertManager(mC,this);
+        }
+        return transfertManager;
+    }
+
+
 }

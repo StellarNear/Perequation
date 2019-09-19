@@ -11,9 +11,7 @@ import android.text.style.ImageSpan;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Map;
@@ -36,20 +34,17 @@ public class BuildTransfertPage {
 
         TextView result = mainLin.findViewById(R.id.resume_info_header);
 
-        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", Calculation.getInstance().getMoneyPerIndiv())+"€";
+        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv())+"€";
         if (AllFamilies.getInstance(mC).hasAlim()) {result_txt+=", Repas : "+AllFamilies.getInstance(mC).getAlim()+"€";}
         result.setText(result_txt);
 
         LinearLayout scroll_fams = mainLin.findViewById(R.id.scroll_main_lin);
         scroll_fams.removeAllViews();
 
-        for (final Family fam : AllFamilies.getInstance(mC).asList()) {
-            if (fam.getTransferts().isEmpty()) {
-                continue;
-            }  //si elle a rien donné
+        for (final Family famDon : AllFamilies.getInstance(mC).getTransfertManager().getDonators()) {
 
             TextView fam_don_name = new TextView(mC);
-            fam_don_name.setText(fam.getName());
+            fam_don_name.setText(famDon.getName());
             fam_don_name.setTextSize(18);
             fam_don_name.setGravity(Gravity.CENTER);
             fam_don_name.setTextColor(Color.DKGRAY);
@@ -74,11 +69,11 @@ public class BuildTransfertPage {
             fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             fam_lin.setGravity(Gravity.CENTER_VERTICAL);
 
-            for (Map.Entry<Family,Integer> transfert : fam.getTransferts().entrySet()) {
+            for (PairFamilyTranfertSum pairFamilyTranfertSum : AllFamilies.getInstance(mC).getTransfertManager().getReciversForDonator(famDon)) {
 
                 TextView fam_rece = new TextView(mC);
 
-                SpannableString spannableString = new SpannableString("X "+transfert.getKey().getName()+" ("+transfert.getValue()+"€)"); //X sera remplacé par l'image apres
+                SpannableString spannableString = new SpannableString("X "+pairFamilyTranfertSum.getRecivier().getName()+" ("+pairFamilyTranfertSum.getSumMoney()+"€)"); //X sera remplacé par l'image apres
 
                 Drawable img_recolo=tools.changeColor(mC,R.drawable.ic_send_black_24dp,Color.DKGRAY);
                 img_recolo.setBounds(0, 0, Math.round(TypedValue.applyDimension(

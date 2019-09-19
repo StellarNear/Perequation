@@ -15,7 +15,6 @@ public class Family  {
     private Integer exed;
     private boolean alimentaire=false;
     private Integer alim=0;
-    private Map<Family,Integer> transfertMap = new HashMap<Family,Integer>();
 
     public Family(String id,String name,Integer nMember,Integer nChild,String branchId){
         this.id=id;
@@ -97,15 +96,4 @@ public class Family  {
         return  this.alim;
     }
 
-    public void addTransfert(Family family,Integer donation){
-        transfertMap.put(family,donation);
-    }
-
-    public Map<Family,Integer> getTransferts(){
-        return transfertMap;
-    }
-
-    public void clearTransfert() {
-        transfertMap.clear();
-    }
 }

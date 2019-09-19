@@ -1,20 +1,23 @@
 package stellarnear.perequation;
 
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class BuildDisplayPage {
     private Activity mA;
@@ -34,7 +37,7 @@ public class BuildDisplayPage {
 
     private void buildPage2() {
         TextView result = mainLin.findViewById(R.id.resume_info_header);
-        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", Calculation.getInstance().getMoneyPerIndiv())+"€";
+        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv())+"€";
         if (AllFamilies.getInstance(mC).hasAlim()) {result_txt+=", Repas : "+AllFamilies.getInstance(mC).getAlim()+"€";}
         result.setText(result_txt);
 
@@ -42,7 +45,7 @@ public class BuildDisplayPage {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder b = new AlertDialog.Builder(mA);
-                b.setTitle("Changement du budget cadeau (<"+Calculation.getInstance().getMoneyPerIndiv()+"€)");
+                b.setTitle("Changement du budget cadeau (<"+AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()+"€)");
                 final EditText input = new EditText(mC);
                 input.setTextColor(Color.BLACK);
                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -51,11 +54,11 @@ public class BuildDisplayPage {
                     @Override
                     public void onClick(DialogInterface dialog, int whichButton) {
                         int newBudget = tools.toInt(input.getText().toString());
-                        if (newBudget<Calculation.getInstance().getMoneyPerIndiv()) {
-                            Calculation.getInstance().calculMoneyPerIndivFixed((double) newBudget);
+                        if (newBudget<AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()) {
+                            AllFamilies.getInstance(mC).getCalculation().calculMoneyPerIndivFixed((double) newBudget);
                             buildPage2();
                         } else {
-                            tools.customToast(mC,"Le nouveau budget doit etre inferieur à "+Calculation.getInstance().getMoneyPerIndiv()+"€","center");
+                            tools.customToast(mC,"Le nouveau budget doit etre inferieur à "+AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()+"€","center");
                         }
                     }
                 });
@@ -118,8 +121,7 @@ public class BuildDisplayPage {
         buttonT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calculation.getInstance().calculTransfer();
-                buildPage2();
+                calculationAnimation();
             }
         });
 
@@ -139,12 +141,71 @@ public class BuildDisplayPage {
             }
         });
 
-        if(Calculation.getInstance().transfertAvailable()){
+        if(AllFamilies.getInstance(mC).getTransfertManager().transfertAvailable()){
             buttonT.setVisibility(View.GONE);buttonDisplayTranfert.setVisibility(View.VISIBLE);
         } else { buttonDisplayTranfert.setVisibility(View.GONE); buttonT.setVisibility(View.VISIBLE);}
 
     }
 
+
+    private void calculationAnimation() {
+        LayoutInflater inflater = mA.getLayoutInflater();
+        final View layoutRecordVideo = inflater.inflate(R.layout.full_drawable_animation, null);
+        final CustomAlertDialog customVideo = new CustomAlertDialog(mA, mC, layoutRecordVideo);
+        customVideo.setPermanent(true);
+        final FrameLayout drawFrame = layoutRecordVideo.findViewById(R.id.fullscreen_drawable);
+        customVideo.showAlert();
+
+        int timePerSlide=200;
+        final Animation aniFade = AnimationUtils.loadAnimation(mC,R.anim.fadein_drawable_animation);
+        for (int i = 0; i <= 9; i++) {
+            final ImageView img = new ImageView(mC);
+            img.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+            int drawableId=mC.getResources().getIdentifier("ic_vector_"+i, "drawable", mC.getPackageName());
+            img.setImageDrawable(mC.getDrawable(drawableId));
+            img.setBackgroundColor(Color.TRANSPARENT);
+
+            Handler h = new Handler();
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    drawFrame.addView(img);
+                    img.startAnimation(aniFade);
+                }
+            }, (i+1)*timePerSlide);
+        }
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                 Animation aniFadeOut =  AnimationUtils.loadAnimation(mC,R.anim.fadeout_drawable_animation);
+                 aniFadeOut.setAnimationListener(new Animation.AnimationListener() {
+                     @Override
+                     public void onAnimationStart(Animation animation) {
+
+                     }
+
+                     @Override
+                     public void onAnimationEnd(Animation animation) {
+                         customVideo.dismissAlert();
+                     }
+
+                     @Override
+                     public void onAnimationRepeat(Animation animation) {
+
+                     }
+                 });
+                drawFrame.removeViews(0,drawFrame.getChildCount()-1);
+                drawFrame.getChildAt(0).startAnimation(aniFadeOut);
+
+                tools.customToast(mC, "Solution trouvée !", "center");
+                AllFamilies.getInstance(mC).getTransfertManager().calculTransfer();
+                buildPage2();
+            }
+        }, 12*timePerSlide);
+
+    }
 
 
     public interface OnBackRequest {

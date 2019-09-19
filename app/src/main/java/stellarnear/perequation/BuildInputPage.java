@@ -3,7 +3,6 @@ package stellarnear.perequation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.InputType;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.util.Random;

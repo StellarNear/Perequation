@@ -2,9 +2,12 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="colorPrimary">#999999</color>
-    <color name="colorPrimaryDark">#000000</color>
+
+    <color name="colorPrimary">#FCE6CD</color>
+    <color name="colorPrimaryDark">#B87333</color>
+
     <color name="colorAccent">#FF4081</color>
+
     <color name="divider_pref">#E0E0E0</color>
 
     <color name="colorBackground">#d5e7f6</color>

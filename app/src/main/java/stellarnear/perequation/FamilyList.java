@@ -1,13 +1,14 @@
 package stellarnear.perequation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FamilyList {
     private ArrayList<Family> list=new ArrayList<>();
+
     public FamilyList(ArrayList<Family> list){
         this.list=list;
     }
+
     public FamilyList(){
         this.list=new ArrayList<>();
     }
