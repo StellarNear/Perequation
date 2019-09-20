@@ -30,4 +30,5 @@
     <color name="light_info">#4ED1E6</color>
     <color name="end_gradient_button_info">#4EA8E6</color>
     <color name="start_gradient_button_info">#134FE3</color>
+    <color name="gold">#DAA520</color>
 </resources>

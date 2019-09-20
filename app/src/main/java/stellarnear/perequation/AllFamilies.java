@@ -26,7 +26,7 @@ public class AllFamilies {
 
     private static AllFamilies instance=null;
 
-    private List<Family> listFamilies = new ArrayList<>();
+    private FamilyList familyList = new FamilyList();
     private Context mC;
 
     private Calculation calculation=null;
@@ -37,7 +37,7 @@ public class AllFamilies {
     public static AllFamilies getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
         if (instance==null){
             TinyDB tinyDB = new TinyDB(mC);
-            List<Family> listDB = tinyDB.getListAllFamilies("localSaveAllFamilies");
+            ArrayList<Family> listDB = tinyDB.getListAllFamilies("localSaveAllFamilies");
             if (listDB.size() > 0) {
                 instance = new AllFamilies(listDB,mC);
             }else{
@@ -58,9 +58,9 @@ public class AllFamilies {
         buildFamiliesList();
     }
 
-    private AllFamilies(List<Family> fromList,Context mC) {
+    private AllFamilies(ArrayList<Family> fromList,Context mC) {
         this.mC=mC;
-        this.listFamilies = fromList;
+        this.familyList = new FamilyList(fromList);
     }
 
     private void buildFamiliesList() {
@@ -85,7 +85,7 @@ public class AllFamilies {
                             tools.toInt(readValue("nMember", element2)),
                             tools.toInt(readValue("nChild", element2)),
                             readValue("branchId", element2));
-                    listFamilies.add(fam);
+                    familyList.add(fam);
                 }
             }
             is.close();
@@ -99,7 +99,7 @@ public class AllFamilies {
 
     private void saveLocalDB() {
         TinyDB tinyDB = new TinyDB(mC);
-        tinyDB.putListAllFamilies("localSaveAllFamilies",listFamilies);
+        tinyDB.putListAllFamilies("localSaveAllFamilies", familyList.asList());
     }
 
     private String readValue(String tag, Element element) {
@@ -112,45 +112,15 @@ public class AllFamilies {
         }
     }
 
-    public Integer getAllMoney() {
-        Integer allMoney=0;
-        for (Family fam : listFamilies){
-            allMoney+=fam.getDonation();
-        }
-        return allMoney;
-    }
-
-    public boolean hasAlim() {
-        boolean alim=false;
-        for (Family fam : listFamilies){
-            if (fam.isAlim()){alim=true;}
-        }
-        return alim;
-    }
-
-    public Integer getAlim() {
-        for (Family fam : listFamilies){
-            if (fam.isAlim()){return fam.getAlim();}
-        }
-        return 0;
-    }
-
-    public Integer getAllIndiv() {
-        Integer allPop=0;
-        for (Family fam : listFamilies){
-            allPop+=fam.getPopulation();
-        }
-        return allPop;
-    }
 
     public List<Family> asList() {
-        return listFamilies;
+        return familyList.asList();
     }
 
     public void checkSharedSettings() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
 
-        for (Family family : listFamilies){
+        for (Family family : familyList.asList()){
             int nMember=tools.toInt(settings.getString(family.getId()+"_member",String.valueOf(family.getnMember())));
             if(nMember!=family.getnMember()){
                 family.setnMember(nMember);
@@ -171,17 +141,20 @@ public class AllFamilies {
 
     public Calculation getCalculation(){
         if(calculation==null){
-            calculation=new Calculation(mC,this);
+            calculation=new Calculation(mC,this.familyList);
         }
         return calculation;
     }
 
     public TransfertManager getTransfertManager(){
         if(transfertManager==null){
-            transfertManager=new TransfertManager(mC,this);
+            transfertManager=new TransfertManager(mC,this.familyList);
         }
         return transfertManager;
     }
 
 
+    public FamilyList getFamList() {
+        return familyList;
+    }
 }

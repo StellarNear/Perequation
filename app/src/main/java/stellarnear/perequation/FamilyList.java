@@ -9,6 +9,10 @@ public class FamilyList {
         this.list=list;
     }
 
+    public FamilyList(FamilyList famList){
+        this.list=new ArrayList<>(famList.asList()); //copy
+    }
+
     public FamilyList(){
         this.list=new ArrayList<>();
     }
@@ -33,5 +37,37 @@ public class FamilyList {
             }
         }
         return resultList;
+    }
+
+
+    public Integer getAllMoney() {
+        Integer allMoney=0;
+        for (Family fam : list){
+            allMoney+=fam.getDonation();
+        }
+        return allMoney;
+    }
+
+    public boolean hasAlim() {
+        boolean alim=false;
+        for (Family fam : list){
+            if (fam.isAlim()){alim=true;}
+        }
+        return alim;
+    }
+
+    public Integer getAlim() {
+        for (Family fam : list){
+            if (fam.isAlim()){return fam.getAlim();}
+        }
+        return 0;
+    }
+
+    public Integer getAllIndiv() {
+        Integer allPop=0;
+        for (Family fam : list){
+            allPop+=fam.getPopulation();
+        }
+        return allPop;
     }
 }

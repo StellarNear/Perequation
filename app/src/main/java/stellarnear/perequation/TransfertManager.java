@@ -12,15 +12,21 @@ import java.util.Set;
 public class TransfertManager {
     private Tools tools=new Tools();
     private Context mC;
-    private AllFamilies allFamilies;
+    private FamilyList allFamilies;
 
     private Map<Family, ArrayList<PairFamilyTranfertSum>> transfertMapDonatorRecivers = new HashMap<Family, ArrayList<PairFamilyTranfertSum>>();
 
     private boolean transfertAvailable=false;
 
-    public TransfertManager(Context mC,AllFamilies allFamilies){
+    public TransfertManager(Context mC, FamilyList allFamilies){
         this.mC=mC;
         this.allFamilies=allFamilies;
+    }
+
+    public TransfertManager(TransfertManager transfertManagerToCopy){
+        this.mC=transfertManagerToCopy.mC;
+        this.allFamilies=new FamilyList(new ArrayList<Family>(transfertManagerToCopy.allFamilies.asList())); //copy
+        this.transfertMapDonatorRecivers=new HashMap<Family, ArrayList<PairFamilyTranfertSum>>(transfertManagerToCopy.transfertMapDonatorRecivers);
     }
 
     public void invalidateTranferts(){
@@ -143,6 +149,11 @@ public class TransfertManager {
 
     public ArrayList<PairFamilyTranfertSum> getReciversForDonator(Family famDon) {
         return transfertMapDonatorRecivers.get(famDon);
+
+    }
+
+    public void forceTransaction(Family familyDon, Family currentReciever) {
+
 
     }
 }

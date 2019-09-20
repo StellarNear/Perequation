@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 displayPageBuilder.setValidationEventListener(new BuildDisplayPage.OnValidationRequest() {
                     @Override
                     public void onEvent() {
-                        transfertPageBuilder=new BuildTransfertPage(getApplicationContext(),pageTransfert);
+                        transfertPageBuilder=new BuildTransfertPage(MainActivity.this,getApplicationContext(),pageTransfert);
                         transfertPageBuilder.setBackEventListener(new BuildTransfertPage.OnBackRequest() {
                             @Override
                             public void onEvent() {

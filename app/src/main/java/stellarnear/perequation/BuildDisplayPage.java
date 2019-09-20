@@ -37,8 +37,8 @@ public class BuildDisplayPage {
 
     private void buildPage2() {
         TextView result = mainLin.findViewById(R.id.resume_info_header);
-        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv())+"€";
-        if (AllFamilies.getInstance(mC).hasAlim()) {result_txt+=", Repas : "+AllFamilies.getInstance(mC).getAlim()+"€";}
+        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getFamList().getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getFamList().getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv())+"€";
+        if (AllFamilies.getInstance(mC).getFamList().hasAlim()) {result_txt+=", Repas : "+AllFamilies.getInstance(mC).getFamList().getAlim()+"€";}
         result.setText(result_txt);
 
         result.setOnClickListener(new View.OnClickListener() {

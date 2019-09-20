@@ -9,12 +9,12 @@ public class Calculation {
     private Tools tools=new Tools();
     private Context mC;
     private double moneyPerIndiv=0.0d;
-    private AllFamilies allFamilies;
+    private FamilyList familyList;
 
 
-    public Calculation(Context mC, AllFamilies allFamilies){
+    public Calculation(Context mC, FamilyList familyList){
         this.mC=mC;
-        this.allFamilies=allFamilies;
+        this.familyList =familyList;
         calculMoneyPerIndiv();
     }
 
@@ -23,10 +23,10 @@ public class Calculation {
     }
 
     private void calculMoneyPerIndiv() {
-        Integer all_money = allFamilies.getAllMoney();
-        Integer all_pop = allFamilies.getAllIndiv();
+        Integer all_money = familyList.getAllMoney();
+        Integer all_pop = familyList.getAllIndiv();
 
-        Family fam_alloc = testAllocAlim(allFamilies);
+        Family fam_alloc = testAllocAlim();
         Double moneyPerIndiv = 0.0;
         if (fam_alloc == null) {
             moneyPerIndiv = (double) all_money / all_pop;
@@ -65,7 +65,7 @@ public class Calculation {
             fam_alloc.setAlim((int) (rest * all_pop));
         }
 
-        for (Family fam : allFamilies.asList()){
+        for (Family fam : familyList.asList()){
             fam.calcExed(moneyPerIndiv);
         }
 
@@ -73,10 +73,10 @@ public class Calculation {
     }
 
     public void calculMoneyPerIndivFixed(Double fixedMoney) {
-        Integer all_money = allFamilies.getAllMoney();
-        Integer all_pop = allFamilies.getAllIndiv();
+        Integer all_money = familyList.getAllMoney();
+        Integer all_pop = familyList.getAllIndiv();
 
-        Family fam_alloc = testAllocAlim(allFamilies);
+        Family fam_alloc = testAllocAlim();
         Double moneyPerIndiv = 0.0;
         if (fam_alloc == null) {
             moneyPerIndiv=fixedMoney;
@@ -99,15 +99,15 @@ public class Calculation {
             fam_alloc.setAlim((int) (rest * all_pop));
         }
 
-        for (Family fam : allFamilies.asList()){
+        for (Family fam : familyList.asList()){
             fam.calcExed(moneyPerIndiv);
         }
 
         this.moneyPerIndiv=moneyPerIndiv;
     }
 
-    private Family testAllocAlim(AllFamilies AllFamilies) {
-        for (final Family fam : AllFamilies.asList()){
+    private Family testAllocAlim() {
+        for (final Family fam : familyList.asList()){
             if (fam.isAlim()) {
                 return fam;
             }
