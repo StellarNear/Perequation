@@ -85,7 +85,6 @@ public class MyDragAndDrop {
         tempAdditionFamilyReciever=null;
         AlertDialog.Builder builder = new AlertDialog.Builder(mA);
         builder.setTitle("Choix de la famille");
-
         // add a radio button list
         final ArrayList<String> familiesNames=new ArrayList<>();
 

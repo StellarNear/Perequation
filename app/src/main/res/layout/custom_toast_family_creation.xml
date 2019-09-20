@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Création d'objet"
+            android:text="Création de Famille"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@android:color/black" />
 
@@ -34,30 +34,35 @@
         android:padding="@dimen/general_margin">
 
         <EditText
-            android:id="@+id/name_item_creation"
+            android:id="@+id/name_family_creation"
             android:layout_width="wrap_content"
-            android:hint="Nom de l'objet"
+            android:hint="Nom de la famille"
             android:inputType="text"
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/value_item_creation"
-            android:hint="Valeur de l'objet (en po)"
+            android:id="@+id/id_family_creation"
+            android:hint="ID de la famille"
+            android:inputType="text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/nmember_family_creation"
+            android:hint="Nombre de membres"
+            android:inputType="number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/nchild_family_creation"
+            android:hint="Nombre d'enfants"
             android:inputType="number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <EditText
-            android:id="@+id/tag_item_creation"
-            android:hint="Tag éventuel"
-            android:inputType="text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/descr_item_creation"
-            android:hint="Description de l'objet"
-            android:inputType="textMultiLine"
+        <Button
+            android:textAllCaps="false"
+            android:id="@+id/branch_id_family_creation"
+            android:text="ID de la branche familliale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

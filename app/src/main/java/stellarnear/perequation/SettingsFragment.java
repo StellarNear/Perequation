@@ -2,6 +2,7 @@ package stellarnear.perequation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -11,7 +12,13 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +37,9 @@ public class SettingsFragment extends PreferenceFragment {
     private SharedPreferences settings;
     private PrefInfoScreenFragment prefInfoScreenFragment;
     private PrefAllFamsListFragment prefAllFamsListFragment;
+
+    private Family tempRemoveFamily=null;
+    private String tempIDbranchFamily="";
 
     private OnSharedPreferenceChangeListener listener =
             new OnSharedPreferenceChangeListener() {
@@ -128,15 +138,144 @@ public class SettingsFragment extends PreferenceFragment {
             case "infos":
                 prefInfoScreenFragment.showInfo();
                 break;
+            case "create_family":
+                popupCreateFamily();
+                break;
+            case "remove_family":
+                popupRemoveFamily();
+                break;
+
         }
 
     }
-        /*
-        // Top level PreferenceScreen
-        if (key.equals("top_key_0")) {         changePrefScreen(R.xml.pref_general, preference.getTitle().toString()); // descend into second level    }
 
-        // Second level PreferenceScreens
-        if (key.equals("second_level_key_0")) {        // do something...    }       */
+    private void popupCreateFamily() {
+        LayoutInflater inflater = mA.getLayoutInflater();
+        final View creationView = inflater.inflate(R.layout.custom_toast_family_creation, null);
+
+        CustomAlertDialog creationItemAlert = new CustomAlertDialog(mA, mC, creationView);
+        creationItemAlert.setPermanent(true);
+        creationItemAlert.addConfirmButton("Créer");
+        creationItemAlert.addCancelButton("Annuler");
+
+        View branchIDButton=creationView.findViewById(R.id.branch_id_family_creation);
+        tempIDbranchFamily="";
+        branchIDButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupChooseMainBranch();
+            }
+        });
+
+        creationItemAlert.setAcceptEventListener(new CustomAlertDialog.OnAcceptEventListener() {
+            @Override
+            public void onEvent() {
+                String name = ((EditText) creationView.findViewById(R.id.name_family_creation)).getText().toString();
+                String id = ((EditText) creationView.findViewById(R.id.id_family_creation)).getText().toString();
+                String nMemberTxt = ((EditText) creationView.findViewById(R.id.nmember_family_creation)).getText().toString();
+                String nChildTxt = ((EditText) creationView.findViewById(R.id.nchild_family_creation)).getText().toString();
+
+                Family fam = new Family(id,name,tools.toInt(nMemberTxt),tools.toInt(nChildTxt),tempIDbranchFamily);
+
+                if(testUniqueID(fam) && !tempIDbranchFamily.equalsIgnoreCase("")) {
+                    AllFamilies.getInstance(mC).addFamily(fam);
+                    tools.customToast(mC, fam.getName() + " ajoutée !");
+                    navigate();
+                } else {
+                    if(!testUniqueID(fam)){
+                        tools.customToast(mC,"L'identifiant de famille existe déjà...");
+                    } else {
+                        tools.customToast(mC,"Vous devez donner la branche familliale principale !");
+                    }
+                }
+            }
+        });
+        creationItemAlert.showAlert();
+        final EditText editName = ((EditText) creationView.findViewById(R.id.name_family_creation));
+        editName.post(new Runnable() {
+            public void run() {
+                editName.setFocusableInTouchMode(true);
+                editName.requestFocusFromTouch();
+                InputMethodManager lManager = (InputMethodManager) mA.getSystemService(Context.INPUT_METHOD_SERVICE);
+                lManager.showSoftInput(editName, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+    }
+
+    private void popupChooseMainBranch() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mC);
+        builder.setTitle("Choose an animal");
+
+        final String[] familiesBranchs = {"chatron", "gouillion", "maestre", "ribiere"};
+        builder.setItems(familiesBranchs, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                try {
+                    tempIDbranchFamily=familiesBranchs[which];
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private boolean testUniqueID(Family famNew) {
+        boolean unique=true;
+        for(Family fam : AllFamilies.getInstance(mC).getFamList().asList()){
+            if(fam.getId().equalsIgnoreCase(famNew.getId())){
+                unique=false;
+            }
+        }
+        return unique;
+    }
+
+    private void popupRemoveFamily() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mA);
+        builder.setTitle("Choix de la famille");
+        // add a radio button list
+        final ArrayList<String> familiesNames=new ArrayList<>();
+
+        for(Family fam : AllFamilies.getInstance(mC).getFamList().asList()){
+            familiesNames.add(fam.getName());
+        }
+
+        int checkedItem = -1;
+        String[] familiesArray = familiesNames.toArray(new String[familiesNames.size()]);
+        builder.setSingleChoiceItems(familiesArray, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                tempRemoveFamily = AllFamilies.getInstance(mC).getFamList().asList().get(which);
+            }
+        });
+
+        // add OK and Cancel buttons
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // user clicked OK
+                if(tempRemoveFamily!=null) {
+                    AllFamilies.getInstance(mC).removeFamily(tempRemoveFamily);
+                    tools.customToast(mC,"Famille supprimée !");
+                    navigate();
+                }
+            }
+        });
+        builder.setNegativeButton("Annuler", null);
+
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    /*
+    // Top level PreferenceScreen
+    if (key.equals("top_key_0")) {         changePrefScreen(R.xml.pref_general, preference.getTitle().toString()); // descend into second level    }
+
+    // Second level PreferenceScreens
+    if (key.equals("second_level_key_0")) {        // do something...    }       */
         @Override
         public void onDestroy() {
             super.onDestroy();

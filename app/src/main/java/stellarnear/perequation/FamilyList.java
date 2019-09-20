@@ -76,4 +76,12 @@ public class FamilyList {
             fam.calcExed(moneyPerIndiv);
         }
     }
+
+    public void remove(Family tempRemoveFamily) {
+        try {
+            list.remove(tempRemoveFamily);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

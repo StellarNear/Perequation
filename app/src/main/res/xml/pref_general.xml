@@ -13,14 +13,14 @@
             android:summary="Valeur : %s€"/>
 
 
-    <stellarnear.perequation.EditTextPreference
-        android:defaultValue="@string/money_alloc_alim_def"
-        android:key="Money_alloc_alim"
-        android:inputType="number"
-        android:title="Argent alloué au repas"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:summary="Valeur : %s€"/>
+        <stellarnear.perequation.EditTextPreference
+            android:defaultValue="@string/money_alloc_alim_def"
+            android:key="Money_alloc_alim"
+            android:inputType="number"
+            android:title="Argent alloué au repas"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Valeur : %s€"/>
 
     </PreferenceCategory>
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
@@ -34,11 +34,29 @@
             android:title="Mode Test" />
 
     </PreferenceCategory>
-
     <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
+    <PreferenceCategory android:title="Modifications de la liste">
+        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+        <PreferenceScreen
+            android:key="create_family"
+            android:icon="@drawable/ic_add_box_addition_24dp"
+            android:title="Créer une famille"
+            android:summary="Ajoute une nouvelle famille à la liste"
+            />
+        <PreferenceScreen
+            android:key="remove_family"
+            android:icon="@drawable/ic_indeterminate_check_box_remove_24dp"
+            android:title="Enlever une famille"
+            android:summary="Supprime une famille de la liste"
+            />
+    </PreferenceCategory>
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
     <PreferenceCategory android:title="Familles et population" android:key="all_fams">
 
         <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
 
 
     </PreferenceCategory>

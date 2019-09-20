@@ -3,20 +3,18 @@ package stellarnear.perequation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ViewFlipper;
 
@@ -54,8 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
         panel = (ViewFlipper) findViewById(R.id.panel);
 
-
         final AllFamilies allFamilies = AllFamilies.getInstance(getApplicationContext());
+        allFamilies.reset();
+
         Family famAlloc = testAllocAlim(allFamilies);
         String msg="";
         if (famAlloc==null) {
@@ -84,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onEvent() {
                         inputPageBuilder.refresh();
+                        setAnimPanelBack();
                         panel.showPrevious();
                     }
                 });
@@ -95,16 +95,42 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onEvent() {
                                 inputPageBuilder.refresh();
+                                setAnimPanelBack();
                                 panel.setDisplayedChild(0);
                             }
                         });
+                        setAnimPanelIn();
                         panel.showNext();
+
                     }
                 });
+                setAnimPanelIn();
                 panel.showNext();
 
             }
         });
+
+
+    }
+
+    private void setAnimPanelIn() {
+        Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.infromright);
+        Animation out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.outtoleft);
+
+        panel.clearAnimation();
+        panel.setInAnimation(in);
+        panel.setOutAnimation(out);
+    }
+
+    private void setAnimPanelBack() {
+        Animation out = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.outtoright);
+        Animation in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.infromleft);
+        panel.clearAnimation();
+        panel.setInAnimation(in);
+        panel.setOutAnimation(out);
+    }
+
+    private void panelNext() {
 
 
     }

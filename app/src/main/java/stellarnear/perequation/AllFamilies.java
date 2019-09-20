@@ -16,8 +16,6 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-
-
 /**
  * Created by jchatron on 05/01/2018.
  */
@@ -47,10 +45,16 @@ public class AllFamilies {
         return instance;
     }
 
-    public void resetAllFamilies(){
+    public void eraseAllFamilies(){
         TinyDB tinyDB = new TinyDB(mC);
         tinyDB.putListAllFamilies("localSaveAllFamilies",new ArrayList<Family>());
         instance =null;
+    }
+
+    public void reset(){
+        for (Family fam : familyList.asList()){
+            fam.reset();
+        }
     }
 
     private AllFamilies(Context mC) {
@@ -156,5 +160,15 @@ public class AllFamilies {
 
     public FamilyList getFamList() {
         return familyList;
+    }
+
+    public void removeFamily(Family tempRemoveFamily) {
+        familyList.remove(tempRemoveFamily);
+        saveLocalDB();
+    }
+
+    public void addFamily(Family fam) {
+        familyList.add(fam);
+        saveLocalDB();
     }
 }

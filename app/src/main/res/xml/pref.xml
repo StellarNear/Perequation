@@ -5,8 +5,8 @@
     <PreferenceScreen
         android:key="pref_general"
         android:icon="@drawable/ic_person_pin_black_24dp"
-        android:title="Paramètres généraux"
-        android:summary="Nombres d'enfants à charge et préparation repas"/>
+        android:title="Paramètres familles"
+        android:summary="Familles, Nb d'enfants et préparation repas"/>
 
     <PreferenceScreen
         android:key="pref_calcul"

@@ -12,7 +12,7 @@ public class Family  {
     private Integer donation=0;
     private Integer nMember;
     private Integer nChild;
-    private Integer exed;
+    private Integer exed=0;
     private boolean alimentaire=false;
     private Integer alim=0;
 
@@ -102,4 +102,10 @@ public class Family  {
     }
 
 
+    public void reset() {
+        donation=0;
+        exed=0;
+        alimentaire=false;
+        alim=0;
+    }
 }

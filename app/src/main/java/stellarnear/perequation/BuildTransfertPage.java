@@ -222,7 +222,6 @@ public class BuildTransfertPage {
                 LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT );
                 famReceTextView.setLayoutParams(params2);
 
-                //todo if(!transfertForced) on affiche le (dons) enrecuperant l'id sur le transfertManager non temp sinon des que forced on enleve le () pou alors recalcul en temps réel à voir
                 famReceTextView.setText(pairFamilyTranfertSum.getRecivier().getName()+" ["+pairFamilyTranfertSum.getRecivier().getExed()+"€] "+"("+pairFamilyTranfertSum.getSumMoney()+"€)");
                 famReceTextView.setTextSize(14);
                 famReceTextView.setGravity(Gravity.CENTER);

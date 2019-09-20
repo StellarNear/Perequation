@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v2.0"</string>
+    <string name="version">"v3.0"</string>
     <string name="basic_infos">"Cette application est développée par le dernier Chatron.
 Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+v3.0 :
+- Refonte graphique totale
+- Systeme de recherche par proximité familliale
+- Transferts editables à la main
+- Liste des familles éditables
+----------------------------------------------------------------------------------
 v2.0 :
 - Ajout d'une branche de famille pour Romain Gouillon
 - Ajout d'une modification manuelle du budget !

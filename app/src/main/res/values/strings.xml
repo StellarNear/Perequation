@@ -9,7 +9,7 @@
     <string name="money_alloc_alim_def">100</string>
     <string name="round_budget_def">5</string>
     <string name="setting_activity">Paramètres</string>
-    <string name="time_spend">14h</string>
+    <string name="time_spend">29h</string>
 
     <string-array name="arrondi_budget">
         <item>"5"</item>
