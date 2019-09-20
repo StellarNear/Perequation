@@ -14,10 +14,9 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.Map;
 
 public class BuildTransfertPage {
     private Activity mA;
@@ -70,10 +69,9 @@ public class BuildTransfertPage {
 
     private void startManualEdition() {
         FamilyList tempList = new FamilyList(AllFamilies.getInstance(mC).getFamList());
-        Calculation tempCalc=new Calculation(mC,tempList);
-        tempCalc.resetCalculation();
-        tempCalc.calculMoneyPerIndivFixed(AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv());
+        tempList.calcExed(AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()); //remet les exced à l'etat avant transfert
         tempTransfertManager=new TransfertManager(mC,tempList);
+        tempTransfertManager.copyTransferts(AllFamilies.getInstance(mC).getTransfertManager().getTransfertsMaps());
 
         LayoutInflater inflater = LayoutInflater.from(mC);
         View mainView = inflater.inflate(R.layout.manual_edition_transferts,null);
@@ -95,8 +93,8 @@ public class BuildTransfertPage {
     }
 
     private void populateTranferts(LinearLayout scrollMainLin) {
-        for (final Family famDon : currentTransfertManager.getDonators()) {
-
+        for (final Family famDon : currentTransfertManager.getDonateurs().asList()) {
+            if(currentTransfertManager.getReciversForDonator(famDon).size()<=0){ continue; }
             TextView fam_don_name = new TextView(mC);
             fam_don_name.setText(famDon.getName());
             fam_don_name.setTextSize(18);
@@ -163,10 +161,16 @@ public class BuildTransfertPage {
         }
     }
 
-    private void populateTranfertsEdition(LinearLayout scrollMainLin) {
-        MyDragAndDrop myDragAndDrop = new MyDragAndDrop(mC,tempTransfertManager);
-        for (final Family famDon : currentTransfertManager.getDonators()) {
-
+    private void populateTranfertsEdition(final LinearLayout scrollMainLin) {
+        MyDragAndDrop myDragAndDrop = new MyDragAndDrop(mA,mC,tempTransfertManager);
+        myDragAndDrop.setOnRefreshListner(new MyDragAndDrop.OnRefreshListner() {
+            @Override
+            public void onEvent() {
+                populateTranfertsEdition(scrollMainLin);
+            }
+        });
+        scrollMainLin.removeAllViews();
+        for (final Family famDon : tempTransfertManager.getDonateurs().asList()) {
             LinearLayout fram = new LinearLayout(mC);
             fram.setGravity(Gravity.CENTER);
             fram.setOrientation(LinearLayout.VERTICAL);
@@ -175,35 +179,61 @@ public class BuildTransfertPage {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT );
             params.setMargins(0,5,0,0);
             fram.setLayoutParams(params);
+            scrollMainLin.addView(fram);
+
+            LinearLayout framDom = new LinearLayout(mC);
+            framDom.setGravity(Gravity.CENTER);
+            framDom.setOrientation(LinearLayout.HORIZONTAL);
+            fram.setPadding(5,0,5,0);
+            LinearLayout.LayoutParams paramsDom = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT );
+            framDom.setLayoutParams(paramsDom);
+
+            fram.addView(framDom);
+
 
             TextView fam_don_name = new TextView(mC);
-            fam_don_name.setText(famDon.getName() +" ["+famDon.getExed()+"€]");
-            fam_don_name.setTextSize(18);
+            fam_don_name.setText(famDon.getName() +" ["+famDon.getExed()+"€] "+"("+tempTransfertManager.getSumDon(famDon)+"€)");
+            fam_don_name.setTextSize(16);
             fam_don_name.setTypeface(null, Typeface.BOLD);
             fam_don_name.setGravity(Gravity.CENTER);
             fam_don_name.setTextColor(mC.getColor(R.color.gold));//fam_don_name.setTextColor(Color.DKGRAY);
 
-            fram.addView(fam_don_name);
-
+            framDom.addView(fam_don_name);
             myDragAndDrop.setDragListner(fram,famDon);
 
-            scrollMainLin.addView(fram);
+            ImageView addButton=new ImageView(mC);
+            addButton.setImageDrawable(mC.getDrawable(R.drawable.ic_add_box_addition_24dp));
+            myDragAndDrop.setAddRecieverOnclickListner(addButton,famDon);
+            framDom.addView(addButton);
 
-            for (PairFamilyTranfertSum pairFamilyTranfertSum : currentTransfertManager.getReciversForDonator(famDon)) {
 
-                TextView fam_rece = new TextView(mC);
+            for (PairFamilyTranfertSum pairFamilyTranfertSum : tempTransfertManager.getReciversForDonator(famDon)) {
+
+                LinearLayout framRece = new LinearLayout(mC);
+                framRece.setGravity(Gravity.CENTER);
+                framRece.setOrientation(LinearLayout.HORIZONTAL);
+                fram.setPadding(5,0,5,0);
+                LinearLayout.LayoutParams paramsRece = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT );
+                framRece.setLayoutParams(paramsRece);
+
+                fram.addView(framRece);
+
+                TextView famReceTextView = new TextView(mC);
                 LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT );
-                fam_rece.setLayoutParams(params2);
+                famReceTextView.setLayoutParams(params2);
 
                 //todo if(!transfertForced) on affiche le (dons) enrecuperant l'id sur le transfertManager non temp sinon des que forced on enleve le () pou alors recalcul en temps réel à voir
-                fam_rece.setText(pairFamilyTranfertSum.getRecivier().getName()+" ["+pairFamilyTranfertSum.getRecivier().getExed()+"]");
-                fam_rece.setTextSize(16);
-                fam_rece.setGravity(Gravity.CENTER);
-                fam_rece.setTextColor(Color.DKGRAY);
+                famReceTextView.setText(pairFamilyTranfertSum.getRecivier().getName()+" ["+pairFamilyTranfertSum.getRecivier().getExed()+"€] "+"("+pairFamilyTranfertSum.getSumMoney()+"€)");
+                famReceTextView.setTextSize(14);
+                famReceTextView.setGravity(Gravity.CENTER);
+                famReceTextView.setTextColor(Color.DKGRAY);
+                myDragAndDrop.setTouchListner(famDon,famReceTextView,framRece,pairFamilyTranfertSum.getRecivier());
+                framRece.addView(famReceTextView);
 
-                myDragAndDrop.setTouchListner(fam_rece,pairFamilyTranfertSum.getRecivier());
-
-                fram.addView(fam_rece);
+                ImageView removeButton=new ImageView(mC);
+                removeButton.setImageDrawable(mC.getDrawable(R.drawable.ic_indeterminate_check_box_remove_24dp));
+                myDragAndDrop.setRemoveOnclickListner(removeButton,framRece,famDon,pairFamilyTranfertSum.getRecivier());
+                framRece.addView(removeButton);
             }
         }
     }

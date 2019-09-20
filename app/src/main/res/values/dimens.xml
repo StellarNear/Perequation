@@ -5,4 +5,5 @@
     <dimen name="large_button_margin">3dp</dimen>
     <dimen name="family_list_margin">5dp</dimen>
     <dimen name="family_list_display_margin">3dp</dimen>
+    <dimen name="margin_edition_popup">8dp</dimen>
 </resources>

@@ -7,6 +7,12 @@
         android:summary="Masque la barre de statut du téléphone"/>
 
     <SwitchPreference
+        android:defaultValue="@bool/switch_anim_calcul_def"
+        android:key="switch_anim_calcul"
+        android:title="Animation de calcul"
+        android:summary="Afficher l'animation lors du calcul de la solution"/>
+
+    <SwitchPreference
         android:defaultValue="@bool/switch_autoclose_dialog_def"
         android:key="switch_autoclose_dialog"
         android:title="Popups éphémères"

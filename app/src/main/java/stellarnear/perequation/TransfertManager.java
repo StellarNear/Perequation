@@ -3,8 +3,10 @@ package stellarnear.perequation;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -13,6 +15,8 @@ public class TransfertManager {
     private Tools tools=new Tools();
     private Context mC;
     private FamilyList allFamilies;
+    private FamilyList donateurs = new FamilyList();
+    private FamilyList receveurs = new FamilyList();
 
     private Map<Family, ArrayList<PairFamilyTranfertSum>> transfertMapDonatorRecivers = new HashMap<Family, ArrayList<PairFamilyTranfertSum>>();
 
@@ -21,12 +25,20 @@ public class TransfertManager {
     public TransfertManager(Context mC, FamilyList allFamilies){
         this.mC=mC;
         this.allFamilies=allFamilies;
+        selectDonorsAndRecievers();
     }
 
-    public TransfertManager(TransfertManager transfertManagerToCopy){
-        this.mC=transfertManagerToCopy.mC;
-        this.allFamilies=new FamilyList(new ArrayList<Family>(transfertManagerToCopy.allFamilies.asList())); //copy
-        this.transfertMapDonatorRecivers=new HashMap<Family, ArrayList<PairFamilyTranfertSum>>(transfertManagerToCopy.transfertMapDonatorRecivers);
+    private void selectDonorsAndRecievers() {
+        donateurs = new FamilyList();
+        receveurs = new FamilyList();
+        for (Family fam : allFamilies.asList()){
+            if (fam.getExed()>0){
+                donateurs.add(fam);
+                addDonator(fam);
+            } else if (fam.getExed()<0){
+                receveurs.add(fam);
+            }
+        }
     }
 
     public void invalidateTranferts(){
@@ -36,6 +48,7 @@ public class TransfertManager {
 
     private void clearTranferts(){
         transfertMapDonatorRecivers =new HashMap<Family, ArrayList<PairFamilyTranfertSum>>();
+        selectDonorsAndRecievers();
     }
 
     public void calculTransfer(){
@@ -51,17 +64,6 @@ public class TransfertManager {
     }
 
     private void calculTransferAll() {
-        FamilyList donateurs = new FamilyList();
-        FamilyList receveurs = new FamilyList();
-        for (Family fam : allFamilies.asList()){
-            if (fam.getExed()>0){
-                donateurs.add(fam);
-                addDonator(fam);
-            } else if (fam.getExed()<0){
-                receveurs.add(fam);
-            }
-        }
-
         for (Family fam_don : donateurs.asList()){
             Integer dons = fam_don.getExed();
             Boolean allRecAllOk=false;
@@ -91,16 +93,6 @@ public class TransfertManager {
     }
 
     private void calculTransferFamilyBranch() {
-        FamilyList donateurs = new FamilyList();
-        FamilyList receveurs = new FamilyList();
-        for (Family fam : allFamilies.asList()){
-            if (fam.getExed()>0){
-                donateurs.add(fam);
-                addDonator(fam);
-            } else if (fam.getExed()<0){
-                receveurs.add(fam);
-            }
-        }
 
         for (Family fam_don : donateurs.asList()){
             Integer dons = fam_don.getExed();
@@ -143,8 +135,12 @@ public class TransfertManager {
         return transfertAvailable;
     }
 
-    public Set<Family> getDonators() {
-        return transfertMapDonatorRecivers.keySet();
+    public FamilyList getDonateurs() {
+        return donateurs;
+    }
+
+    public FamilyList getReceveurs() {
+        return receveurs;
     }
 
     public ArrayList<PairFamilyTranfertSum> getReciversForDonator(Family famDon) {
@@ -152,8 +148,57 @@ public class TransfertManager {
 
     }
 
-    public void forceTransaction(Family familyDon, Family currentReciever) {
+    public void forceTransaction(Family familyDon, Family currentReciever,int money) {
+        try {
+            transfertMapDonatorRecivers.get(familyDon).add(new PairFamilyTranfertSum(currentReciever,money));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void removeTransfert(Family familyDon, Family familyRec) {
+        try {
+            for(PairFamilyTranfertSum pair : transfertMapDonatorRecivers.get(familyDon)){
+                if(pair.getRecivier()==familyRec){
+                    transfertMapDonatorRecivers.get(familyDon).remove(pair);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
+    public void copyTransferts( Map<Family, ArrayList<PairFamilyTranfertSum>> map){
+        this.transfertMapDonatorRecivers=map;
+    }
+
+    public Map<Family, ArrayList<PairFamilyTranfertSum>> getTransfertsMaps() {
+        return transfertMapDonatorRecivers;
+    }
+
+    public int getSumDon(Family famDon) {
+        int sum=0;
+        try {
+            for(PairFamilyTranfertSum pair : transfertMapDonatorRecivers.get(famDon)){
+                sum+=pair.getSumMoney();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sum;
+    }
+
+    public int getExistingTransfer(Family tempAdditionFamilyDonator, Family tempAdditionFamilyReciever) {
+        int money=0;
+        try {
+            for(PairFamilyTranfertSum pair : transfertMapDonatorRecivers.get(tempAdditionFamilyDonator)){
+                if(pair.getRecivier()==tempAdditionFamilyReciever){
+                    money=pair.getSumMoney();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return money;
     }
 }

@@ -3,9 +3,11 @@ package stellarnear.perequation;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.view.Gravity;
@@ -121,7 +123,14 @@ public class BuildDisplayPage {
         buttonT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                calculationAnimation();
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+                if (settings.getBoolean("switch_anim_calcul", mC.getResources().getBoolean(R.bool.switch_anim_calcul_def))) {
+                    calculationAnimation();
+                } else {
+                    tools.customToast(mC, "Solution trouvée !", "center");
+                    AllFamilies.getInstance(mC).getTransfertManager().calculTransfer();
+                    buildPage2();
+                }
             }
         });
 

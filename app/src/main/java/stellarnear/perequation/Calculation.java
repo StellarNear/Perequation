@@ -27,9 +27,9 @@ public class Calculation {
         Integer all_pop = familyList.getAllIndiv();
 
         Family fam_alloc = testAllocAlim();
-        Double moneyPerIndiv = 0.0;
+        Double moneyPerIndivCalcul = 0.0;
         if (fam_alloc == null) {
-            moneyPerIndiv = (double) all_money / all_pop;
+            moneyPerIndivCalcul = (double) all_money / all_pop;
         } else {
 
             Double moneyPerIndivOri = (double) all_money / all_pop;
@@ -44,21 +44,21 @@ public class Calculation {
 
             if (arrondi_budget==5){
                 if (Double.parseDouble(avant_virgule) >=5.0) {
-                    moneyPerIndiv=Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule,"5"));
+                    moneyPerIndivCalcul=Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule,"5"));
                 } else {
-                    moneyPerIndiv=Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule,"0"));
+                    moneyPerIndivCalcul=Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule,"0"));
                 }
             } else if (arrondi_budget==1){
 
-                moneyPerIndiv= (double) moneyPerIndivOri.intValue(); //arrondi à l'entier inferieur
-                Log.d("STATE budg1",String.valueOf(moneyPerIndiv));
+                moneyPerIndivCalcul= (double) moneyPerIndivOri.intValue(); //arrondi à l'entier inferieur
+                Log.d("STATE budg1",String.valueOf(moneyPerIndivCalcul));
             }
 
-            Double rest = moneyPerIndivOri-moneyPerIndiv;
+            Double rest = moneyPerIndivOri-moneyPerIndivCalcul;
 
             while (rest * all_pop < money_repas) {
-                moneyPerIndiv-=arrondi_budget;
-                rest = moneyPerIndivOri-moneyPerIndiv;
+                moneyPerIndivCalcul-=arrondi_budget;
+                rest = moneyPerIndivOri-moneyPerIndivCalcul;
             }
 
             fam_alloc.setAlimentaire_bool(true);
@@ -66,10 +66,10 @@ public class Calculation {
         }
 
         for (Family fam : familyList.asList()){
-            fam.calcExed(moneyPerIndiv);
+            fam.calcExed(moneyPerIndivCalcul);
         }
 
-        this.moneyPerIndiv=moneyPerIndiv;
+        this.moneyPerIndiv=moneyPerIndivCalcul;
     }
 
     public void calculMoneyPerIndivFixed(Double fixedMoney) {
@@ -77,22 +77,22 @@ public class Calculation {
         Integer all_pop = familyList.getAllIndiv();
 
         Family fam_alloc = testAllocAlim();
-        Double moneyPerIndiv = 0.0;
+        Double moneyPerIndivCalcul = 0.0;
         if (fam_alloc == null) {
-            moneyPerIndiv=fixedMoney;
+            moneyPerIndivCalcul=fixedMoney;
         } else {
             Double moneyPerIndivOri = (double) all_money / all_pop;
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
             Double money_repas = (double) tools.toInt(prefs.getString("Money_alloc_alim",mC.getResources().getString(R.string.money_alloc_alim_def)));
             Integer arrondi_budget = tools.toInt(prefs.getString("round_budget",mC.getResources().getString(R.string.round_budget_def)));
 
-            moneyPerIndiv=fixedMoney;
+            moneyPerIndivCalcul=fixedMoney;
 
-            Double rest = moneyPerIndivOri-moneyPerIndiv;
+            Double rest = moneyPerIndivOri-moneyPerIndivCalcul;
 
             while (rest * all_pop < money_repas) {
-                moneyPerIndiv-=arrondi_budget;
-                rest = moneyPerIndivOri-moneyPerIndiv;
+                moneyPerIndivCalcul-=arrondi_budget;
+                rest = moneyPerIndivOri-moneyPerIndivCalcul;
             }
 
             fam_alloc.setAlimentaire_bool(true);
@@ -100,10 +100,14 @@ public class Calculation {
         }
 
         for (Family fam : familyList.asList()){
-            fam.calcExed(moneyPerIndiv);
+            if(fam_alloc!=null){
+                fam.calcExed(moneyPerIndivCalcul);
+            } else {
+                fam.calcExedRefund(this.moneyPerIndiv,moneyPerIndivCalcul);
+            }
         }
 
-        this.moneyPerIndiv=moneyPerIndiv;
+        this.moneyPerIndiv=moneyPerIndivCalcul;
     }
 
     private Family testAllocAlim() {

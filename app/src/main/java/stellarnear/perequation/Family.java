@@ -65,10 +65,15 @@ public class Family  {
 
     public void calcExed(Double moneyPerIndiv){
         if (this.alimentaire) {
-            this.exed = (int) (this.donation - (this.nMember+this.nChild) * moneyPerIndiv - this.alim);
-        }else {
-            this.exed = (int) (this.donation - (this.nMember+this.nChild) * moneyPerIndiv);
+            this.exed = (int) (this.donation - (this.nMember + this.nChild) * moneyPerIndiv - this.alim);
+        } else {
+            this.exed = (int) (this.donation - (this.nMember + this.nChild) * moneyPerIndiv);
         }
+    }
+
+    public void calcExedRefund(Double oldMoneyPerIndiv,Double newMoneyPerIndiv) {  //quand on fixe manuelement une moneyPerIndiv inferieur il faut diminuer les don de chaqu'un si y a pas d'alimentaire
+        this.donation=this.donation-(int)((oldMoneyPerIndiv-newMoneyPerIndiv)*(this.nChild+this.nMember));
+        this.exed = (int) (this.donation - (this.nMember + this.nChild) * newMoneyPerIndiv);
     }
 
 
@@ -95,5 +100,6 @@ public class Family  {
     public Integer getAlim(){
         return  this.alim;
     }
+
 
 }

@@ -145,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:gravity="center"
-                    android:background="@drawable/button_info_gradient"
+                    android:background="@drawable/button_primary_gradient"
                     android:orientation="horizontal">
 
                     <TextView
@@ -153,14 +153,14 @@
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
                         android:textAllCaps="true"
-                        android:textColor="@color/light_info"
+                        android:textColor="@color/colorPrimary"
                         android:text="Afficher les transferts"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_marginStart="@dimen/general_margin"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_receipt_info_24dp"/>
+                        android:src="@drawable/ic_receipt_primary_24dp"/>
                 </LinearLayout>
 
                 <LinearLayout

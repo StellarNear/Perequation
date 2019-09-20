@@ -70,4 +70,10 @@ public class FamilyList {
         }
         return allPop;
     }
+
+    public void calcExed(double moneyPerIndiv) {
+        for(Family fam: list){
+            fam.calcExed(moneyPerIndiv);
+        }
+    }
 }

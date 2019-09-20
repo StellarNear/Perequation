@@ -6,5 +6,6 @@
     <bool name="switch_fullscreen_mode_def">true</bool>
 
     <bool name="family_mode_calcul_def">true</bool>
+    <bool name="switch_anim_calcul_def">true</bool>
 
 </resources>
