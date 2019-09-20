@@ -30,6 +30,7 @@ public class CustomAlertDialog {
             dialogBuilder  = new AlertDialog.Builder(mA,R.style.CustomDialog);
         }
         dialogBuilder.setView(view);
+        dialogBuilder.setCancelable(false);
     }
 
     public void showAlert() {
