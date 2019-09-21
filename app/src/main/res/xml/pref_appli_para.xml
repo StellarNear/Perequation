@@ -28,6 +28,16 @@
         android:summary="Valeurs : %s ms"
         android:title="Durée d'affichage des fenêtres"
         />
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+    <PreferenceCategory android:title="Paramètre de test">
 
+        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+        <SwitchPreference
+            android:defaultValue="@bool/Test_switch_def"
+            android:key="Test_switch"
+            android:title="Mode Test" />
+
+    </PreferenceCategory>
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
 </PreferenceScreen>

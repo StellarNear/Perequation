@@ -105,7 +105,5 @@ public class Family  {
     public void reset() {
         donation=0;
         exed=0;
-        alimentaire=false;
-        alim=0;
     }
 }

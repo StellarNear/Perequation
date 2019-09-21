@@ -127,7 +127,7 @@ public class MyDragAndDrop {
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
         int previousMoneyTransfert = transfertManager.getExistingTransfer(newTransfertDon,newTransfertRec);
         if(previousMoneyTransfert>0) {
-            input.setHint(previousMoneyTransfert);
+            input.setHint("Précédant don : "+previousMoneyTransfert+" €");
         }
         new AlertDialog.Builder(mA)
                 .setView(input)
@@ -201,13 +201,16 @@ public class MyDragAndDrop {
                     break;
                 case DragEvent.ACTION_DROP:
                     // Dropped, reassign View to ViewGroup
-                    transfertManager.removeTransfert(currentPreviousDonator,currentReciever);
                     ViewGroup owner = (ViewGroup) currentFamilyLine.getParent();
                     owner.removeView(currentFamilyLine);
                     LinearLayout container = (LinearLayout) v;
                     container.addView(currentFamilyLine);
                     currentFamilyLine.setVisibility(View.VISIBLE);
                     askForNewTransfert(familyDon,currentReciever);
+                    transfertManager.removeTransfert(currentPreviousDonator,currentReciever);
+                    if (mListner != null) {
+                        mListner.onEvent();
+                    }
                     break;
                 case DragEvent.ACTION_DRAG_ENDED:
                     v.setBackground(normalShape);

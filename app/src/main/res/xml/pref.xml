@@ -4,7 +4,7 @@
 
     <PreferenceScreen
         android:key="pref_general"
-        android:icon="@drawable/ic_person_pin_black_24dp"
+        android:icon="@drawable/ic_people_black_24dp"
         android:title="Paramètres familles"
         android:summary="Familles, Nb d'enfants et préparation repas"/>
 
@@ -12,7 +12,7 @@
         android:key="pref_calcul"
         android:icon="@drawable/ic_functions_black_24dp"
         android:title="Paramètres de calculs"
-        android:summary="Mode de calcul pour les transferts"/>
+        android:summary="Paramètres appliqués aux calcul"/>
 
 
     <PreferenceScreen

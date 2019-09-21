@@ -3,6 +3,7 @@ package stellarnear.perequation;
 import android.app.Activity;
 import android.content.Context;
 import android.preference.ListPreference;
+import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.text.InputType;
 
@@ -31,6 +32,10 @@ public class PrefAllFamsListFragment {
     private void refreshList() {
         listCat.removeAll();
 
+        Preference div = new Preference(mC);
+        div.setLayoutResource(R.layout.divider_pref);
+        div.setSelectable(false);
+        listCat.addPreference(div);
         for (Family fam: AllFamilies.getInstance(mC).asList()) {
             EditTextPreference textMember = new EditTextPreference(mC,InputType.TYPE_CLASS_NUMBER);
             textMember.setKey(fam.getId()+"_member");
@@ -48,15 +53,6 @@ public class PrefAllFamsListFragment {
         }
     }
 
-    /*
-        <ListPreference
-        android:key="Alloc_alime"
-        android:title="Famille qui fournit le repas"
-        android:entries="@array/values_fam_names_alim"
-        android:entryValues="@array/values_fam_names_alim"
-        android:summary="Valeur : %s"
-        android:defaultValue="@string/Alloc_alime_def"/>
-     */
     public void addFamilyAlimListPref(PreferenceCategory general){
         ListPreference list = new ListPreference(mC);
         list.setTitle("Famille qui organise le repas");

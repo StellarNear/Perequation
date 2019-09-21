@@ -1,40 +1,6 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Paramètres généraux" android:key="general_alim">
-
-        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
-        <ListPreference
-            android:defaultValue="@string/round_budget_def"
-            android:key="round_budget"
-            android:title="Arrondi pour le budget cadeau"
-            android:entries="@array/arrondi_budget"
-            android:entryValues="@array/arrondi_budget"
-            android:summary="Valeur : %s€"/>
-
-
-        <stellarnear.perequation.EditTextPreference
-            android:defaultValue="@string/money_alloc_alim_def"
-            android:key="Money_alloc_alim"
-            android:inputType="number"
-            android:title="Argent alloué au repas"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:summary="Valeur : %s€"/>
-
-    </PreferenceCategory>
-    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
-
-    <PreferenceCategory android:title="Paramètre de test">
-
-        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
-        <SwitchPreference
-            android:defaultValue="@bool/Test_switch_def"
-            android:key="Test_switch"
-            android:title="Mode Test" />
-
-    </PreferenceCategory>
-    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
 
     <PreferenceCategory android:title="Modifications de la liste">
         <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>

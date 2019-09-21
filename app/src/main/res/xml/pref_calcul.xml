@@ -1,9 +1,43 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreference
-        android:defaultValue="@bool/family_mode_calcul_def"
-        android:key="family_mode_calcul"
-        android:title="Branche familiale"
-        android:summary="Les transfert sont privilégié au coeur d'une même branche"/>
+    <PreferenceCategory android:title="Paramètres généraux de calcul" >
+        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+        <ListPreference
+            android:defaultValue="@string/round_budget_def"
+            android:key="round_budget"
+            android:title="Arrondi pour le budget cadeau"
+            android:entries="@array/arrondi_budget"
+            android:entryValues="@array/arrondi_budget"
+            android:summary="Valeur : %s€"/>
+
+
+        <SwitchPreference
+            android:defaultValue="@bool/family_mode_calcul_def"
+            android:key="family_mode_calcul"
+            android:title="Branche familiale"
+            android:summary="Les transfert sont privilégié au coeur d'une même branche"/>
+</PreferenceCategory>
+<Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
+    <PreferenceCategory android:title="Paramètres alimentaire" android:key="general_alim">
+
+        <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
+        <stellarnear.perequation.EditTextPreference
+            android:defaultValue="@string/money_alloc_alim_def"
+            android:key="Money_alloc_alim"
+            android:inputType="number"
+            android:title="Argent alloué au repas (min)"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Valeur : %s€"/>
+
+
+    </PreferenceCategory>
+    <Preference  android:layout="@layout/divider_pref" android:selectable="false"/>
+
+
+
+
 </PreferenceScreen>

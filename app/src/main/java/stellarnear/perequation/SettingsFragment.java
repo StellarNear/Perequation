@@ -118,8 +118,10 @@ public class SettingsFragment extends PreferenceFragment {
             switch (currentPageKey) {
                 case "pref_general":
                     PreferenceCategory allFams = (PreferenceCategory) findPreference("all_fams");
-                    PreferenceCategory famsAlim = (PreferenceCategory) findPreference("general_alim");
                     prefAllFamsListFragment.addFamsList(allFams);
+                    break;
+                case "pref_calcul":
+                    PreferenceCategory famsAlim = (PreferenceCategory) findPreference("general_alim");
                     prefAllFamsListFragment.addFamilyAlimListPref(famsAlim);
                     break;
             }
@@ -235,9 +237,7 @@ public class SettingsFragment extends PreferenceFragment {
     private void popupRemoveFamily() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mA);
         builder.setTitle("Choix de la famille");
-        // add a radio button list
         final ArrayList<String> familiesNames=new ArrayList<>();
-
         for(Family fam : AllFamilies.getInstance(mC).getFamList().asList()){
             familiesNames.add(fam.getName());
         }
@@ -250,8 +250,6 @@ public class SettingsFragment extends PreferenceFragment {
                 tempRemoveFamily = AllFamilies.getInstance(mC).getFamList().asList().get(which);
             }
         });
-
-        // add OK and Cancel buttons
         builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -264,8 +262,6 @@ public class SettingsFragment extends PreferenceFragment {
             }
         });
         builder.setNegativeButton("Annuler", null);
-
-        // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
     }
