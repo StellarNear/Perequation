@@ -150,6 +150,11 @@ public class TransfertManager {
 
     public void forceTransaction(Family familyDon, Family currentReciever,int money) {
         try {
+            for(PairFamilyTranfertSum pair:transfertMapDonatorRecivers.get(familyDon)){
+                if(pair.getRecivier().equals(currentReciever)){
+                    transfertMapDonatorRecivers.get(familyDon).remove(pair);
+                }
+            }
             transfertMapDonatorRecivers.get(familyDon).add(new PairFamilyTranfertSum(currentReciever,money));
         } catch (Exception e) {
             e.printStackTrace();
