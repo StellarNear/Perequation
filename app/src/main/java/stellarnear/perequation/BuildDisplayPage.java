@@ -58,6 +58,7 @@ public class BuildDisplayPage {
                         int newBudget = tools.toInt(input.getText().toString());
                         if (newBudget<AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()) {
                             AllFamilies.getInstance(mC).getCalculation().calculMoneyPerIndivFixed((double) newBudget);
+                            AllFamilies.getInstance(mC).getTransfertManager().invalidateTranferts();
                             buildPage2();
                         } else {
                             tools.customToast(mC,"Le nouveau budget doit etre inferieur à "+AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()+"€","center");
@@ -66,7 +67,6 @@ public class BuildDisplayPage {
                 });
                 b.setNegativeButton("Annuler", null);
                 b.create().show();
-
             }
         });
 
@@ -127,9 +127,7 @@ public class BuildDisplayPage {
                 if (settings.getBoolean("switch_anim_calcul", mC.getResources().getBoolean(R.bool.switch_anim_calcul_def))) {
                     calculationAnimation();
                 } else {
-                    tools.customToast(mC, "Solution trouvée !", "center");
-                    AllFamilies.getInstance(mC).getTransfertManager().calculTransfer();
-                    buildPage2();
+                    calculAndTurnPage();
                 }
             }
         });
@@ -154,6 +152,12 @@ public class BuildDisplayPage {
             buttonT.setVisibility(View.GONE);buttonDisplayTranfert.setVisibility(View.VISIBLE);
         } else { buttonDisplayTranfert.setVisibility(View.GONE); buttonT.setVisibility(View.VISIBLE);}
 
+    }
+
+    private void calculAndTurnPage() {
+        tools.customToast(mC, "Solution trouvée !", "center");
+        AllFamilies.getInstance(mC).getTransfertManager().calculTransfer();
+        buildPage2();
     }
 
 
@@ -208,12 +212,13 @@ public class BuildDisplayPage {
                 drawFrame.removeViews(0,drawFrame.getChildCount()-1);
                 drawFrame.getChildAt(0).startAnimation(aniFadeOut);
 
-                tools.customToast(mC, "Solution trouvée !", "center");
-                AllFamilies.getInstance(mC).getTransfertManager().calculTransfer();
-                buildPage2();
+                calculAndTurnPage();
             }
         }, 12*timePerSlide);
 
+    }
+
+    public void loadFromHistory(History.Record record) {
     }
 
 

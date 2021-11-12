@@ -171,4 +171,10 @@ public class AllFamilies {
         familyList.add(fam);
         saveLocalDB();
     }
+
+    public void loadFromHistory(History.Record record) {
+        this.familyList=record.getFamilies();
+        this.calculation=null;
+        this.transfertManager=null;
+    }
 }

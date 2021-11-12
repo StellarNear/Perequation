@@ -17,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ public class SettingsFragment extends PreferenceFragment {
     private SharedPreferences settings;
     private PrefInfoScreenFragment prefInfoScreenFragment;
     private PrefAllFamsListFragment prefAllFamsListFragment;
+    private PrefHistory prefHistory;
 
     private Family tempRemoveFamily=null;
     private String tempIDbranchFamily="";
@@ -63,6 +63,7 @@ public class SettingsFragment extends PreferenceFragment {
         this.histoTitle.add(getResources().getString(R.string.setting_activity));
         this.prefInfoScreenFragment=new PrefInfoScreenFragment(mA,mC);
         this.prefAllFamsListFragment=new PrefAllFamsListFragment(mA,mC);
+        this.prefHistory=new PrefHistory(mA,mC);
     }
 
 
@@ -123,6 +124,10 @@ public class SettingsFragment extends PreferenceFragment {
                 case "pref_calcul":
                     PreferenceCategory famsAlim = (PreferenceCategory) findPreference("general_alim");
                     prefAllFamsListFragment.addFamilyAlimListPref(famsAlim);
+                    break;
+                case "pref_history":
+                    PreferenceCategory hisotryCat = (PreferenceCategory) findPreference("history");
+                    prefHistory.addCategory(hisotryCat);
                     break;
             }
         }
@@ -206,7 +211,7 @@ public class SettingsFragment extends PreferenceFragment {
 
     private void popupChooseMainBranch() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mC);
-        builder.setTitle("Choose an animal");
+        builder.setTitle("Choisissez la branche principale");
 
         final String[] familiesBranchs = {"chatron", "gouillion", "maestre", "ribiere"};
         builder.setItems(familiesBranchs, new DialogInterface.OnClickListener() {

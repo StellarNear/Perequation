@@ -606,6 +606,27 @@ public class TinyDB {
         }
     }
 
+    public List<History.Record> getHistory(String key) {
+        Gson gson = new Gson();
+
+        ArrayList<String> objStrings = getListString(key);
+        List<History.Record> objects = new ArrayList<>();
+
+        for (String jObjString : objStrings) {
+            History.Record value = gson.fromJson(jObjString, History.Record.class);
+            objects.add(value);
+        }
+        return objects;
+    }
 
 
+    public void putHistory(String key, List<History.Record> objArray) {
+        checkForNullKey(key);
+        Gson gson = new Gson();
+        ArrayList<String> objStrings = new ArrayList<String>();
+        for (History.Record obj : objArray) {
+            objStrings.add(gson.toJson(obj));
+        }
+        putListString(key, objStrings);
+    }
 }

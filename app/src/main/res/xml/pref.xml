@@ -22,6 +22,11 @@
         android:icon="@drawable/ic_smartphone" />
 
 
+    <PreferenceScreen
+        android:key="pref_history"
+        android:title="Historique"
+        android:summary="Enregistrement des années précédantes"
+        android:icon="@drawable/ic_baseline_history_24" />
 
 
 

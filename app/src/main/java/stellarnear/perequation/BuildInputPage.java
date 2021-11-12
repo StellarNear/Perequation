@@ -132,6 +132,11 @@ public class BuildInputPage {
         buildPage1();
     }
 
+    public void loadFromHistory(History.Record record) {
+        AllFamilies.getInstance(mC).loadFromHistory(record);
+        if(mListner!=null){mListner.onEvent();}
+    }
+
     public interface OnValidationRequest {
         void onEvent();
     }

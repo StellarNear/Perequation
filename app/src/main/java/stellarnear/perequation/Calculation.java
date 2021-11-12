@@ -27,7 +27,7 @@ public class Calculation {
         Integer all_pop = familyList.getAllIndiv();
 
         Family fam_alloc = testAllocAlim();
-        Double moneyPerIndivCalcul = 0.0;
+        Double moneyPerIndivCalcul = 0.0d;
         if (fam_alloc == null) {
             moneyPerIndivCalcul = (double) all_money / all_pop;
         } else {
@@ -77,7 +77,7 @@ public class Calculation {
         Integer all_pop = familyList.getAllIndiv();
 
         Family fam_alloc = testAllocAlim();
-        Double moneyPerIndivCalcul = 0.0;
+        Double moneyPerIndivCalcul = 0.0d;
         if (fam_alloc == null) {
             moneyPerIndivCalcul=fixedMoney;
         } else {

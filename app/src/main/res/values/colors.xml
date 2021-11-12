@@ -31,4 +31,8 @@
     <color name="end_gradient_button_info">#4EA8E6</color>
     <color name="start_gradient_button_info">#134FE3</color>
     <color name="gold">#DAA520</color>
+    <color name="save">#7F7F7F</color>
+    <color name="light_save">#C6C6C6</color>
+    <color name="start_gradient_button_save">#7F7F7F</color>
+    <color name="end_gradient_button_save">#DEDEDE</color>
 </resources>

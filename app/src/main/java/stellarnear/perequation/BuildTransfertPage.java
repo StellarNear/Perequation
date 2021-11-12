@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.GregorianCalendar;
+
 public class BuildTransfertPage {
     private Activity mA;
     private Context mC;
@@ -49,6 +51,21 @@ public class BuildTransfertPage {
         scroll_fams.removeAllViews();
 
         populateTranferts(scroll_fams);
+
+        LinearLayout buttonSave = mainLin.findViewById(R.id.save_history);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try{
+                    History history =new History(mC);
+                    history.addRecord(new History.Record(new GregorianCalendar(),AllFamilies.getInstance(mC).getFamList(),AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()));
+                    tools.customToast(mC,"Péréquation enregistrée !");
+                } catch (Exception e){
+                    tools.customToast(mC,"Erreur durant la sauvegarde de la péréquation");
+                }
+
+            }
+        });
 
         LinearLayout buttonEdit = mainLin.findViewById(R.id.edit_transferts);
         buttonEdit.setOnClickListener(new View.OnClickListener() {

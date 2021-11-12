@@ -46,7 +46,7 @@ public class TransfertManager {
         this.transfertAvailable=false;
     }
 
-    private void clearTranferts(){
+    public void clearTranferts(){
         transfertMapDonatorRecivers =new HashMap<Family, ArrayList<PairFamilyTranfertSum>>();
         selectDonorsAndRecievers();
     }
@@ -206,4 +206,5 @@ public class TransfertManager {
         }
         return money;
     }
+
 }
