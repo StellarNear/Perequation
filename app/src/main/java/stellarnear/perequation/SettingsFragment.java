@@ -178,11 +178,10 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public void onEvent() {
                 String name = ((EditText) creationView.findViewById(R.id.name_family_creation)).getText().toString();
-                String id = ((EditText) creationView.findViewById(R.id.id_family_creation)).getText().toString();
                 String nMemberTxt = ((EditText) creationView.findViewById(R.id.nmember_family_creation)).getText().toString();
                 String nChildTxt = ((EditText) creationView.findViewById(R.id.nchild_family_creation)).getText().toString();
 
-                Family fam = new Family(id,name,tools.toInt(nMemberTxt),tools.toInt(nChildTxt),tempIDbranchFamily);
+                Family fam = new Family(name,tools.toInt(nMemberTxt),tools.toInt(nChildTxt),tempIDbranchFamily);
 
                 if(testUniqueID(fam) && !tempIDbranchFamily.equalsIgnoreCase("")) {
                     AllFamilies.getInstance(mC).addFamily(fam);

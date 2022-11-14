@@ -84,7 +84,6 @@ public class AllFamilies {
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element2 = (Element) node;
                     Family fam = new Family(
-                            readValue("id", element2),
                             readValue("name", element2),
                             tools.toInt(readValue("nMember", element2)),
                             tools.toInt(readValue("nChild", element2)),
@@ -170,11 +169,5 @@ public class AllFamilies {
     public void addFamily(Family fam) {
         familyList.add(fam);
         saveLocalDB();
-    }
-
-    public void loadFromHistory(History.Record record) {
-        this.familyList=record.getFamilies();
-        this.calculation=null;
-        this.transfertManager=null;
     }
 }

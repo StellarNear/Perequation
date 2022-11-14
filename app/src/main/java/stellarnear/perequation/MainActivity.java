@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        AllFamilies.getInstance(getApplicationContext()).reset();
         if (settings.getBoolean("switch_fullscreen_mode", getApplicationContext().getResources().getBoolean(R.bool.switch_fullscreen_mode_def))) {
             requestWindowFeature(Window.FEATURE_NO_TITLE);
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         panel = (ViewFlipper) findViewById(R.id.panel);
 
         final AllFamilies allFamilies = AllFamilies.getInstance(getApplicationContext());
-        allFamilies.reset();
 
         Family famAlloc = testAllocAlim(allFamilies);
         if (famAlloc != null) {
@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 panel.showNext();
             }
         });
+
+
     }
 
     //si on vient de charger un record
@@ -122,10 +124,20 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        inputPageBuilder.loadFromHistory(record);
+                        final LinearLayout pageDisplay = (LinearLayout) ((FrameLayout) findViewById(R.id.include_display)).findViewById(R.id.main_linear_2);
+                        displayPageBuilder = new BuildDisplayPage(MainActivity.this, getApplicationContext(), pageDisplay,record);
+                        displayPageBuilder.setBackEventListener(new BuildDisplayPage.OnBackRequest() {
+                            @Override
+                            public void onEvent() {
+                                inputPageBuilder.refresh();
+                                setAnimPanelBack();
+                                panel.showPrevious();
+                            }
+                        });
+                        setAnimPanelIn();
+                        panel.showNext();
                     }
                 }, 333);
-
             }
         }
     }
@@ -145,11 +157,6 @@ public class MainActivity extends AppCompatActivity {
         panel.clearAnimation();
         panel.setInAnimation(in);
         panel.setOutAnimation(out);
-    }
-
-    private void panelNext() {
-
-
     }
 
     private Family testAllocAlim(AllFamilies AllFamilies) {
@@ -176,13 +183,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-
 }

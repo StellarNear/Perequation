@@ -16,8 +16,8 @@ public class Family  {
     private boolean alimentaire=false;
     private Integer alim=0;
 
-    public Family(String id,String name,Integer nMember,Integer nChild,String branchId){
-        this.id=id;
+    public Family(String name,Integer nMember,Integer nChild,String branchId){
+        this.id=name.toLowerCase().trim().replace(" ","");
         this.name=name;
         this.nMember =nMember;
         this.nChild=nChild;
@@ -51,6 +51,8 @@ public class Family  {
     public Integer getDonation() {
         return this.donation;
     }
+
+
 
     public Integer getPopulation() {
         return this.nMember+this.nChild;

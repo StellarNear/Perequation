@@ -28,7 +28,6 @@ public class BuildInputPage {
         buildPage1();
     }
 
-
     private void buildPage1() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
 
@@ -59,13 +58,9 @@ public class BuildInputPage {
                     if(mListner!=null){mListner.onEvent();}
                 }
             });
-
-
         } else {
             ((LinearLayout)(mainLin.findViewById(R.id.test_lin))).setVisibility(View.GONE);
         }
-
-
 
         LinearLayout scroll_fams =mainLin.findViewById(R.id.scroll_main_lin);
         scroll_fams.removeAllViews();
@@ -130,11 +125,6 @@ public class BuildInputPage {
 
     public void refresh() {
         buildPage1();
-    }
-
-    public void loadFromHistory(History.Record record) {
-        AllFamilies.getInstance(mC).loadFromHistory(record);
-        if(mListner!=null){mListner.onEvent();}
     }
 
     public interface OnValidationRequest {

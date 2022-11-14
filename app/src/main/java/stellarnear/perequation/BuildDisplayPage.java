@@ -21,6 +21,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
+
 public class BuildDisplayPage {
     private Activity mA;
     private Context mC;
@@ -33,47 +36,66 @@ public class BuildDisplayPage {
         this.mA=mA;
         this.mC=mC;
         this.mainLin=mainLin;
-        buildPage2();
+        buildPage2(AllFamilies.getInstance(mC).getFamList(),AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv());
+    }
+
+    public BuildDisplayPage(Activity mA, Context mC, LinearLayout mainLin, History.Record record){
+        this.mA=mA;
+        this.mC=mC;
+        this.mainLin=mainLin;
+        buildPage2(record.getFamilies(), record.getMoneyPerIndiv(),record.getCalendar());
     }
 
 
-    private void buildPage2() {
+    private void buildPage2(FamilyList famList, double moneyPerIndiv, GregorianCalendar... loadedFromHistoryArg) {
+
+        GregorianCalendar loadedFromHistory=null;
+        if(loadedFromHistoryArg.length>0){
+            loadedFromHistory=loadedFromHistoryArg[0];
+        }
         TextView result = mainLin.findViewById(R.id.resume_info_header);
-        String result_txt="Total dons : "+AllFamilies.getInstance(mC).getFamList().getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getFamList().getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv())+"€";
-        if (AllFamilies.getInstance(mC).getFamList().hasAlim()) {result_txt+=", Repas : "+AllFamilies.getInstance(mC).getFamList().getAlim()+"€";}
+        String result_txt="Total dons : "+famList.getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getFamList().getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", moneyPerIndiv)+"€";
+        if (famList.hasAlim()) {result_txt+=", Repas : "+famList.getAlim()+"€";}
+        if(loadedFromHistory!=null){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            result_txt= dateFormat.format(loadedFromHistory.getTime())+ "\n"+result_txt;
+
+        }
         result.setText(result_txt);
 
-        result.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder b = new AlertDialog.Builder(mA);
-                b.setTitle("Changement du budget cadeau (<"+AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()+"€)");
-                final EditText input = new EditText(mC);
-                input.setTextColor(Color.BLACK);
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                b.setView(input);
-                b.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        int newBudget = tools.toInt(input.getText().toString());
-                        if (newBudget<AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()) {
-                            AllFamilies.getInstance(mC).getCalculation().calculMoneyPerIndivFixed((double) newBudget);
-                            AllFamilies.getInstance(mC).getTransfertManager().invalidateTranferts();
-                            buildPage2();
-                        } else {
-                            tools.customToast(mC,"Le nouveau budget doit etre inferieur à "+AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()+"€","center");
+        if(loadedFromHistory==null) {
+            result.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder b = new AlertDialog.Builder(mA);
+                    b.setTitle("Changement du budget cadeau (<" + moneyPerIndiv + "€)");
+                    final EditText input = new EditText(mC);
+                    input.setTextColor(Color.BLACK);
+                    input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                    b.setView(input);
+                    b.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            int newBudget = tools.toInt(input.getText().toString());
+                            if (newBudget < moneyPerIndiv) {
+                                AllFamilies.getInstance(mC).getCalculation().calculMoneyPerIndivFixed((double) newBudget);
+                                AllFamilies.getInstance(mC).getTransfertManager().invalidateTranferts();
+                                buildPage2(AllFamilies.getInstance(mC).getFamList(), AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv());
+                            } else {
+                                tools.customToast(mC, "Le nouveau budget doit etre inferieur à " + AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv() + "€", "center");
+                            }
                         }
-                    }
-                });
-                b.setNegativeButton("Annuler", null);
-                b.create().show();
-            }
-        });
+                    });
+                    b.setNegativeButton("Annuler", null);
+                    b.create().show();
+                }
+            });
+        }
 
         LinearLayout scroll_fams = mainLin.findViewById(R.id.scroll_main_lin);
         scroll_fams.removeAllViews();
 
-        for (final Family fam : AllFamilies.getInstance(mC).asList()){
+        for (final Family fam : famList.asList()){
             final LinearLayout fam_lin = new LinearLayout(mC);
 
             int end_color=Color.LTGRAY;
@@ -119,26 +141,37 @@ public class BuildDisplayPage {
             fam_lin.addView(fam_exed_txt);
         }
 
-        LinearLayout buttonT = mainLin.findViewById(R.id.validation_button);
-        buttonT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
-                if (settings.getBoolean("switch_anim_calcul", mC.getResources().getBoolean(R.bool.switch_anim_calcul_def))) {
-                    calculationAnimation();
-                } else {
-                    calculAndTurnPage();
+        if(loadedFromHistory==null) {
+            LinearLayout buttonT = mainLin.findViewById(R.id.validation_button);
+            buttonT.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
+                    if (settings.getBoolean("switch_anim_calcul", mC.getResources().getBoolean(R.bool.switch_anim_calcul_def))) {
+                        calculationAnimation();
+                    } else {
+                        calculAndTurnPage();
+                    }
                 }
-            }
-        });
+            });
 
-        LinearLayout buttonDisplayTranfert = mainLin.findViewById(R.id.display_tranferts);
-        buttonDisplayTranfert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(mListner!=null){mListner.onEvent();}
-            }
-        });
+            LinearLayout buttonDisplayTranfert = mainLin.findViewById(R.id.display_tranferts);
+            buttonDisplayTranfert.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListner != null) {
+                        mListner.onEvent();
+                    }
+                }
+            });
+
+            if(AllFamilies.getInstance(mC).getTransfertManager().transfertAvailable()){
+                buttonT.setVisibility(View.GONE);buttonDisplayTranfert.setVisibility(View.VISIBLE);
+            } else { buttonDisplayTranfert.setVisibility(View.GONE); buttonT.setVisibility(View.VISIBLE);}
+        } else {
+            mainLin.findViewById(R.id.display_tranferts).setVisibility(View.GONE);
+            mainLin.findViewById(R.id.validation_button).setVisibility(View.GONE);
+        }
 
         LinearLayout buttonBack = mainLin.findViewById(R.id.back_button);
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -147,17 +180,12 @@ public class BuildDisplayPage {
                 if(mListnerBack!=null){mListnerBack.onEvent();}
             }
         });
-
-        if(AllFamilies.getInstance(mC).getTransfertManager().transfertAvailable()){
-            buttonT.setVisibility(View.GONE);buttonDisplayTranfert.setVisibility(View.VISIBLE);
-        } else { buttonDisplayTranfert.setVisibility(View.GONE); buttonT.setVisibility(View.VISIBLE);}
-
     }
 
     private void calculAndTurnPage() {
-        tools.customToast(mC, "Solution trouvée !", "center");
         AllFamilies.getInstance(mC).getTransfertManager().calculTransfer();
-        buildPage2();
+        tools.customToast(mC, "Solution trouvée !", "center");
+        buildPage2(AllFamilies.getInstance(mC).getFamList(), AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv());
     }
 
 
@@ -217,10 +245,6 @@ public class BuildDisplayPage {
         }, 12*timePerSlide);
 
     }
-
-    public void loadFromHistory(History.Record record) {
-    }
-
 
     public interface OnBackRequest {
         void onEvent();

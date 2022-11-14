@@ -6,13 +6,9 @@ android {
         applicationId "stellarnear.periquation"
         minSdkVersion 26
         targetSdkVersion 26
-        versionCode 4
-        versionName "4.0"
+        versionCode 5
+        versionName "4.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    lintOptions {
-        disable 'GoogleAppIndexingWarning'
-        baseline file("lint-baseline.xml")
     }
     buildTypes {
         release {
@@ -21,6 +17,10 @@ android {
         }
     }
     productFlavors {
+    }
+    lint {
+        baseline file('lint-baseline.xml')
+        disable 'GoogleAppIndexingWarning'
     }
 }
 
