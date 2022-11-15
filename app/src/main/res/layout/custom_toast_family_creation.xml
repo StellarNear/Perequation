@@ -41,12 +41,6 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/id_family_creation"
-            android:hint="ID de la famille"
-            android:inputType="text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <EditText
             android:id="@+id/nmember_family_creation"
             android:hint="Nombre de membres"
             android:inputType="number"

@@ -1,21 +1,18 @@
 <?xml version="1.0"?>
 <records>
     <family>
-        <id>chatron_senior</id>
         <name>Jacques et Dominique</name>
         <branchId>chatron</branchId>
         <nMember>2</nMember>
     </family>
 
     <family>
-        <id>chatron_junior</id>
         <name>Jérémie et Marjorie</name>
         <branchId>chatron</branchId>
         <nMember>2</nMember>
     </family>
 
     <family>
-        <id>gouillion_senior</id>
         <name>Bernard et Chantal</name>
         <nMember>2</nMember>
         <branchId>gouillion</branchId>
@@ -23,7 +20,6 @@
 
 
     <family>
-        <id>gouillion_junior_1</id>
         <name>Christophe et Florence</name>
         <nMember>2</nMember>
         <nChild>3</nChild>
@@ -31,7 +27,6 @@
     </family>
 
     <family>
-        <id>gouillion_junior_2</id>
         <name>Antony et Sophie</name>
         <nMember>2</nMember>
         <nChild>3</nChild>
@@ -39,7 +34,6 @@
     </family>
 
     <family>
-        <id>gouillion_junior_3</id>
         <name>Nicolas et Delphine</name>
         <nMember>2</nMember>
         <nChild>2</nChild>
@@ -47,7 +41,6 @@
     </family>
 
     <family>
-        <id>maestre_senior</id>
         <name>Robert et Mireille</name>
         <nMember>2</nMember>
         <nChild>0</nChild>
@@ -55,7 +48,6 @@
     </family>
 
     <family>
-        <id>maestre_junior_1</id>
         <name>Aurélie et Annabel</name>
         <nMember>2</nMember>
         <nChild>0</nChild>
@@ -63,7 +55,6 @@
     </family>
 
     <family>
-        <id>maestre_junior_2</id>
         <name>Raphael et Florence</name>
         <nMember>2</nMember>
         <nChild>2</nChild>
@@ -71,28 +62,24 @@
     </family>
 
     <family>
-        <id>ribiere_senior</id>
         <name>Claude et Francoise</name>
         <nMember>2</nMember>
         <nChild>0</nChild>
         <branchId>ribiere</branchId>
     </family>
     <family>
-        <id>ribiere_junior_1</id>
         <name>Benjamin et Claire</name>
         <nMember>2</nMember>
         <nChild>2</nChild>
         <branchId>ribiere</branchId>
     </family>
     <family>
-        <id>ribiere_junior_2</id>
         <name>Sam et Perrine</name>
         <nMember>2</nMember>
         <nChild>3</nChild>
         <branchId>ribiere</branchId>
     </family>
     <family>
-        <id>ribiere_junior_3</id>
         <name>Simon et Anaïs</name>
         <nMember>2</nMember>
         <nChild>1</nChild>

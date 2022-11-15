@@ -116,7 +116,7 @@ public class Tools {
     }
 
     public Drawable changeColor(Context mC,int img_id, int color) {
-        Drawable img = mC.getResources().getDrawable(img_id);
+        Drawable img = mC.getDrawable(img_id);
         int iColor = color;
 
         int red   = (iColor & 0xFF0000) / 0xFFFF;
@@ -149,8 +149,11 @@ public class Tools {
         Toast mToastToShow = Toast.makeText(mC, txt, Toast.LENGTH_LONG);
 
         if (mode.contains("center")) {
-            TextView v = (TextView) mToastToShow.getView().findViewById(android.R.id.message);
-            if (v != null) v.setGravity(Gravity.CENTER);
+            if(mToastToShow.getView()!=null) {
+                TextView v = (TextView) mToastToShow.getView().findViewById(android.R.id.message);
+                if (v != null) v.setGravity(Gravity.CENTER);
+            }
+
         }
         mToastToShow.setGravity(Gravity.CENTER, 0, 0);
         mToastToShow.show();

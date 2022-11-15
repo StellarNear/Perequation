@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="version">"v4.1"</string>
-    <string name="time_spend">35h</string>
+    <string name="time_spend">36h</string>
     <string name="basic_infos">"Cette application est développée par le dernier Chatron.
 Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
 v4.1 :
+- Envoi de mail possible par clic sur les donateurs
 - Meilleure gestion de l'affichage de saisie précedante
 - Affichage en indice des valeurs sauvegardées temporaires
 ----------------------------------------------------------------------------------

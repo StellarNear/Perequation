@@ -24,11 +24,13 @@
             android:id="@+id/resume_info_header"
             android:text="Blabla resume"
             android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="18sp"
             android:singleLine="false"
+            android:textStyle="bold"
             android:textColor="@color/dkgray"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
+            android:layout_height="50dp"
             />
     </LinearLayout>
 
