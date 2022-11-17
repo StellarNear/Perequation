@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -165,12 +166,12 @@ public class SettingsFragment extends PreferenceFragment {
         creationItemAlert.addConfirmButton("Créer");
         creationItemAlert.addCancelButton("Annuler");
 
-        View branchIDButton=creationView.findViewById(R.id.branch_id_family_creation);
+        Button branchIDButton=creationView.findViewById(R.id.branch_id_family_creation);
         tempIDbranchFamily="";
         branchIDButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                popupChooseMainBranch();
+                popupChooseMainBranch(branchIDButton);
             }
         });
 
@@ -208,7 +209,7 @@ public class SettingsFragment extends PreferenceFragment {
         });
     }
 
-    private void popupChooseMainBranch() {
+    private void popupChooseMainBranch(Button branchIDButton) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mC);
         builder.setTitle("Choisissez la branche principale");
 
@@ -218,6 +219,7 @@ public class SettingsFragment extends PreferenceFragment {
             public void onClick(DialogInterface dialog, int which) {
                 try {
                     tempIDbranchFamily=familiesBranchs[which];
+                    branchIDButton.setText(familiesBranchs[which]);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

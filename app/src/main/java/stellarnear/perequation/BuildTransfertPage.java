@@ -46,13 +46,16 @@ public class BuildTransfertPage {
 
     private void buildPage3() {
 
-        TextView result = mainLin.findViewById(R.id.resume_info_header);
+        LinearLayout result = mainLin.findViewById(R.id.resume_info_header);
+        result.removeAllViews();
 
-        String result_txt = "Total dons : " + AllFamilies.getInstance(mC).getFamList().getAllMoney() + "€, Population : " + AllFamilies.getInstance(mC).getFamList().getAllIndiv() + "\nBudget cadeau : " + String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()) + "€";
+        String info1 = "Total dons : " + AllFamilies.getInstance(mC).getFamList().getAllMoney() + "€, Population : " + AllFamilies.getInstance(mC).getFamList().getAllIndiv();
+        result.addView(getTextInfo(info1));
+        String info2="Budget cadeau : " + String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()) + "€";
         if (AllFamilies.getInstance(mC).getFamList().hasAlim()) {
-            result_txt += ", Repas : " + AllFamilies.getInstance(mC).getFamList().getAlim() + "€";
+            info2 += ", Repas : " + AllFamilies.getInstance(mC).getFamList().getAlim() + "€";
         }
-        result.setText(result_txt);
+        result.addView(getTextInfo(info2));
 
         LinearLayout scroll_fams = mainLin.findViewById(R.id.scroll_main_lin);
         scroll_fams.removeAllViews();
@@ -92,6 +95,17 @@ public class BuildTransfertPage {
             }
         });
     }
+
+    private TextView getTextInfo(String info_txt) {
+        TextView info = new TextView(mC);
+        info.setText(info_txt);
+        info.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        info.setTypeface(Typeface.DEFAULT_BOLD);
+        info.setTextSize(18);
+        info.setTextColor(Color.DKGRAY);
+        return info;
+    }
+
 
     private void startManualEdition() {
         FamilyList tempList = new FamilyList(AllFamilies.getInstance(mC).getFamList());

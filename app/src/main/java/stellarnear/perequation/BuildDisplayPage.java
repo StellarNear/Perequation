@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -53,15 +54,19 @@ public class BuildDisplayPage {
         if(loadedFromHistoryArg.length>0){
             loadedFromHistory=loadedFromHistoryArg[0];
         }
-        TextView result = mainLin.findViewById(R.id.resume_info_header);
-        String result_txt="Total dons : "+famList.getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getFamList().getAllIndiv() +"\nBudget cadeau : "+String.format("%.2f", moneyPerIndiv)+"€";
-        if (famList.hasAlim()) {result_txt+=", Repas : "+famList.getAlim()+"€";}
+        LinearLayout result = mainLin.findViewById(R.id.resume_info_header);
+        result.removeAllViews();
         if(loadedFromHistory!=null){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            result_txt= dateFormat.format(loadedFromHistory.getTime())+ "\n"+result_txt;
-
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            result.addView(getTextInfo(dateFormat.format(loadedFromHistory.getTime())));
         }
-        result.setText(result_txt);
+
+        String info_txt="Total dons : "+famList.getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getFamList().getAllIndiv();
+        result.addView(getTextInfo(info_txt));
+
+        String info2_txt="Budget cadeau : "+String.format("%.2f", moneyPerIndiv)+"€";
+        if (famList.hasAlim()) {info2_txt+=", Repas : "+famList.getAlim()+"€";}
+        result.addView(getTextInfo(info2_txt));
 
         if(loadedFromHistory==null) {
             result.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +185,16 @@ public class BuildDisplayPage {
                 if(mListnerBack!=null){mListnerBack.onEvent();}
             }
         });
+    }
+
+    private TextView getTextInfo(String info_txt) {
+        TextView info = new TextView(mC);
+        info.setText(info_txt);
+        info.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        info.setTypeface(Typeface.DEFAULT_BOLD);
+        info.setTextSize(18);
+        info.setTextColor(Color.DKGRAY);
+        return info;
     }
 
     private void calculAndTurnPage() {
