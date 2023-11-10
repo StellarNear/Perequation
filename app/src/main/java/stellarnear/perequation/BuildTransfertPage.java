@@ -166,6 +166,7 @@ public class BuildTransfertPage {
                     AlertDialog.Builder b = new AlertDialog.Builder(mA);
                     b.setTitle("Adresse(s) mails");
                     final EditText input = new EditText(mC);
+                    input.setHint("mail1@email.com,mail2@email.fr");
                     input.setTextColor(Color.BLACK);
                     input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     b.setView(input);
@@ -175,8 +176,12 @@ public class BuildTransfertPage {
                             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                             StrictMode.setThreadPolicy(policy);
                             Email sendMail = new Email();
-                            sendMail.execute(input.getText().toString() ,famDon,currentTransfertManager.getReciversForDonator(famDon));
-                            sendMail.onPostExecute(mA);
+                            if(input.getText().toString().length()>0){
+                                sendMail.execute(input.getText().toString() ,famDon,currentTransfertManager.getReciversForDonator(famDon),mA);
+                            } else {
+                                tools.customToast(mC,"Rentrez au moins une adresse");
+                            }
+
                         }
                     });
                     b.setNegativeButton("Annuler", null);

@@ -6,8 +6,8 @@ android {
         applicationId "stellarnear.periquation"
         minSdkVersion 26
         targetSdkVersion 32
-        versionCode 5
-        versionName "4.1"
+        versionCode 6
+        versionName "4.1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
