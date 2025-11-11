@@ -166,7 +166,11 @@ public class BuildTransfertPage {
                     AlertDialog.Builder b = new AlertDialog.Builder(mA);
                     b.setTitle("Adresse(s) mails");
                     final EditText input = new EditText(mC);
-                    input.setHint("mail1@email.com,mail2@email.fr");
+                    String mailHint="mail1@email.com,mail2@email.fr";
+                    if(famDon.getMails()!=null && famDon.getMails().length()>1){
+                        input.setText(famDon.getMails());
+                    }
+                    input.setHint(mailHint);
                     input.setTextColor(Color.BLACK);
                     input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     b.setView(input);

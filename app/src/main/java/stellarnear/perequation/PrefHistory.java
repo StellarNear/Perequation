@@ -64,7 +64,7 @@ public class PrefHistory {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                 }
                             })
-                            .setNegativeButton("Rien", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Charger", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     tools.customToast(mC, "Chargement de la pérequation de " + record.getCalendar().get(Calendar.YEAR));
                                     Intent intent = new Intent(mC, MainActivity.class);

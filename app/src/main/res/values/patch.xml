@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="version">"v4.2"</string>
-    <string name="time_spend">38h</string>
+    <string name="version">"v4.3"</string>
+    <string name="time_spend">39h</string>
     <string name="basic_infos">"Cette application est développée par le dernier Chatron.
 Développée avec amour par Jérémie Chatron en fin 2017 pour sa famille."
     </string>
 
 <string name="patch_list">"----------------------------------------------------------------------------------
+v4.3 :
+- Ajout de supression des anciennes saves
+- Nouveau system de mails à partir d'android
+- update des libs depreciées
+----------------------------------------------------------------------------------
 v4.2 :
 - Systeme d'exportation et de chargement de sauvegarde d'application
 ----------------------------------------------------------------------------------
