@@ -167,7 +167,7 @@ public class BuildTransfertPage {
                     b.setTitle("Adresse(s) mails");
                     final EditText input = new EditText(mC);
                     String mailHint="mail1@email.com,mail2@email.fr";
-                    if(famDon.getMails()!=null && famDon.getMails().length()>1){
+                    if(famDon.getMails()!=null && famDon.getMails().length()>1 && !famDon.getMails().equalsIgnoreCase("null")){
                         input.setText(famDon.getMails());
                     }
                     input.setHint(mailHint);
@@ -182,8 +182,8 @@ public class BuildTransfertPage {
 
                             if (input.getText().toString().length() > 0) {
                                 try {
-                                    SendMail.sendDownloadEmail(mA, input.getText().toString().trim(), famDon, currentTransfertManager.getReciversForDonator(famDon));
                                     AllFamilies.getInstance(mC).addMailToFamily(famDon, input.getText().toString().trim());
+                                    SendMail.sendDownloadEmail(mA, input.getText().toString().trim(), famDon, currentTransfertManager.getReciversForDonator(famDon));
                                 } catch (Exception e) {
                                     tools.customToast(mC, "Le mail n'a pas pu être envoyé : " + e.getMessage());
                                 }

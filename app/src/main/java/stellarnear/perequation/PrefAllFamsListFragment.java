@@ -56,7 +56,8 @@ public class PrefAllFamsListFragment {
             mailText.setKey(fam.getId() + "_emails");
             mailText.setTitle(fam.getName() + " (emails)");
             mailText.setSummary("Emails : %s");
-            mailText.setDefaultValue(String.valueOf(fam.getMails()));
+            String mails= (fam.getMails()==null || fam.getMails().equalsIgnoreCase("null")) ? "Aucun": fam.getMails();
+            mailText.setDefaultValue(mails);
             listCat.addPreference(mailText);
         }
     }
