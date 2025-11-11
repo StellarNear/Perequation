@@ -134,8 +134,8 @@ public class AllFamilies {
                 family.setnChild(nChild);
             }
 
-            String emails = settings.getString(family.getId() + "_emails", String.valueOf(family.getMails()));
-            if (!emails.equalsIgnoreCase(family.getMails())) {
+            String emails = settings.getString(family.getId() + "_emails", family.getMails());
+            if (!emails.equalsIgnoreCase(family.getMails()) && !emails.equalsIgnoreCase("null") && !emails.equalsIgnoreCase("aucun")) {
                 family.setMails(emails);
             }
 
