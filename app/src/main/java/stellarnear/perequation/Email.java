@@ -1,6 +1,5 @@
 package stellarnear.perequation;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -16,14 +15,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.util.ByteArrayDataSource;
 
-class Email extends AsyncTask<Object,Void,Void> {
-   // private static String user = "perequation.chatron@gmail.com";
-  //  private static String pass = "fkeifwxikkjnlano";
-     private static String user = "stellarnear@hotmail.com";
-      private static String pass = "Antilles1";
+class Email extends AsyncTask<Object, Void, Void> {
+    // private static String user = "perequation.chatron@gmail.com";
+    //  private static String pass = "fkeifwxikkjnlano";
+    private static final String user = "stellarnear@hotmail.com";
+    private static final String pass = "Antilles1";
 
 
-    private Tools tools = new Tools();
+    private final Tools tools = new Tools();
     private Exception error = null;
     private Context mC;
 
@@ -32,7 +31,7 @@ class Email extends AsyncTask<Object,Void,Void> {
         String emailAdress = (String) objects[0];
         Family family = (Family) objects[1];
         ArrayList<PairFamilyTranfertSum> reciversForDonator = (ArrayList<PairFamilyTranfertSum>) objects[2];
-        this.mC= (Context) objects[3];
+        this.mC = (Context) objects[3];
 
 
         String text = "Merci cher " + family.getName() + " de faire parti des généreux donateurs, sans vous la belle péréquation de cette merveilleuse famille ne pourrait avoir lieu :)\n\nVoici un récapitulatif des différents transferts de fond :\n";
@@ -45,7 +44,7 @@ class Email extends AsyncTask<Object,Void,Void> {
         Properties properties = System.getProperties();
 
         // Setup mail server
-       // properties.setProperty("mail.smtp.host", "smtp.gmail.com");
+        // properties.setProperty("mail.smtp.host", "smtp.gmail.com");
         properties.setProperty("mail.smtp.port", "587");
         properties.setProperty("mail.smtp.auth", "true");
         properties.setProperty("mail.smtp.starttls.enable", "true"); // TLS
@@ -77,7 +76,7 @@ class Email extends AsyncTask<Object,Void,Void> {
 
             String[] emails = emailAdress.split(",");
             for (int i = 0; i < emails.length; i++) {
-                if(i==0){
+                if (i == 0) {
                     message.setRecipient(Message.RecipientType.TO, new InternetAddress(emails[i]));
                 } else {
                     message.setRecipient(Message.RecipientType.CC, new InternetAddress(emails[i]));
@@ -98,7 +97,6 @@ class Email extends AsyncTask<Object,Void,Void> {
             tools.customToast(mC, "Mail envoyé!");
         }
     }
-
 
 
 }

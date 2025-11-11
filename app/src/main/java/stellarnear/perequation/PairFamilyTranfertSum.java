@@ -2,11 +2,12 @@ package stellarnear.perequation;
 
 public class PairFamilyTranfertSum {
 
-    private Family recivier;
-    private int sumMoney=0;
-    public PairFamilyTranfertSum(Family reciever,int sumMoney){
-        this.recivier=reciever;
-        this.sumMoney=sumMoney;
+    private final Family recivier;
+    private int sumMoney = 0;
+
+    public PairFamilyTranfertSum(Family reciever, int sumMoney) {
+        this.recivier = reciever;
+        this.sumMoney = sumMoney;
     }
 
     public Family getRecivier() {

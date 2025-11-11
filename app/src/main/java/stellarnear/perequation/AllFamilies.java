@@ -22,37 +22,37 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 public class AllFamilies {
 
-    private static AllFamilies instance=null;
+    private static AllFamilies instance = null;
 
     private FamilyList familyList = new FamilyList();
-    private Context mC;
+    private final Context mC;
 
-    private Calculation calculation=null;
-    private TransfertManager transfertManager=null;
+    private Calculation calculation = null;
+    private TransfertManager transfertManager = null;
 
-    private Tools tools=new Tools();
+    private final Tools tools = new Tools();
 
     public static AllFamilies getInstance(Context mC) {  //pour eviter de relire le xml à chaque fois
-        if (instance==null){
+        if (instance == null) {
             TinyDB tinyDB = new TinyDB(mC);
             ArrayList<Family> listDB = tinyDB.getListAllFamilies("localSaveAllFamilies");
             if (listDB.size() > 0) {
-                instance = new AllFamilies(listDB,mC);
-            }else{
+                instance = new AllFamilies(listDB, mC);
+            } else {
                 instance = new AllFamilies(mC);
             }
         }
         return instance;
     }
 
-    public void eraseAllFamilies(){
+    public void eraseAllFamilies() {
         TinyDB tinyDB = new TinyDB(mC);
-        tinyDB.putListAllFamilies("localSaveAllFamilies",new ArrayList<Family>());
-        instance =null;
+        tinyDB.putListAllFamilies("localSaveAllFamilies", new ArrayList<Family>());
+        instance = null;
     }
 
-    public void reset(){
-        for (Family fam : familyList.asList()){
+    public void reset() {
+        for (Family fam : familyList.asList()) {
             fam.reset();
         }
     }
@@ -62,8 +62,8 @@ public class AllFamilies {
         buildFamiliesList();
     }
 
-    private AllFamilies(ArrayList<Family> fromList,Context mC) {
-        this.mC=mC;
+    private AllFamilies(ArrayList<Family> fromList, Context mC) {
+        this.mC = mC;
         this.familyList = new FamilyList(fromList);
     }
 
@@ -123,35 +123,33 @@ public class AllFamilies {
     public void checkSharedSettings() {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(mC);
 
-        for (Family family : familyList.asList()){
-            int nMember=tools.toInt(settings.getString(family.getId()+"_member",String.valueOf(family.getnMember())));
-            if(nMember!=family.getnMember()){
+        for (Family family : familyList.asList()) {
+            int nMember = tools.toInt(settings.getString(family.getId() + "_member", String.valueOf(family.getnMember())));
+            if (nMember != family.getnMember()) {
                 family.setnMember(nMember);
             }
 
-            int nChild=tools.toInt(settings.getString(family.getId()+"_child",String.valueOf(family.getnChild())));
-            if(nChild!=family.getnChild()){
+            int nChild = tools.toInt(settings.getString(family.getId() + "_child", String.valueOf(family.getnChild())));
+            if (nChild != family.getnChild()) {
                 family.setnChild(nChild);
             }
 
-            String idAlim=settings.getString("alloc_alime",String.valueOf(mC.getResources().getString(R.string.alloc_alime_def)));
-            if(idAlim.equalsIgnoreCase(family.getId())){
-                family.setAlimentaire_bool(true);
-            } else { family.setAlimentaire_bool(false); }
+            String idAlim = settings.getString("alloc_alime", String.valueOf(mC.getResources().getString(R.string.alloc_alime_def)));
+            family.setAlimentaire_bool(idAlim.equalsIgnoreCase(family.getId()));
         }
         saveLocalDB();
     }
 
-    public Calculation getCalculation(){
-        if(calculation==null){
-            calculation=new Calculation(mC,this.familyList);
+    public Calculation getCalculation() {
+        if (calculation == null) {
+            calculation = new Calculation(mC, this.familyList);
         }
         return calculation;
     }
 
-    public TransfertManager getTransfertManager(){
-        if(transfertManager==null){
-            transfertManager=new TransfertManager(mC,this.familyList);
+    public TransfertManager getTransfertManager() {
+        if (transfertManager == null) {
+            transfertManager = new TransfertManager(mC, this.familyList);
         }
         return transfertManager;
     }
@@ -168,6 +166,11 @@ public class AllFamilies {
 
     public void addFamily(Family fam) {
         familyList.add(fam);
+        saveLocalDB();
+    }
+
+    public void addMailToFamily(Family famDon, String emails) {
+        famDon.setMails(emails);
         saveLocalDB();
     }
 }

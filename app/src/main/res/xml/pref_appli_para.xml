@@ -1,5 +1,17 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <PreferenceScreen
+        android:icon="@drawable/ic_file_upload_24dp"
+        android:key="import_save"
+        android:summary="Charge les informations"
+        android:title="Charger" />
+    <PreferenceScreen
+        android:icon="@drawable/ic_file_download_24dp"
+        android:key="export_save"
+        android:summary="Sauvegarde les informations"
+        android:title="Sauvegarder" />
+
+
     <SwitchPreference
         android:defaultValue="@bool/switch_fullscreen_mode_def"
         android:key="switch_fullscreen_mode"

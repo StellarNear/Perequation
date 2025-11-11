@@ -26,49 +26,51 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 public class BuildDisplayPage {
-    private Activity mA;
-    private Context mC;
-    private LinearLayout mainLin;
-    private Tools tools=new Tools();
+    private final Activity mA;
+    private final Context mC;
+    private final LinearLayout mainLin;
+    private final Tools tools = new Tools();
     private OnValidationRequest mListner;
     private OnBackRequest mListnerBack;
 
-    public BuildDisplayPage(Activity mA,Context mC, LinearLayout mainLin){
-        this.mA=mA;
-        this.mC=mC;
-        this.mainLin=mainLin;
-        buildPage2(AllFamilies.getInstance(mC).getFamList(),AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv());
+    public BuildDisplayPage(Activity mA, Context mC, LinearLayout mainLin) {
+        this.mA = mA;
+        this.mC = mC;
+        this.mainLin = mainLin;
+        buildPage2(AllFamilies.getInstance(mC).getFamList(), AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv());
     }
 
-    public BuildDisplayPage(Activity mA, Context mC, LinearLayout mainLin, History.Record record){
-        this.mA=mA;
-        this.mC=mC;
-        this.mainLin=mainLin;
-        buildPage2(record.getFamilies(), record.getMoneyPerIndiv(),record.getCalendar());
+    public BuildDisplayPage(Activity mA, Context mC, LinearLayout mainLin, History.Record record) {
+        this.mA = mA;
+        this.mC = mC;
+        this.mainLin = mainLin;
+        buildPage2(record.getFamilies(), record.getMoneyPerIndiv(), record.getCalendar());
     }
 
 
     private void buildPage2(FamilyList famList, double moneyPerIndiv, GregorianCalendar... loadedFromHistoryArg) {
 
-        GregorianCalendar loadedFromHistory=null;
-        if(loadedFromHistoryArg.length>0){
-            loadedFromHistory=loadedFromHistoryArg[0];
+        GregorianCalendar loadedFromHistory = null;
+        if (loadedFromHistoryArg.length > 0) {
+            loadedFromHistory = loadedFromHistoryArg[0];
         }
         LinearLayout result = mainLin.findViewById(R.id.resume_info_header);
         result.removeAllViews();
-        if(loadedFromHistory!=null){
+        if (loadedFromHistory != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             result.addView(getTextInfo(dateFormat.format(loadedFromHistory.getTime())));
         }
 
-        String info_txt="Total dons : "+famList.getAllMoney()+"€, Population : "+ AllFamilies.getInstance(mC).getFamList().getAllIndiv();
+        String info_txt = "Total dons : " + famList.getAllMoney() + "€, Population : " + AllFamilies.getInstance(mC).getFamList().getAllIndiv();
         result.addView(getTextInfo(info_txt));
 
-        String info2_txt="Budget cadeau : "+String.format("%.2f", moneyPerIndiv)+"€";
-        if (famList.hasAlim()) {info2_txt+=", Repas : "+famList.getAlim()+"€";}
+        String info2_txt = "Budget cadeau : " + String.format("%.2f", moneyPerIndiv) + "€";
+        if (famList.hasAlim()) {
+            info2_txt += ", Repas : " + famList.getAlim() + "€";
+        }
         result.addView(getTextInfo(info2_txt));
 
-        if(loadedFromHistory==null) {
+        if (loadedFromHistory == null) {
             result.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -100,53 +102,57 @@ public class BuildDisplayPage {
         LinearLayout scroll_fams = mainLin.findViewById(R.id.scroll_main_lin);
         scroll_fams.removeAllViews();
 
-        for (final Family fam : famList.asList()){
+        for (final Family fam : famList.asList()) {
             final LinearLayout fam_lin = new LinearLayout(mC);
 
-            int end_color=Color.LTGRAY;
+            int end_color = Color.LTGRAY;
 
-            if (fam.getExed()>1) { end_color=Color.parseColor("#48eabf");}
-            if (fam.getExed()<-1)  { end_color=Color.parseColor("#F5A9A9");}
+            if (fam.getExed() > 1) {
+                end_color = Color.parseColor("#48eabf");
+            }
+            if (fam.getExed() < -1) {
+                end_color = Color.parseColor("#F5A9A9");
+            }
 
             GradientDrawable gd = new GradientDrawable(
                     GradientDrawable.Orientation.BL_TR,
-                    new int[] {Color.WHITE,end_color});
+                    new int[]{Color.WHITE, end_color});
             gd.setCornerRadius(0f);
             fam_lin.setBackground(gd);
             fam_lin.setOrientation(LinearLayout.HORIZONTAL);
 
-            fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            fam_lin.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
             fam_lin.setWeightSum(5);
             fam_lin.setGravity(Gravity.CENTER_VERTICAL);
             scroll_fams.addView(fam_lin);
 
 
             TextView fam_txt = new TextView(mC);
-            fam_txt.setText(fam.getName()+" ("+fam.getPopulation()+")");
+            fam_txt.setText(fam.getName() + " (" + fam.getPopulation() + ")");
             fam_txt.setTextSize(16);
             fam_txt.setGravity(Gravity.CENTER);
             fam_txt.setTextColor(Color.DKGRAY);
-            fam_txt.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,3));
+            fam_txt.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 3));
             fam_lin.addView(fam_txt);
 
             TextView fam_don = new TextView(mC);
-            fam_don.setText(String.valueOf(fam.getDonation())+"€");
+            fam_don.setText(fam.getDonation() + "€");
             fam_don.setTextSize(20);
             fam_don.setGravity(Gravity.CENTER);
-            fam_don.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+            fam_don.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             fam_don.setTextColor(Color.DKGRAY);
             fam_lin.addView(fam_don);
 
             TextView fam_exed_txt = new TextView(mC);
-            fam_exed_txt.setText(fam.getExed()+"€");
+            fam_exed_txt.setText(fam.getExed() + "€");
             fam_exed_txt.setTextSize(20);
             fam_exed_txt.setGravity(Gravity.CENTER);
             fam_exed_txt.setTextColor(Color.DKGRAY);
-            fam_exed_txt.setLayoutParams(new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT,1));
+            fam_exed_txt.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
             fam_lin.addView(fam_exed_txt);
         }
 
-        if(loadedFromHistory==null) {
+        if (loadedFromHistory == null) {
             LinearLayout buttonT = mainLin.findViewById(R.id.validation_button);
             buttonT.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -170,9 +176,13 @@ public class BuildDisplayPage {
                 }
             });
 
-            if(AllFamilies.getInstance(mC).getTransfertManager().transfertAvailable()){
-                buttonT.setVisibility(View.GONE);buttonDisplayTranfert.setVisibility(View.VISIBLE);
-            } else { buttonDisplayTranfert.setVisibility(View.GONE); buttonT.setVisibility(View.VISIBLE);}
+            if (AllFamilies.getInstance(mC).getTransfertManager().transfertAvailable()) {
+                buttonT.setVisibility(View.GONE);
+                buttonDisplayTranfert.setVisibility(View.VISIBLE);
+            } else {
+                buttonDisplayTranfert.setVisibility(View.GONE);
+                buttonT.setVisibility(View.VISIBLE);
+            }
         } else {
             mainLin.findViewById(R.id.display_tranferts).setVisibility(View.GONE);
             mainLin.findViewById(R.id.validation_button).setVisibility(View.GONE);
@@ -182,7 +192,9 @@ public class BuildDisplayPage {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mListnerBack!=null){mListnerBack.onEvent();}
+                if (mListnerBack != null) {
+                    mListnerBack.onEvent();
+                }
             }
         });
     }
@@ -212,13 +224,13 @@ public class BuildDisplayPage {
         final FrameLayout drawFrame = layoutRecordVideo.findViewById(R.id.fullscreen_drawable);
         customVideo.showAlert();
 
-        int timePerSlide=200;
-        final Animation aniFade = AnimationUtils.loadAnimation(mC,R.anim.fadein_drawable_animation);
+        int timePerSlide = 200;
+        final Animation aniFade = AnimationUtils.loadAnimation(mC, R.anim.fadein_drawable_animation);
         for (int i = 0; i <= 9; i++) {
             final ImageView img = new ImageView(mC);
             img.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
-            int drawableId=mC.getResources().getIdentifier("ic_vector_"+i, "drawable", mC.getPackageName());
+            int drawableId = mC.getResources().getIdentifier("ic_vector_" + i, "drawable", mC.getPackageName());
             img.setImageDrawable(mC.getDrawable(drawableId));
             img.setBackgroundColor(Color.TRANSPARENT);
 
@@ -229,35 +241,35 @@ public class BuildDisplayPage {
                     drawFrame.addView(img);
                     img.startAnimation(aniFade);
                 }
-            }, (i+1)*timePerSlide);
+            }, (i + 1) * timePerSlide);
         }
         Handler h = new Handler();
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-                 Animation aniFadeOut =  AnimationUtils.loadAnimation(mC,R.anim.fadeout_drawable_animation);
-                 aniFadeOut.setAnimationListener(new Animation.AnimationListener() {
-                     @Override
-                     public void onAnimationStart(Animation animation) {
+                Animation aniFadeOut = AnimationUtils.loadAnimation(mC, R.anim.fadeout_drawable_animation);
+                aniFadeOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
-                     }
+                    }
 
-                     @Override
-                     public void onAnimationEnd(Animation animation) {
-                         customVideo.dismissAlert();
-                     }
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        customVideo.dismissAlert();
+                    }
 
-                     @Override
-                     public void onAnimationRepeat(Animation animation) {
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
 
-                     }
-                 });
-                drawFrame.removeViews(0,drawFrame.getChildCount()-1);
+                    }
+                });
+                drawFrame.removeViews(0, drawFrame.getChildCount() - 1);
                 drawFrame.getChildAt(0).startAnimation(aniFadeOut);
 
                 calculAndTurnPage();
             }
-        }, 12*timePerSlide);
+        }, 12 * timePerSlide);
 
     }
 

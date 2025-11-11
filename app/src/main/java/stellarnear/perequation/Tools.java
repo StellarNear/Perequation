@@ -8,6 +8,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,15 +68,15 @@ public class Tools {
     }
 
     public Drawable resize(Context mC, Drawable image, int pixelSizeIcon) {
-        Drawable draw=mC.getDrawable(R.drawable.mire_test);
+        Drawable draw = mC.getDrawable(R.drawable.mire_test);
         try {
             Bitmap b = ((BitmapDrawable) image).getBitmap();
             Bitmap bitmapResized = Bitmap.createScaledBitmap(b, pixelSizeIcon, pixelSizeIcon, false);
-            draw =new BitmapDrawable(mC.getResources(), bitmapResized);
+            draw = new BitmapDrawable(mC.getResources(), bitmapResized);
         } catch (Exception e) {
             Bitmap b = ((BitmapDrawable) draw).getBitmap();
             Bitmap bitmapResized = Bitmap.createScaledBitmap(b, pixelSizeIcon, pixelSizeIcon, false);
-            draw =new BitmapDrawable(mC.getResources(), bitmapResized);
+            draw = new BitmapDrawable(mC.getResources(), bitmapResized);
             e.printStackTrace();
         }
         return draw;
@@ -97,36 +98,36 @@ public class Tools {
         return image;
     }
 
-    public Drawable changeColor(Context mC,int img_id, String color) {
+    public Drawable changeColor(Context mC, int img_id, String color) {
         Drawable img = mC.getResources().getDrawable(img_id);
         int iColor = Color.parseColor(color);
 
-        int red   = (iColor & 0xFF0000) / 0xFFFF;
+        int red = (iColor & 0xFF0000) / 0xFFFF;
         int green = (iColor & 0xFF00) / 0xFF;
-        int blue  = iColor & 0xFF;
+        int blue = iColor & 0xFF;
 
-        float[] matrix = { 0, 0, 0, 0, red,
+        float[] matrix = {0, 0, 0, 0, red,
                 0, 0, 0, 0, green,
                 0, 0, 0, 0, blue,
-                0, 0, 0, 1, 0 };
+                0, 0, 0, 1, 0};
 
         ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
         img.setColorFilter(colorFilter);
         return img;
     }
 
-    public Drawable changeColor(Context mC,int img_id, int color) {
+    public Drawable changeColor(Context mC, int img_id, int color) {
         Drawable img = mC.getDrawable(img_id);
         int iColor = color;
 
-        int red   = (iColor & 0xFF0000) / 0xFFFF;
+        int red = (iColor & 0xFF0000) / 0xFFFF;
         int green = (iColor & 0xFF00) / 0xFF;
-        int blue  = iColor & 0xFF;
+        int blue = iColor & 0xFF;
 
-        float[] matrix = { 0, 0, 0, 0, red,
+        float[] matrix = {0, 0, 0, 0, red,
                 0, 0, 0, 0, green,
                 0, 0, 0, 0, blue,
-                0, 0, 0, 1, 0 };
+                0, 0, 0, 1, 0};
 
         ColorFilter colorFilter = new ColorMatrixColorFilter(matrix);
         img.setColorFilter(colorFilter);
@@ -144,20 +145,22 @@ public class Tools {
 
 
     public void customToast(Context mC, String txt, String... modeInput) {
-        // Set the toast and duration
         String mode = modeInput.length > 0 ? modeInput[0] : "";
+        txt = txt.replace("\n", " - ");
         Toast mToastToShow = Toast.makeText(mC, txt, Toast.LENGTH_LONG);
 
-        if (mode.contains("center")) {
-            if(mToastToShow.getView()!=null) {
-                TextView v = (TextView) mToastToShow.getView().findViewById(android.R.id.message);
-                if (v != null) v.setGravity(Gravity.CENTER);
+        // Only apply setGravity() on older Android versions
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) { // < Android 11
+            if (mode.contains("center")) {
+                if (mToastToShow.getView() != null) {
+                    TextView v = mToastToShow.getView().findViewById(android.R.id.message);
+                    if (v != null) v.setGravity(Gravity.CENTER);
+                }
             }
-
+            mToastToShow.setGravity(Gravity.CENTER, 0, 0);
         }
-        mToastToShow.setGravity(Gravity.CENTER, 0, 0);
-        mToastToShow.show();
 
+        mToastToShow.show();
     }
 
 
@@ -165,8 +168,8 @@ public class Tools {
         Double value;
         try {
             value = Double.parseDouble(key);
-        } catch (Exception e){
-            value=0.0;
+        } catch (Exception e) {
+            value = 0.0;
         }
         return value;
     }

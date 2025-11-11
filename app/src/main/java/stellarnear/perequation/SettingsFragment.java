@@ -27,26 +27,26 @@ import java.util.List;
 public class SettingsFragment extends PreferenceFragment {
     private Activity mA;
     private Context mC;
-    private List<String> histoPrefKeys = new ArrayList<>();
-    private List<String> histoTitle = new ArrayList<>();
+    private final List<String> histoPrefKeys = new ArrayList<>();
+    private final List<String> histoTitle = new ArrayList<>();
 
     private String currentPageKey;
     private String currentPageTitle;
 
-    private Tools tools = new Tools();
+    private final Tools tools = new Tools();
     private SharedPreferences settings;
     private PrefInfoScreenFragment prefInfoScreenFragment;
     private PrefAllFamsListFragment prefAllFamsListFragment;
     private PrefHistory prefHistory;
 
-    private Family tempRemoveFamily=null;
-    private String tempIDbranchFamily="";
+    private Family tempRemoveFamily = null;
+    private String tempIDbranchFamily = "";
 
-    private OnSharedPreferenceChangeListener listener =
+    private final OnSharedPreferenceChangeListener listener =
             new OnSharedPreferenceChangeListener() {
                 @Override
                 public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
-                    if (key.contains("_member")|| key.contains("_child") || key.equalsIgnoreCase("alloc_alime")){
+                    if (key.contains("_member") || key.contains("_child") || key.equalsIgnoreCase("alloc_alime")) {
                         AllFamilies.getInstance(getContext()).checkSharedSettings();
                     }
                 }
@@ -57,17 +57,15 @@ public class SettingsFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         this.settings = PreferenceManager.getDefaultSharedPreferences(getContext());
         settings.registerOnSharedPreferenceChangeListener(listener);
-        this.mA=getActivity();
-        this.mC=getContext();
+        this.mA = getActivity();
+        this.mC = getContext();
         addPreferencesFromResource(R.xml.pref);
         this.histoPrefKeys.add("pref");
         this.histoTitle.add(getResources().getString(R.string.setting_activity));
-        this.prefInfoScreenFragment=new PrefInfoScreenFragment(mA,mC);
-        this.prefAllFamsListFragment=new PrefAllFamsListFragment(mA,mC);
-        this.prefHistory=new PrefHistory(mA,mC);
+        this.prefInfoScreenFragment = new PrefInfoScreenFragment(mA, mC);
+        this.prefAllFamsListFragment = new PrefAllFamsListFragment(mA, mC);
+        this.prefHistory = new PrefHistory(mA, mC);
     }
-
-
 
 
     // will be called by SettingsActivity (Host Activity)
@@ -79,8 +77,8 @@ public class SettingsFragment extends PreferenceFragment {
             mA.startActivity(intent);
         } else // in sub-level
         {
-            currentPageKey=histoPrefKeys.get(histoPrefKeys.size() - 2);
-            currentPageTitle=histoTitle.get(histoTitle.size() - 2);
+            currentPageKey = histoPrefKeys.get(histoPrefKeys.size() - 2);
+            currentPageTitle = histoTitle.get(histoTitle.size() - 2);
             navigate();
             histoPrefKeys.remove(histoPrefKeys.size() - 1);
             histoTitle.remove(histoTitle.size() - 1);
@@ -95,8 +93,8 @@ public class SettingsFragment extends PreferenceFragment {
         }
 
         if (preference.getKey().startsWith("pref")) {
-            this.currentPageKey =preference.getKey();
-            this.currentPageTitle =preference.getTitle().toString();
+            this.currentPageKey = preference.getKey();
+            this.currentPageTitle = preference.getTitle().toString();
             navigate();
         } else {
             action(preference);
@@ -127,8 +125,8 @@ public class SettingsFragment extends PreferenceFragment {
                     prefAllFamsListFragment.addFamilyAlimListPref(famsAlim);
                     break;
                 case "pref_history":
-                    PreferenceCategory hisotryCat = (PreferenceCategory) findPreference("history");
-                    prefHistory.addCategory(hisotryCat);
+                    PreferenceCategory historyCat = (PreferenceCategory) findPreference("history");
+                    prefHistory.addCategory(historyCat);
                     break;
             }
         }
@@ -152,7 +150,18 @@ public class SettingsFragment extends PreferenceFragment {
             case "remove_family":
                 popupRemoveFamily();
                 break;
-
+            case "export_save":
+                Intent intentSave = new Intent(mC, SaveSharedPreferencesActivity.class);
+                intentSave.putExtra("ACTION_TYPE", "SAVE");
+                intentSave.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                mC.startActivity(intentSave);
+                break;
+            case "import_save":
+                Intent intentLoad = new Intent(mC, SaveSharedPreferencesActivity.class);
+                intentLoad.putExtra("ACTION_TYPE", "LOAD");
+                intentLoad.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                mC.startActivity(intentLoad);
+                break;
         }
 
     }
@@ -166,8 +175,8 @@ public class SettingsFragment extends PreferenceFragment {
         creationItemAlert.addConfirmButton("Créer");
         creationItemAlert.addCancelButton("Annuler");
 
-        Button branchIDButton=creationView.findViewById(R.id.branch_id_family_creation);
-        tempIDbranchFamily="";
+        Button branchIDButton = creationView.findViewById(R.id.branch_id_family_creation);
+        tempIDbranchFamily = "";
         branchIDButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,23 +191,23 @@ public class SettingsFragment extends PreferenceFragment {
                 String nMemberTxt = ((EditText) creationView.findViewById(R.id.nmember_family_creation)).getText().toString();
                 String nChildTxt = ((EditText) creationView.findViewById(R.id.nchild_family_creation)).getText().toString();
 
-                Family fam = new Family(name,tools.toInt(nMemberTxt),tools.toInt(nChildTxt),tempIDbranchFamily);
+                Family fam = new Family(name, tools.toInt(nMemberTxt), tools.toInt(nChildTxt), tempIDbranchFamily);
 
-                if(testUniqueID(fam) && !tempIDbranchFamily.equalsIgnoreCase("")) {
+                if (testUniqueID(fam) && !tempIDbranchFamily.equalsIgnoreCase("")) {
                     AllFamilies.getInstance(mC).addFamily(fam);
                     tools.customToast(mC, fam.getName() + " ajoutée !");
                     navigate();
                 } else {
-                    if(!testUniqueID(fam)){
-                        tools.customToast(mC,"L'identifiant de famille existe déjà...");
+                    if (!testUniqueID(fam)) {
+                        tools.customToast(mC, "L'identifiant de famille existe déjà...");
                     } else {
-                        tools.customToast(mC,"Vous devez donner la branche familliale principale !");
+                        tools.customToast(mC, "Vous devez donner la branche familliale principale !");
                     }
                 }
             }
         });
         creationItemAlert.showAlert();
-        final EditText editName = ((EditText) creationView.findViewById(R.id.name_family_creation));
+        final EditText editName = creationView.findViewById(R.id.name_family_creation);
         editName.post(new Runnable() {
             public void run() {
                 editName.setFocusableInTouchMode(true);
@@ -218,7 +227,7 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
-                    tempIDbranchFamily=familiesBranchs[which];
+                    tempIDbranchFamily = familiesBranchs[which];
                     branchIDButton.setText(familiesBranchs[which]);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -231,10 +240,11 @@ public class SettingsFragment extends PreferenceFragment {
     }
 
     private boolean testUniqueID(Family famNew) {
-        boolean unique=true;
-        for(Family fam : AllFamilies.getInstance(mC).getFamList().asList()){
-            if(fam.getId().equalsIgnoreCase(famNew.getId())){
-                unique=false;
+        boolean unique = true;
+        for (Family fam : AllFamilies.getInstance(mC).getFamList().asList()) {
+            if (fam.getId().equalsIgnoreCase(famNew.getId())) {
+                unique = false;
+                break;
             }
         }
         return unique;
@@ -243,8 +253,8 @@ public class SettingsFragment extends PreferenceFragment {
     private void popupRemoveFamily() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mA);
         builder.setTitle("Choix de la famille");
-        final ArrayList<String> familiesNames=new ArrayList<>();
-        for(Family fam : AllFamilies.getInstance(mC).getFamList().asList()){
+        final ArrayList<String> familiesNames = new ArrayList<>();
+        for (Family fam : AllFamilies.getInstance(mC).getFamList().asList()) {
             familiesNames.add(fam.getName());
         }
 
@@ -260,9 +270,9 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // user clicked OK
-                if(tempRemoveFamily!=null) {
+                if (tempRemoveFamily != null) {
                     AllFamilies.getInstance(mC).removeFamily(tempRemoveFamily);
-                    tools.customToast(mC,"Famille supprimée !");
+                    tools.customToast(mC, "Famille supprimée !");
                     navigate();
                 }
             }
@@ -278,10 +288,10 @@ public class SettingsFragment extends PreferenceFragment {
 
     // Second level PreferenceScreens
     if (key.equals("second_level_key_0")) {        // do something...    }       */
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-            prefs.unregisterOnSharedPreferenceChangeListener(listener);
-        }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
+        prefs.unregisterOnSharedPreferenceChangeListener(listener);
+    }
 }

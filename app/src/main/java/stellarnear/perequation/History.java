@@ -10,7 +10,7 @@ import java.util.List;
 
 public class History {
     private List<Record> history = new ArrayList<>();
-    private TinyDB tinyDB;
+    private final TinyDB tinyDB;
 
     public History(Context mC) {
         tinyDB = new TinyDB(mC);
@@ -66,26 +66,31 @@ public class History {
     }
 
     public Record getRecordForTimestamp(long id) {
-        Record result=null;
-        for(Record rec : history){
-            if(rec.getTimestamp()==id){
+        Record result = null;
+        for (Record rec : history) {
+            if (rec.getTimestamp() == id) {
                 result = rec;
             }
         }
         return result;
     }
 
-    public static class Record{
-        private GregorianCalendar calendar;
-        private FamilyList families;
-        private double moneyPerIndiv;
-        private long timestamp;
+    public void removeRecord(Record record) {
+        history.remove(record);
+        saveLocalHallOfFame();
+    }
+
+    public static class Record {
+        private final GregorianCalendar calendar;
+        private final FamilyList families;
+        private final double moneyPerIndiv;
+        private final long timestamp;
 
         public Record(GregorianCalendar calendar, FamilyList families, double moneyPerIndiv) {
-            this.calendar=calendar;
-            this.families=families;
-            this.moneyPerIndiv=moneyPerIndiv;
-            this.timestamp=calendar.getTimeInMillis();
+            this.calendar = calendar;
+            this.families = families;
+            this.moneyPerIndiv = moneyPerIndiv;
+            this.timestamp = calendar.getTimeInMillis();
         }
 
         public long getTimestamp() {

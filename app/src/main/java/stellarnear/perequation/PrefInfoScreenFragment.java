@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 
 public class PrefInfoScreenFragment {
-    private Activity mA;
-    private Context mC;
+    private final Activity mA;
+    private final Context mC;
     private CustomAlertDialog infoPopup;
 
     public PrefInfoScreenFragment(Activity mA, Context mC) {
@@ -24,7 +24,7 @@ public class PrefInfoScreenFragment {
 
     private void createInfoPopup() {
         LayoutInflater inflater = LayoutInflater.from(mC);
-        View mainView = inflater.inflate(R.layout.custom_info_patchnote,null);
+        View mainView = inflater.inflate(R.layout.custom_info_patchnote, null);
         LinearLayout mainLin = mainView.findViewById(R.id.custom_info_patchnote);
 
         TextView version = new TextView(mC);
@@ -55,7 +55,7 @@ public class PrefInfoScreenFragment {
         textePatch.setText(mC.getString(R.string.patch_list));
         scroll_info.addView(textePatch);
 
-        this.infoPopup = new CustomAlertDialog(mA,mC,mainView);
+        this.infoPopup = new CustomAlertDialog(mA, mC, mainView);
         this.infoPopup.setPermanent(true);
         this.infoPopup.clickToHide(mainView.findViewById(R.id.custom_info_patchnote_title));
 

@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private BuildDisplayPage displayPageBuilder;
     private BuildTransfertPage transfertPageBuilder;
     private ViewFlipper panel;
-    private Tools tools = new Tools();
+    private final Tools tools = new Tools();
     private SharedPreferences settings;
 
     @Override
@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final LinearLayout pageInput = (LinearLayout) ((FrameLayout) findViewById(R.id.include_input)).findViewById(R.id.main_linear_1);
-        final LinearLayout pageDisplay = (LinearLayout) ((FrameLayout) findViewById(R.id.include_display)).findViewById(R.id.main_linear_2);
-        final LinearLayout pageTransfert = (LinearLayout) ((FrameLayout) findViewById(R.id.include_transfert)).findViewById(R.id.main_linear_3);
+        final LinearLayout pageInput = ((FrameLayout) findViewById(R.id.include_input)).findViewById(R.id.main_linear_1);
+        final LinearLayout pageDisplay = ((FrameLayout) findViewById(R.id.include_display)).findViewById(R.id.main_linear_2);
+        final LinearLayout pageTransfert = ((FrameLayout) findViewById(R.id.include_transfert)).findViewById(R.id.main_linear_3);
 
         panel = (ViewFlipper) findViewById(R.id.panel);
 
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        final LinearLayout pageDisplay = (LinearLayout) ((FrameLayout) findViewById(R.id.include_display)).findViewById(R.id.main_linear_2);
-                        displayPageBuilder = new BuildDisplayPage(MainActivity.this, getApplicationContext(), pageDisplay,record);
+                        final LinearLayout pageDisplay = ((FrameLayout) findViewById(R.id.include_display)).findViewById(R.id.main_linear_2);
+                        displayPageBuilder = new BuildDisplayPage(MainActivity.this, getApplicationContext(), pageDisplay, record);
                         displayPageBuilder.setBackEventListener(new BuildDisplayPage.OnBackRequest() {
                             @Override
                             public void onEvent() {
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-    if (id == R.id.action_settings) {
+        if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }

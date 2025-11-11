@@ -26,10 +26,10 @@ import android.widget.TextView;
 import java.util.GregorianCalendar;
 
 public class BuildTransfertPage {
-    private Activity mA;
-    private Context mC;
-    private LinearLayout mainLin;
-    private Tools tools = new Tools();
+    private final Activity mA;
+    private final Context mC;
+    private final LinearLayout mainLin;
+    private final Tools tools = new Tools();
 
     private TransfertManager currentTransfertManager = null;
     private TransfertManager tempTransfertManager = null;
@@ -51,7 +51,7 @@ public class BuildTransfertPage {
 
         String info1 = "Total dons : " + AllFamilies.getInstance(mC).getFamList().getAllMoney() + "€, Population : " + AllFamilies.getInstance(mC).getFamList().getAllIndiv();
         result.addView(getTextInfo(info1));
-        String info2="Budget cadeau : " + String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()) + "€";
+        String info2 = "Budget cadeau : " + String.format("%.2f", AllFamilies.getInstance(mC).getCalculation().getMoneyPerIndiv()) + "€";
         if (AllFamilies.getInstance(mC).getFamList().hasAlim()) {
             info2 += ", Repas : " + AllFamilies.getInstance(mC).getFamList().getAlim() + "€";
         }
@@ -120,7 +120,7 @@ public class BuildTransfertPage {
         dialog.addCancelButton("Annuler");
         dialog.addConfirmButton("Valider");
         dialog.showAlert();
-        populateTranfertsEdition((LinearLayout) mainView.findViewById(R.id.main_linear_edition_tranferts));
+        populateTranfertsEdition(mainView.findViewById(R.id.main_linear_edition_tranferts));
 
         dialog.setAcceptEventListener(new CustomAlertDialog.OnAcceptEventListener() {
             @Override
@@ -147,7 +147,7 @@ public class BuildTransfertPage {
                     TypedValue.COMPLEX_UNIT_DIP, 16, mC.getResources().getDisplayMetrics())));
 
             ImageSpan imageSpanMail_center = getImageSpan(img_mail);
-            spannableTitleString.setSpan(imageSpanMail_center, spannableTitleString.length()-1, spannableTitleString.length(), 0);
+            spannableTitleString.setSpan(imageSpanMail_center, spannableTitleString.length() - 1, spannableTitleString.length(), 0);
 
             fam_don_name.setText(spannableTitleString);
             fam_don_name.setTextSize(18);
@@ -175,11 +175,17 @@ public class BuildTransfertPage {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
                             StrictMode.setThreadPolicy(policy);
-                            Email sendMail = new Email();
-                            if(input.getText().toString().length()>0){
-                                sendMail.execute(input.getText().toString() ,famDon,currentTransfertManager.getReciversForDonator(famDon),mA);
+
+                            if (input.getText().toString().length() > 0) {
+                                try {
+                                    SendMail.sendDownloadEmail(mA, input.getText().toString().trim(), famDon, currentTransfertManager.getReciversForDonator(famDon));
+                                    AllFamilies.getInstance(mC).addMailToFamily(famDon, input.getText().toString().trim());
+                                } catch (Exception e) {
+                                    tools.customToast(mC, "Le mail n'a pas pu être envoyé : " + e.getMessage());
+                                }
+                                //OLD WAY sendMail.execute(input.getText().toString() ,famDon,currentTransfertManager.getReciversForDonator(famDon),mA);
                             } else {
-                                tools.customToast(mC,"Rentrez au moins une adresse");
+                                tools.customToast(mC, "Rentrez au moins une adresse");
                             }
 
                         }

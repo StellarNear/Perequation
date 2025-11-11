@@ -26,15 +26,15 @@ public class PrefResetScreenFragment extends Preference {
         super(context, attrs, defStyle);
 
     }
+
     public PrefResetScreenFragment(Context context) {
         super(context);
     }
 
     @Override
-    protected View onCreateView(ViewGroup parent)
-    {
+    protected View onCreateView(ViewGroup parent) {
         super.onCreateView(parent);
-        this.mC=getContext();
+        this.mC = getContext();
 
         mainView = new View(getContext());
         final ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(parent.getWidth(), parent.getHeight());  //pour full screen
@@ -76,7 +76,7 @@ public class PrefResetScreenFragment extends Preference {
                 editor.commit();
                 AllFamilies.getInstance(mC).eraseAllFamilies();
                 tools.customToast(mC, "Remise à zero des paramètres de l'application", "center");
-                Intent intent = new Intent(mC,  MainActivity.class);
+                Intent intent = new Intent(mC, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 mC.startActivity(intent);
             }

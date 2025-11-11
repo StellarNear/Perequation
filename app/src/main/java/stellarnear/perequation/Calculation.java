@@ -6,15 +6,15 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class Calculation {
-    private Tools tools=new Tools();
-    private Context mC;
-    private double moneyPerIndiv=0.0d;
-    private FamilyList familyList;
+    private final Tools tools = new Tools();
+    private final Context mC;
+    private double moneyPerIndiv = 0.0d;
+    private final FamilyList familyList;
 
 
-    public Calculation(Context mC, FamilyList familyList){
-        this.mC=mC;
-        this.familyList =familyList;
+    public Calculation(Context mC, FamilyList familyList) {
+        this.mC = mC;
+        this.familyList = familyList;
         calculMoneyPerIndiv();
     }
 
@@ -37,39 +37,39 @@ public class Calculation {
             String moneyPerIndivTxt = String.valueOf(moneyPerIndivOri);
 
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-            Double money_repas = (double) tools.toInt(prefs.getString("Money_alloc_alim",mC.getResources().getString(R.string.money_alloc_alim_def)));
-            Integer arrondi_budget = tools.toInt(prefs.getString("round_budget",mC.getResources().getString(R.string.round_budget_def)));
+            Double money_repas = (double) tools.toInt(prefs.getString("Money_alloc_alim", mC.getResources().getString(R.string.money_alloc_alim_def)));
+            Integer arrondi_budget = tools.toInt(prefs.getString("round_budget", mC.getResources().getString(R.string.round_budget_def)));
 
-            String avant_virgule = moneyPerIndivTxt.substring(moneyPerIndivTxt.indexOf(".")-1);  // dans 154,78  ca donne 4,78
+            String avant_virgule = moneyPerIndivTxt.substring(moneyPerIndivTxt.indexOf(".") - 1);  // dans 154,78  ca donne 4,78
 
-            if (arrondi_budget==5){
-                if (Double.parseDouble(avant_virgule) >=5.0) {
-                    moneyPerIndivCalcul=Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule,"5"));
+            if (arrondi_budget == 5) {
+                if (Double.parseDouble(avant_virgule) >= 5.0) {
+                    moneyPerIndivCalcul = Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule, "5"));
                 } else {
-                    moneyPerIndivCalcul=Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule,"0"));
+                    moneyPerIndivCalcul = Double.parseDouble(moneyPerIndivTxt.replace(avant_virgule, "0"));
                 }
-            } else if (arrondi_budget==1){
+            } else if (arrondi_budget == 1) {
 
-                moneyPerIndivCalcul= (double) moneyPerIndivOri.intValue(); //arrondi à l'entier inferieur
-                Log.d("STATE budg1",String.valueOf(moneyPerIndivCalcul));
+                moneyPerIndivCalcul = (double) moneyPerIndivOri.intValue(); //arrondi à l'entier inferieur
+                Log.d("STATE budg1", String.valueOf(moneyPerIndivCalcul));
             }
 
-            Double rest = moneyPerIndivOri-moneyPerIndivCalcul;
+            Double rest = moneyPerIndivOri - moneyPerIndivCalcul;
 
             while (rest * all_pop < money_repas) {
-                moneyPerIndivCalcul-=arrondi_budget;
-                rest = moneyPerIndivOri-moneyPerIndivCalcul;
+                moneyPerIndivCalcul -= arrondi_budget;
+                rest = moneyPerIndivOri - moneyPerIndivCalcul;
             }
 
             fam_alloc.setAlimentaire_bool(true);
             fam_alloc.setAlim((int) (rest * all_pop));
         }
 
-        for (Family fam : familyList.asList()){
+        for (Family fam : familyList.asList()) {
             fam.calcExed(moneyPerIndivCalcul);
         }
 
-        this.moneyPerIndiv=moneyPerIndivCalcul;
+        this.moneyPerIndiv = moneyPerIndivCalcul;
     }
 
     public void calculMoneyPerIndivFixed(Double fixedMoney) {
@@ -79,39 +79,39 @@ public class Calculation {
         Family fam_alloc = testAllocAlim();
         Double moneyPerIndivCalcul = 0.0d;
         if (fam_alloc == null) {
-            moneyPerIndivCalcul=fixedMoney;
+            moneyPerIndivCalcul = fixedMoney;
         } else {
             Double moneyPerIndivOri = (double) all_money / all_pop;
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mC);
-            Double money_repas = (double) tools.toInt(prefs.getString("Money_alloc_alim",mC.getResources().getString(R.string.money_alloc_alim_def)));
-            Integer arrondi_budget = tools.toInt(prefs.getString("round_budget",mC.getResources().getString(R.string.round_budget_def)));
+            Double money_repas = (double) tools.toInt(prefs.getString("Money_alloc_alim", mC.getResources().getString(R.string.money_alloc_alim_def)));
+            Integer arrondi_budget = tools.toInt(prefs.getString("round_budget", mC.getResources().getString(R.string.round_budget_def)));
 
-            moneyPerIndivCalcul=fixedMoney;
+            moneyPerIndivCalcul = fixedMoney;
 
-            Double rest = moneyPerIndivOri-moneyPerIndivCalcul;
+            Double rest = moneyPerIndivOri - moneyPerIndivCalcul;
 
             while (rest * all_pop < money_repas) {
-                moneyPerIndivCalcul-=arrondi_budget;
-                rest = moneyPerIndivOri-moneyPerIndivCalcul;
+                moneyPerIndivCalcul -= arrondi_budget;
+                rest = moneyPerIndivOri - moneyPerIndivCalcul;
             }
 
             fam_alloc.setAlimentaire_bool(true);
             fam_alloc.setAlim((int) (rest * all_pop));
         }
 
-        for (Family fam : familyList.asList()){
-            if(fam_alloc!=null){
+        for (Family fam : familyList.asList()) {
+            if (fam_alloc != null) {
                 fam.calcExed(moneyPerIndivCalcul);
             } else {
-                fam.calcExedRefund(this.moneyPerIndiv,moneyPerIndivCalcul);
+                fam.calcExedRefund(this.moneyPerIndiv, moneyPerIndivCalcul);
             }
         }
 
-        this.moneyPerIndiv=moneyPerIndivCalcul;
+        this.moneyPerIndiv = moneyPerIndivCalcul;
     }
 
     private Family testAllocAlim() {
-        for (final Family fam : familyList.asList()){
+        for (final Family fam : familyList.asList()) {
             if (fam.isAlim()) {
                 return fam;
             }

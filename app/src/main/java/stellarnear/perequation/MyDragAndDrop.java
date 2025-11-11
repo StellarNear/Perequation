@@ -20,46 +20,48 @@ import java.util.ArrayList;
 
 public class MyDragAndDrop {
 
-    private Tools tools=new Tools();
-    private Activity mA;
-    private Context mC;
+    private final Tools tools = new Tools();
+    private final Activity mA;
+    private final Context mC;
     static private Family currentReciever;
     static private LinearLayout currentFamilyLine;
     static private Family currentPreviousDonator;
-    private Family tempAdditionFamilyDonator =null;
-    private Family tempAdditionFamilyReciever =null;
-    private TransfertManager transfertManager;
+    private Family tempAdditionFamilyDonator = null;
+    private Family tempAdditionFamilyReciever = null;
+    private final TransfertManager transfertManager;
     private OnRefreshListner mListner;
 
-    public MyDragAndDrop(Activity mA,Context mC,TransfertManager transfertManager){
-        this.mA=mA;
-        this.mC=mC;
-        this.transfertManager=transfertManager;
+    public MyDragAndDrop(Activity mA, Context mC, TransfertManager transfertManager) {
+        this.mA = mA;
+        this.mC = mC;
+        this.transfertManager = transfertManager;
     }
 
 
-    public void setTouchListner(Family previousDon,View v,LinearLayout familyRecLine,Family familyRec){
-        v.setOnTouchListener(new MyTouchListner(previousDon,familyRecLine,familyRec));
+    public void setTouchListner(Family previousDon, View v, LinearLayout familyRecLine, Family familyRec) {
+        v.setOnTouchListener(new MyTouchListner(previousDon, familyRecLine, familyRec));
     }
 
-    public void setDragListner(View v,Family familyDon){  //faire un truc ennemi
+    public void setDragListner(View v, Family familyDon) {  //faire un truc ennemi
         v.setOnDragListener(new MyDragListener(familyDon));
     }
 
-    public void setRemoveOnclickListner(final ImageView removeButton,final LinearLayout famRecLine,final Family familyDon,final Family familyRec) {
+    public void setRemoveOnclickListner(final ImageView removeButton, final LinearLayout famRecLine, final Family familyDon, final Family familyRec) {
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(mA)
                         .setTitle("Confirmation de suppression de transfert")
-                        .setMessage("Confirmes tu enelver la famille "+familyRec.getName()+" des receveurs de la famille "+familyDon.getName())
+                        .setMessage("Confirmes tu enelver la famille " + familyRec.getName() + " des receveurs de la famille " + familyDon.getName())
                         .setIcon(android.R.drawable.ic_menu_help)
                         .setPositiveButton("oui", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 ViewGroup owner = (ViewGroup) famRecLine.getParent();
                                 owner.removeView(famRecLine);
-                                transfertManager.removeTransfert(familyDon,familyRec);
-                                if(mListner!=null){mListner.onEvent();}
+                                transfertManager.removeTransfert(familyDon, familyRec);
+                                if (mListner != null) {
+                                    mListner.onEvent();
+                                }
                             }
                         })
                         .setNegativeButton("non", new DialogInterface.OnClickListener() {
@@ -74,7 +76,7 @@ public class MyDragAndDrop {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tempAdditionFamilyDonator=famDon;
+                tempAdditionFamilyDonator = famDon;
                 pickNewReciever();
             }
         });
@@ -82,13 +84,13 @@ public class MyDragAndDrop {
 
     private void pickNewReciever() {
         // setup the alert builder
-        tempAdditionFamilyReciever=null;
+        tempAdditionFamilyReciever = null;
         AlertDialog.Builder builder = new AlertDialog.Builder(mA);
         builder.setTitle("Choix de la famille");
         // add a radio button list
-        final ArrayList<String> familiesNames=new ArrayList<>();
+        final ArrayList<String> familiesNames = new ArrayList<>();
 
-        for(Family fam : this.transfertManager.getReceveurs().asList()){
+        for (Family fam : this.transfertManager.getReceveurs().asList()) {
             familiesNames.add(fam.getName());
         }
 
@@ -106,8 +108,8 @@ public class MyDragAndDrop {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // user clicked OK
-                if(tempAdditionFamilyReciever!=null) {
-                    askForNewTransfert(tempAdditionFamilyDonator,tempAdditionFamilyReciever);
+                if (tempAdditionFamilyReciever != null) {
+                    askForNewTransfert(tempAdditionFamilyDonator, tempAdditionFamilyReciever);
                 }
             }
         });
@@ -118,16 +120,16 @@ public class MyDragAndDrop {
         dialog.show();
     }
 
-    private void askForNewTransfert(final Family newTransfertDon,final Family newTransfertRec) {
+    private void askForNewTransfert(final Family newTransfertDon, final Family newTransfertRec) {
         final EditText input = new EditText(mC);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         input.setLayoutParams(lp);
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
-        int previousMoneyTransfert = transfertManager.getExistingTransfer(newTransfertDon,newTransfertRec);
-        if(previousMoneyTransfert>0) {
-            input.setHint("Précédant don : "+previousMoneyTransfert+" €");
+        int previousMoneyTransfert = transfertManager.getExistingTransfer(newTransfertDon, newTransfertRec);
+        if (previousMoneyTransfert > 0) {
+            input.setHint("Précédant don : " + previousMoneyTransfert + " €");
         }
         new AlertDialog.Builder(mA)
                 .setView(input)
@@ -153,13 +155,14 @@ public class MyDragAndDrop {
 
 
     class MyTouchListner implements View.OnTouchListener {
-        private LinearLayout familyRecLine;
-        private Family family;
-        private Family previousDon;
-        private MyTouchListner(Family previousDon,LinearLayout familyRecLine,Family family){
-            this.previousDon=previousDon;
-            this.familyRecLine=familyRecLine;
-            this.family=family;
+        private final LinearLayout familyRecLine;
+        private final Family family;
+        private final Family previousDon;
+
+        private MyTouchListner(Family previousDon, LinearLayout familyRecLine, Family family) {
+            this.previousDon = previousDon;
+            this.familyRecLine = familyRecLine;
+            this.family = family;
         }
 
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -168,9 +171,9 @@ public class MyDragAndDrop {
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(
                         view);
                 view.startDrag(data, shadowBuilder, view, 0);
-                currentPreviousDonator =previousDon;
-                currentFamilyLine=familyRecLine;
-                currentReciever=family;
+                currentPreviousDonator = previousDon;
+                currentFamilyLine = familyRecLine;
+                currentReciever = family;
                 return true;
             } else {
                 return false;
@@ -181,9 +184,10 @@ public class MyDragAndDrop {
     class MyDragListener implements View.OnDragListener {
         Drawable enterShape = mC.getResources().getDrawable(R.drawable.edit_select_gradient);
         Drawable normalShape = mC.getResources().getDrawable(R.drawable.edit_basic_gradient);
-        private Family familyDon;
-        private MyDragListener(Family familyDon){
-            this.familyDon=familyDon;
+        private final Family familyDon;
+
+        private MyDragListener(Family familyDon) {
+            this.familyDon = familyDon;
         }
 
 
@@ -206,8 +210,8 @@ public class MyDragAndDrop {
                     LinearLayout container = (LinearLayout) v;
                     container.addView(currentFamilyLine);
                     currentFamilyLine.setVisibility(View.VISIBLE);
-                    askForNewTransfert(familyDon,currentReciever);
-                    transfertManager.removeTransfert(currentPreviousDonator,currentReciever);
+                    askForNewTransfert(familyDon, currentReciever);
+                    transfertManager.removeTransfert(currentPreviousDonator, currentReciever);
                     if (mListner != null) {
                         mListner.onEvent();
                     }
