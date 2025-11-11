@@ -134,6 +134,11 @@ public class AllFamilies {
                 family.setnChild(nChild);
             }
 
+            String emails = settings.getString(family.getId() + "_emails", String.valueOf(family.getMails()));
+            if (!emails.equalsIgnoreCase(family.getMails())) {
+                family.setMails(emails);
+            }
+
             String idAlim = settings.getString("alloc_alime", String.valueOf(mC.getResources().getString(R.string.alloc_alime_def)));
             family.setAlimentaire_bool(idAlim.equalsIgnoreCase(family.getId()));
         }

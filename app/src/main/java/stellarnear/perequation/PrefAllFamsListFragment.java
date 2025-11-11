@@ -51,6 +51,13 @@ public class PrefAllFamsListFragment {
             textChild.setSummary("Enfants : %s");
             textChild.setDefaultValue(String.valueOf(fam.getnChild()));
             listCat.addPreference(textChild);
+
+            EditTextPreference mailText = new EditTextPreference(mC);
+            mailText.setKey(fam.getId() + "_emails");
+            mailText.setTitle(fam.getName() + " (emails)");
+            mailText.setSummary("Emails : %s");
+            mailText.setDefaultValue(String.valueOf(fam.getMails()));
+            listCat.addPreference(mailText);
         }
     }
 
